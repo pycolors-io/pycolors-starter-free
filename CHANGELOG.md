@@ -1,5 +1,12 @@
 # @pycolors/starter-free
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [243d833]
+  - @pycolors/ui@1.0.6
+
 ## 0.0.3
 
 ### Patch Changes
