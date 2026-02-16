@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@pycolors/ui": "^1.0.6",
-    "@pycolors/tokens": "^1.0.0",
+    "@pycolors/tokens": "^0.3.0",
     "lucide-react": "^0.552.0",
     "next": "15.2.0",
     "react": "^19.0.0",
