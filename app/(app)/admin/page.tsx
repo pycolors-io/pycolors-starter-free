@@ -245,7 +245,7 @@ export default function AdminMembersPage() {
         </CardHeader>
 
         <CardContent className="p-0 pt-4">
-          <Tabs value={tab} onValueChange={(v) => setTab(v as any)}>
+          <Tabs value={tab} onValueChange={(v) => setTab(v as 'members' | 'invites')}>
             <TabsList>
               <TabsTrigger value="members">Members</TabsTrigger>
               <TabsTrigger value="invites">Invitations</TabsTrigger>
