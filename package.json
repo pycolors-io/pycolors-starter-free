@@ -40,15 +40,15 @@
     "verify": "pnpm lint && pnpm types:check && pnpm build"
   },
   "dependencies": {
-    "@pycolors/ui": "^1.0.6",
     "@pycolors/tokens": "^1.0.0",
+    "@pycolors/ui": "^1.0.6",
     "lucide-react": "^0.552.0",
-    "next": "15.2.0",
+    "next": "15.5.12",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@pycolors/eslint-config": "^1.0.0",
+    "@pycolors/eslint-config": "^1.0.1",
     "@pycolors/typescript-config": "^1.0.0",
     "@tailwindcss/postcss": "^4.1.16",
     "@types/node": "^22.15.3",
