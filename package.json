@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.6",
   "type": "module",
+  "packageManager": "pnpm@9.0.0",
   "description": "Free Next.js SaaS starter by PyColors — UI + Tokens + best-practice structure, synced from the PyColors monorepo.",
   "homepage": "https://pycolors.io/starters",
   "repository": {
