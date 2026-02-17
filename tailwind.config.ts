@@ -6,6 +6,7 @@ const config: Config = {
     './app/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     '../../packages/ui/src/**/*.{ts,tsx,jsx,js}',
+    "./node_modules/@pycolors/ui/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {},
