@@ -20,11 +20,6 @@ import {
 } from '@pycolors/ui';
 import { AppNav } from '@/components/app/app-nav';
 
-function isRouteActive(pathname: string, href: string) {
-  if (href === '/dashboard') return pathname === '/dashboard';
-  return pathname === href || pathname.startsWith(`${href}/`);
-}
-
 function MobileNav() {
   const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
