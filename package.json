@@ -1,7 +1,7 @@
 {
   "name": "@pycolors/starter-free",
   "private": true,
-  "version": "0.0.7",
+  "version": "1.0.0",
   "type": "module",
   "description": "Free Next.js SaaS starter by PyColors — UI + Tokens + best-practice structure, synced from the PyColors monorepo.",
   "homepage": "https://pycolors.io/starters",
@@ -15,7 +15,7 @@
   "license": "MIT",
   "packageManager": "pnpm@10.5.2",
   "engines": {
-    "node": "24.x"
+    "node": ">=20 <23"
   },
   "keywords": [
     "pycolors",
