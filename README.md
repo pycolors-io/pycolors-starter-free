@@ -1,15 +1,18 @@
 ![license](https://img.shields.io/github/license/pycolors-io/pycolors-starter-free)
 ![next](https://img.shields.io/badge/Next.js-15.x-black)
 ![tailwind](https://img.shields.io/badge/TailwindCSS-v4-06B6D4)
+![version](https://img.shields.io/github/v/release/pycolors-io/pycolors-starter-free)
+![discussions](https://img.shields.io/github/discussions/pycolors-io/pycolors-starter-free)
 
 # PyColors Starter (Free)
 
 Free SaaS starter for Next.js powered by the PyColors ecosystem.\
 Clone → run → ship your first product screens in minutes.
 
-👉 Website: https://pycolors.io \
-👉 Documentation: https://pycolors.io/docs \
-👉 UI library: https://github.com/pycolors-io/pycolors-ui
+👉 Starter page: https://pycolors.io/starters/free \
+👉 Documentation: https://pycolors.io/docs/saas-starter \
+👉 UI library: https://pycolors.io/ui \
+👉 Discussions: https://github.com/pycolors-io/pycolors-starter-free/discussions
 
 ------------------------------------------------------------------------
 
@@ -115,19 +118,51 @@ meant to be the fastest starting point.
 
 ------------------------------------------------------------------------
 
-## Starter Pro (coming next)
+## Starter Pro (next)
 
-Starter Free is the foundation.
+Starter Free gives you the full SaaS surface.
 
-Starter Pro will focus on the money path:
+Starter Pro keeps the same screens and UX contracts —
+but wires the foundations for production so you can ship the **money path** faster.
 
--   Auth + teams + roles architecture
--   Billing-ready structure
--   Advanced dashboard patterns
--   CRUD patterns + data layer conventions
--   More automation, fewer decisions
+From sign up → onboarding → subscription → team management.
 
-👉 Early access: https://pycolors.io/starters
+---
+
+### What you get with Pro
+
+- **Authentication + organizations architecture**
+  Sessions, teams, invites, and role-based access patterns — production-ready.
+
+- **Stripe billing foundations**
+  Checkout + customer portal flows, subscription states, and billing UX wired end-to-end.
+
+- **Production data layer conventions**
+  Structured CRUD patterns, validation, loading/error states, and API contracts aligned with real backend wiring.
+
+- **Advanced dashboard patterns**
+  Onboarding cues, empty states, scalable layouts, and real product UX decisions baked in.
+
+- **Less glue code. Fewer edge cases.**
+  Opinionated defaults and automation so you focus on product — not wiring.
+
+---
+
+Designed for founders and product engineers shipping their first paid version.
+
+👉 Early access & roadmap: https://pycolors.io/starters
+
+------------------------------------------------------------------------
+
+## Community
+
+Have a question, idea, or feedback?
+
+• Ask questions → https://github.com/pycolors-io/pycolors-starter-free/discussions
+• Report bugs → https://github.com/pycolors-io/pycolors-starter-free/issues
+
+Discussions are the best place to get help with setup, integrations,
+and deployment.
 
 ------------------------------------------------------------------------
 
@@ -136,7 +171,7 @@ Starter Pro will focus on the money path:
 This repository is automatically synced from the PyColors monorepo.\
 Source of truth: `apps/starter-free`.
 
-You can open Issues and Discussions here.
+You can open Issues and participate in Discussions in this repository.
 
 ------------------------------------------------------------------------
 
