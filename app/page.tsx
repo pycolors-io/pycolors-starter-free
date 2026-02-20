@@ -16,6 +16,8 @@ import {
   Badge,
 } from '@pycolors/ui';
 
+import { STARTER_VERSION_TAG } from '@/lib/version';
+
 const EXTERNAL = {
   starters: 'https://pycolors.io/starters',
   docs: 'https://pycolors.io/docs/saas-starter',
@@ -82,7 +84,7 @@ function IncludedCard({
           className="w-full"
         >
           <Link href={href}>
-            Open{' '}
+            Open
             <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
           </Link>
         </Button>
@@ -96,38 +98,52 @@ export default function HomePage() {
     <main className="mx-auto w-full max-w-6xl px-4 py-10 md:px-6 md:py-14">
       <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-1">
-          <Link
+          <a
             href={EXTERNAL.starters}
+            target="_blank"
+            rel="noreferrer noopener"
             className="inline-flex items-center gap-2 text-sm font-semibold tracking-tight underline underline-offset-4"
           >
             PyColors SaaS Starter (FREE)
             <ExternalLink className="h-4 w-4" aria-hidden="true" />
-          </Link>
+          </a>
 
-          <div className="text-xs text-muted-foreground">
-            Minimal landing inside the starter. Full details live on
-            pycolors.io.
+          <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+            <span>Minimal landing inside the starter.</span>
+            <span className="text-muted-foreground/70">·</span>
+            <span>
+              Starter version{' '}
+              <span className="font-mono">{STARTER_VERSION_TAG}</span>
+            </span>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
           <Button asChild variant="outline" size="sm">
-            <Link href={EXTERNAL.docs}>
-              Docs{' '}
+            <a
+              href={EXTERNAL.docs}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Docs
               <ExternalLink
                 className="ml-2 h-4 w-4"
                 aria-hidden="true"
               />
-            </Link>
+            </a>
           </Button>
           <Button asChild variant="outline" size="sm">
-            <Link href={EXTERNAL.github}>
-              GitHub{' '}
+            <a
+              href={EXTERNAL.github}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              GitHub
               <ExternalLink
                 className="ml-2 h-4 w-4"
                 aria-hidden="true"
               />
-            </Link>
+            </a>
           </Button>
         </div>
       </div>
@@ -147,16 +163,17 @@ export default function HomePage() {
           </h1>
 
           <p className="max-w-2xl text-sm text-muted-foreground md:text-base">
-            Most starters stop at UI screens. This one ships the real
-            UX surface: navigation, states, tables, dialogs, settings,
-            billing entrypoints, and auth flows — ready to wire.
+            This starter ships the UX surface that makes a SaaS feel
+            real: navigation, states, tables, dialogs, settings,
+            billing entrypoints, and auth flows — ready to wire when
+            you’re ready.
           </p>
         </div>
 
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
           <Button asChild>
             <Link href="/dashboard">
-              Open live demo{' '}
+              Open live demo
               <ArrowRight
                 className="ml-2 h-4 w-4"
                 aria-hidden="true"
@@ -165,17 +182,21 @@ export default function HomePage() {
           </Button>
 
           <Button asChild variant="outline">
-            <Link href={EXTERNAL.starters}>
-              Get the starter{' '}
+            <a
+              href={EXTERNAL.docs}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Read docs
               <ExternalLink
                 className="ml-2 h-4 w-4"
                 aria-hidden="true"
               />
-            </Link>
+            </a>
           </Button>
 
           <div className="text-xs text-muted-foreground sm:ml-2">
-            Pro version planned (billing + auth wired + more blocks).
+            Pro planned (wired auth + billing + more blocks).
           </div>
         </div>
 
@@ -192,7 +213,7 @@ export default function HomePage() {
                 </div>
                 <div className="text-sm text-muted-foreground">
                   a11y defaults, clear states, stable layouts, safe
-                  destructive patterns.
+                  destructive flows.
                 </div>
               </div>
             </div>
@@ -209,7 +230,7 @@ export default function HomePage() {
                   B2B-ready surface
                 </div>
                 <div className="text-sm text-muted-foreground">
-                  org members + invitations, settings tabs, billing
+                  Members + invitations, settings tabs, billing
                   overview, portal entrypoint.
                 </div>
               </div>
@@ -243,15 +264,15 @@ export default function HomePage() {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           <IncludedCard
             title="Dashboard"
-            description="KPI cards, quick actions, credible layout and navigation."
+            description="KPI cards with trend indicators + quick actions + credible layout."
             href="/dashboard"
-            badge="v1"
+            badge="Demo"
           />
           <IncludedCard
             title="Projects"
             description="Table + row actions + rename/delete dialogs + empty/loading states."
             href="/projects"
-            badge=" mock"
+            badge="Data"
           />
           <IncludedCard
             title="Admin"
@@ -273,9 +294,9 @@ export default function HomePage() {
           />
           <IncludedCard
             title="Auth"
-            description="Login/register/forgot. Uses PasswordInput. OAuth placeholder."
+            description="Login/register/forgot. PasswordInput + OAuth placeholder."
             href="/login"
-            badge="UI"
+            badge="Flow"
           />
         </div>
       </section>
@@ -348,7 +369,7 @@ export default function HomePage() {
       <section className="mt-12 space-y-4">
         <SectionTitle
           title="Quickstart"
-          description="Keep it short. Devs want to run it fast."
+          description="Clone and run in minutes."
         />
 
         <Card className="p-4">
@@ -364,13 +385,17 @@ pnpm dev`}
             </div>
 
             <Button asChild variant="outline" size="sm">
-              <Link href={EXTERNAL.docs}>
-                Read docs on pycolors.io{' '}
+              <a
+                href={EXTERNAL.docs}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                Read docs on pycolors.io
                 <ExternalLink
                   className="ml-2 h-4 w-4"
                   aria-hidden="true"
                 />
-              </Link>
+              </a>
             </Button>
           </div>
         </Card>
@@ -379,23 +404,36 @@ pnpm dev`}
       <footer className="mt-12 border-t border-border/60 pt-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div className="text-xs text-muted-foreground">
-            Starter v1 · mock data · no backend · built with PyColors
-            UI
+            Starter{' '}
+            <span className="font-mono">{STARTER_VERSION_TAG}</span> ·
+            mock data · no backend · built with{' '}
+            <a
+              href="https://pycolors.io/ui"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="underline underline-offset-4 hover:text-foreground transition-colors"
+            >
+              PyColors UI
+            </a>
           </div>
 
           <div className="flex items-center gap-4 text-xs">
-            <Link
+            <a
               href={EXTERNAL.starters}
+              target="_blank"
+              rel="noreferrer noopener"
               className="underline underline-offset-4"
             >
               Starters
-            </Link>
-            <Link
+            </a>
+            <a
               href={EXTERNAL.docs}
+              target="_blank"
+              rel="noreferrer noopener"
               className="underline underline-offset-4"
             >
               Docs
-            </Link>
+            </a>
             <Link
               href="/dashboard"
               className="underline underline-offset-4"
