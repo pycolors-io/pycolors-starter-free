@@ -16,6 +16,7 @@ import {
   CardDescription,
   CardContent,
   Badge,
+  cn,
 } from '@pycolors/ui';
 
 function StatCard({
@@ -25,6 +26,7 @@ function StatCard({
   href,
   hrefLabel = 'View',
   footer,
+  trend,
 }: {
   label: string;
   value: string | number;
@@ -32,7 +34,15 @@ function StatCard({
   href?: string;
   hrefLabel?: string;
   footer?: React.ReactNode;
+  trend?: { label: string; intent?: 'good' | 'neutral' | 'bad' };
 }) {
+  const trendClass =
+    trend?.intent === 'good'
+      ? 'text-emerald-600'
+      : trend?.intent === 'bad'
+        ? 'text-rose-600'
+        : 'text-muted-foreground';
+
   return (
     <Card className="p-4">
       <CardHeader className="p-0">
@@ -40,6 +50,11 @@ function StatCard({
           <div className="min-w-0">
             <CardDescription className="flex items-center gap-2">
               <span>{label}</span>
+              {trend ? (
+                <span className={cn('text-xs', trendClass)}>
+                  {trend.label}
+                </span>
+              ) : null}
             </CardDescription>
 
             <CardTitle className="text-3xl">{value}</CardTitle>
@@ -58,7 +73,7 @@ function StatCard({
         </div>
       </CardHeader>
 
-      <CardContent className="p-0 pt-4 space-y-2">
+      <CardContent className="p-0 space-y-2 pt-4">
         <div className="text-sm text-muted-foreground">{hint}</div>
 
         {footer ? (
@@ -116,12 +131,18 @@ function ActivityItem({
 }
 
 export default function DashboardPage() {
+  // v1: keep deterministic (no fetch) — page should feel instant
+  const isReady = true;
+
   const projectsCount = 3;
   const membersCount = 16;
   const plan = 'Pro';
 
-  // v1: keep deterministic (no fetch) — page should feel instant
-  const isReady = true;
+  // SaaS KPI placeholders (mocked)
+  const mrr = 1240;
+  const activeUsers = 312;
+  const churn = '2.1%';
+  const uptime = '99.95%';
 
   return (
     <div className="space-y-6">
@@ -131,7 +152,7 @@ export default function DashboardPage() {
             Dashboard
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Your product overview (v1).
+            Your product overview (v1). KPIs are mocked by design.
           </p>
         </div>
 
@@ -174,6 +195,49 @@ export default function DashboardPage() {
         </CardHeader>
       </Card>
 
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <StatCard
+          label="MRR"
+          value={`$${mrr.toLocaleString()}`}
+          hint="Monthly recurring revenue"
+          trend={{ label: '▲ 12% MoM', intent: 'good' }}
+          href="/billing"
+          hrefLabel="Billing"
+          footer="Mocked KPI — wire Stripe later."
+        />
+
+        <StatCard
+          label="Active users"
+          value={activeUsers}
+          hint="Last 7 days"
+          trend={{ label: '▲ 8%', intent: 'good' }}
+          href="/admin"
+          hrefLabel="Admin"
+          footer="Mocked KPI — wire events later."
+        />
+
+        <StatCard
+          label="Churn"
+          value={churn}
+          hint="Last 30 days"
+          trend={{ label: '▲ 0.4%', intent: 'good' }}
+          href="/billing"
+          hrefLabel="Billing"
+          footer="Mocked KPI — computed from subscriptions later."
+        />
+
+        <StatCard
+          label="Uptime"
+          value={uptime}
+          hint="Rolling 30 days"
+          trend={{ label: 'Stable', intent: 'neutral' }}
+          href="/projects"
+          hrefLabel="Projects"
+          footer="Mocked KPI — wire monitoring later."
+        />
+      </div>
+
+      {/* Product KPIs (surface) */}
       <div className="grid gap-4 md:grid-cols-3">
         <StatCard
           label="Total projects"
@@ -181,6 +245,7 @@ export default function DashboardPage() {
           hint="Across your organization"
           href="/projects"
           hrefLabel="Projects"
+          trend={{ label: 'Stable', intent: 'neutral' }}
           footer="CRUD v1: table + row actions + dialogs (local-only)."
         />
 
@@ -190,6 +255,7 @@ export default function DashboardPage() {
           hint="Active across projects"
           href="/admin"
           hrefLabel="Admin"
+          trend={{ label: '▲ 2 invited', intent: 'good' }}
           footer="B2B readiness: members + invitations (mock)."
         />
 
@@ -199,6 +265,7 @@ export default function DashboardPage() {
           hint="Subscription status"
           href="/billing"
           hrefLabel="Billing"
+          trend={{ label: 'Renews monthly', intent: 'neutral' }}
           footer="Stripe portal coming next (server route + redirect)."
         />
       </div>
@@ -246,7 +313,6 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        {/* Secondary */}
         <div className="space-y-6">
           <Card className="p-4">
             <CardHeader className="p-0">
