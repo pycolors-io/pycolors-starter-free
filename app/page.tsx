@@ -18,7 +18,7 @@ import {
 
 const EXTERNAL = {
   starters: 'https://pycolors.io/starters',
-  docs: 'https://pycolors.io/docs',
+  docs: 'https://pycolors.io/docs/saas-starter',
   github: 'https://github.com/pycolors-io/pycolors-starter-free',
 } as const;
 
