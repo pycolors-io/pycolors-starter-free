@@ -20,7 +20,7 @@ import { STARTER_VERSION_TAG } from '@/lib/version';
 
 const EXTERNAL = {
   starters: 'https://pycolors.io/starters',
-  docs: 'https://pycolors.io/docs/saas-starter',
+  docs: 'https://pycolors.io/docs/starter',
   github: 'https://github.com/pycolors-io/pycolors-starter-free',
 } as const;
 

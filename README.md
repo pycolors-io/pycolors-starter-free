@@ -10,7 +10,7 @@ Free SaaS starter for Next.js powered by the PyColors ecosystem.\
 Clone → run → ship your first product screens in minutes.
 
 👉 Starter page: https://pycolors.io/starters/free \
-👉 Documentation: https://pycolors.io/docs/saas-starter \
+👉 Documentation: https://pycolors.io/docs/starter \
 👉 UI library: https://pycolors.io/ui \
 👉 Discussions: https://github.com/pycolors-io/pycolors-starter-free/discussions
 
