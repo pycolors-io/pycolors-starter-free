@@ -40,7 +40,7 @@
     "verify": "pnpm lint && pnpm types:check && pnpm build"
   },
   "dependencies": {
-    "@pycolors/tokens": "^1.0.0",
+    "@pycolors/tokens": "^1.1.0",
     "@pycolors/ui": "^1.0.6",
     "lucide-react": "^0.552.0",
     "next": "15.5.12",

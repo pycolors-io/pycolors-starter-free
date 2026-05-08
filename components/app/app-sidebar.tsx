@@ -39,7 +39,7 @@ export function AppSidebar() {
 
         <div className="flex items-center gap-3">
           <a
-            href="https://pycolors.io/docs/saas-starter"
+            href="https://pycolors.io/docs/starter"
             target="_blank"
             rel="noreferrer noopener"
             className="underline underline-offset-4 hover:text-foreground transition-colors"
