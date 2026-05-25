@@ -3,23 +3,23 @@
 import * as React from 'react';
 
 import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
   Button,
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  TabsContent,
+  EmptyState,
   Input,
   PasswordInput,
-  Alert,
-  AlertTitle,
-  AlertDescription,
-  EmptyState,
   Skeleton,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
 } from '@pycolors/ui';
 
 import { PageShell } from '@/components/app/page-shell';
@@ -28,37 +28,35 @@ type SettingsTab = 'profile' | 'organization' | 'security' | 'danger';
 
 export default function SettingsPage() {
   const [tab, setTab] = React.useState<SettingsTab>('profile');
-
   const [isLoading, setIsLoading] = React.useState(true);
+
   React.useEffect(() => {
-    const t = setTimeout(() => setIsLoading(false), 450);
-    return () => clearTimeout(t);
+    const timeout = setTimeout(() => setIsLoading(false), 450);
+    return () => clearTimeout(timeout);
   }, []);
 
   const profile = { name: 'Patrice', email: 'patrice@pycolors.io' };
-  const org = { name: 'PyColors SaaS', slug: 'pycolors-saas' };
+  const organization = {
+    name: 'PyColors SaaS',
+    slug: 'pycolors-saas',
+  };
 
   return (
     <PageShell
       title="Settings"
-      description="Account & organization settings (v1)."
+      description="Account, workspace, security, and destructive action patterns."
       actions={
-        <div className="flex items-center gap-2">
-          <Button size="sm" type="button" disabled>
-            Save changes
-          </Button>
-          <span className="text-xs text-muted-foreground">
-            Coming next
-          </span>
-        </div>
+        <Button size="sm" type="button" disabled>
+          Save changes
+        </Button>
       }
       meta={
         <Alert>
-          <AlertTitle>Starter mode</AlertTitle>
+          <AlertTitle>Production-ready settings surface</AlertTitle>
           <AlertDescription>
-            Settings are intentionally disabled in v1. The goal is to
-            ship a credible UX surface (tabs, forms, helpers, and a
-            clear danger zone) before wiring APIs.
+            A structured settings experience with tabs, forms, helper
+            text, loading states, and safe destructive patterns for
+            modern SaaS products.
           </AlertDescription>
         </Alert>
       }
@@ -67,30 +65,23 @@ export default function SettingsPage() {
         <CardHeader className="p-0">
           <CardTitle>Account</CardTitle>
           <CardDescription>
-            This page makes the starter feel like a real SaaS:
-            predictable navigation, structured forms, and safe
-            destructive patterns.
+            Manage profile, organization, security, and account-level
+            controls from a single workspace surface.
           </CardDescription>
         </CardHeader>
 
         <CardContent className="p-0 pt-4">
           <Tabs
             value={tab}
-            onValueChange={(v) => setTab(v as SettingsTab)}
+            onValueChange={(value) => setTab(value as SettingsTab)}
           >
             <TabsList className="w-full justify-start">
-              <TabsTrigger value="profile" className="gap-2">
-                Profile
-              </TabsTrigger>
-              <TabsTrigger value="organization" className="gap-2">
+              <TabsTrigger value="profile">Profile</TabsTrigger>
+              <TabsTrigger value="organization">
                 Organization
               </TabsTrigger>
-              <TabsTrigger value="security" className="gap-2">
-                Security
-              </TabsTrigger>
-              <TabsTrigger value="danger" className="gap-2">
-                Danger zone
-              </TabsTrigger>
+              <TabsTrigger value="security">Security</TabsTrigger>
+              <TabsTrigger value="danger">Danger zone</TabsTrigger>
             </TabsList>
 
             <TabsContent value="profile">
@@ -99,11 +90,12 @@ export default function SettingsPage() {
                   <CardHeader className="p-0">
                     <CardTitle>Profile</CardTitle>
                     <CardDescription>
-                      Identity fields (disabled in v1).
+                      Personal identity fields prepared for
+                      authenticated user data.
                     </CardDescription>
                   </CardHeader>
 
-                  <CardContent className="p-0 pt-4 space-y-4">
+                  <CardContent className="space-y-4 p-0 pt-4">
                     {isLoading ? (
                       <div className="space-y-3">
                         <div className="space-y-2">
@@ -122,24 +114,19 @@ export default function SettingsPage() {
                           label="Full name"
                           defaultValue={profile.name}
                           disabled
-                          helperText="Coming next: PATCH /me"
+                          helperText="Connect this field to your user profile update flow."
                         />
 
                         <Input
                           label="Email"
                           defaultValue={profile.email}
                           disabled
-                          helperText="Coming next: email verification flow."
+                          helperText="Prepared for verification and email change workflows."
                         />
 
-                        <div className="flex items-center gap-2">
-                          <Button type="button" size="sm" disabled>
-                            Update profile
-                          </Button>
-                          <span className="text-xs text-muted-foreground">
-                            Coming next
-                          </span>
-                        </div>
+                        <Button type="button" size="sm" disabled>
+                          Update profile
+                        </Button>
                       </>
                     )}
                   </CardContent>
@@ -149,14 +136,15 @@ export default function SettingsPage() {
                   <CardHeader className="p-0">
                     <CardTitle>Preferences</CardTitle>
                     <CardDescription>
-                      Timezone, locale, theme (v2).
+                      Product preferences for localization,
+                      notifications, and workspace experience.
                     </CardDescription>
                   </CardHeader>
 
                   <CardContent className="p-0 pt-4">
                     <EmptyState
-                      title="Preferences not wired yet"
-                      description="Add timezone, notifications, and UI preferences in v2."
+                      title="Preferences are ready to extend"
+                      description="Add timezone, notification, theme, and locale controls when your product needs them."
                       action={
                         <Button
                           type="button"
@@ -164,7 +152,7 @@ export default function SettingsPage() {
                           size="sm"
                           disabled
                         >
-                          Coming next
+                          Configure preferences
                         </Button>
                       }
                     />
@@ -179,11 +167,12 @@ export default function SettingsPage() {
                   <CardHeader className="p-0">
                     <CardTitle>Organization</CardTitle>
                     <CardDescription>
-                      Workspace settings (disabled in v1).
+                      Workspace identity fields prepared for
+                      team-based SaaS products.
                     </CardDescription>
                   </CardHeader>
 
-                  <CardContent className="p-0 pt-4 space-y-4">
+                  <CardContent className="space-y-4 p-0 pt-4">
                     {isLoading ? (
                       <div className="space-y-3">
                         <div className="space-y-2">
@@ -200,26 +189,21 @@ export default function SettingsPage() {
                       <>
                         <Input
                           label="Organization name"
-                          defaultValue={org.name}
+                          defaultValue={organization.name}
                           disabled
-                          helperText="Coming next: PATCH /org"
+                          helperText="Connect this field to your organization update flow."
                         />
 
                         <Input
                           label="Workspace slug"
-                          defaultValue={org.slug}
+                          defaultValue={organization.slug}
                           disabled
-                          helperText="Used in URLs and invites."
+                          helperText="Used for workspace URLs, invites, and product routing."
                         />
 
-                        <div className="flex items-center gap-2">
-                          <Button type="button" size="sm" disabled>
-                            Update organization
-                          </Button>
-                          <span className="text-xs text-muted-foreground">
-                            Coming next
-                          </span>
-                        </div>
+                        <Button type="button" size="sm" disabled>
+                          Update organization
+                        </Button>
                       </>
                     )}
                   </CardContent>
@@ -229,14 +213,15 @@ export default function SettingsPage() {
                   <CardHeader className="p-0">
                     <CardTitle>Billing profile</CardTitle>
                     <CardDescription>
-                      Invoice identity (B2B-ready).
+                      Company identity surface for B2B invoicing and
+                      subscription operations.
                     </CardDescription>
                   </CardHeader>
 
                   <CardContent className="p-0 pt-4">
                     <EmptyState
-                      title="Billing profile not set"
-                      description="Coming next: company name, VAT, address, invoice email."
+                      title="Billing profile ready"
+                      description="Extend with company name, VAT number, billing address, and invoice email."
                       action={
                         <Button
                           type="button"
@@ -244,7 +229,7 @@ export default function SettingsPage() {
                           size="sm"
                           disabled
                         >
-                          Coming next
+                          Manage billing profile
                         </Button>
                       }
                     />
@@ -259,11 +244,12 @@ export default function SettingsPage() {
                   <CardHeader className="p-0">
                     <CardTitle>Password</CardTitle>
                     <CardDescription>
-                      Password update flow (disabled in v1).
+                      Secure credential update surface prepared for
+                      re-authentication and validation rules.
                     </CardDescription>
                   </CardHeader>
 
-                  <CardContent className="p-0 pt-4 space-y-4">
+                  <CardContent className="space-y-4 p-0 pt-4">
                     {isLoading ? (
                       <div className="space-y-3">
                         <div className="space-y-2">
@@ -282,24 +268,19 @@ export default function SettingsPage() {
                           label="Current password"
                           placeholder="********"
                           disabled
-                          helperText="Coming next: re-auth + change password."
+                          helperText="Prepared for re-authentication before sensitive changes."
                         />
 
                         <PasswordInput
                           label="New password"
                           placeholder="********"
                           disabled
-                          helperText="Coming next: validation rules + strength meter."
+                          helperText="Ready for validation rules, strength checks, and secure submission."
                         />
 
-                        <div className="flex items-center gap-2">
-                          <Button type="button" size="sm" disabled>
-                            Update password
-                          </Button>
-                          <span className="text-xs text-muted-foreground">
-                            Coming next
-                          </span>
-                        </div>
+                        <Button type="button" size="sm" disabled>
+                          Update password
+                        </Button>
                       </>
                     )}
                   </CardContent>
@@ -309,14 +290,15 @@ export default function SettingsPage() {
                   <CardHeader className="p-0">
                     <CardTitle>Sessions</CardTitle>
                     <CardDescription>
-                      Revoke devices and rotate tokens (v2).
+                      Device and token management for secure account
+                      control.
                     </CardDescription>
                   </CardHeader>
 
                   <CardContent className="p-0 pt-4">
                     <EmptyState
-                      title="No session management yet"
-                      description="Coming next: sessions list + revoke + token rotation."
+                      title="Session management ready"
+                      description="Extend with active sessions, device history, token rotation, and revoke actions."
                       action={
                         <Button
                           type="button"
@@ -324,7 +306,7 @@ export default function SettingsPage() {
                           size="sm"
                           disabled
                         >
-                          Coming next
+                          Manage sessions
                         </Button>
                       }
                     />
@@ -339,21 +321,23 @@ export default function SettingsPage() {
                   <CardHeader className="p-0">
                     <CardTitle>Danger zone</CardTitle>
                     <CardDescription>
-                      Destructive actions are explicit and separated.
+                      Destructive actions are isolated, explicit, and
+                      designed for confirmation-first workflows.
                     </CardDescription>
                   </CardHeader>
 
-                  <CardContent className="p-0 pt-4 space-y-4">
+                  <CardContent className="space-y-4 p-0 pt-4">
                     <div className="rounded-md border border-border/60 p-3">
                       <div className="text-sm font-medium">
                         Delete account
                       </div>
                       <div className="mt-1 text-sm text-muted-foreground">
-                        Coming next: confirmation dialog + typed
-                        confirmation.
+                        Prepared for confirmation dialogs, typed
+                        verification, and irreversible account
+                        removal.
                       </div>
 
-                      <div className="mt-3 flex items-center gap-2">
+                      <div className="mt-3">
                         <Button
                           type="button"
                           variant="destructive"
@@ -362,9 +346,6 @@ export default function SettingsPage() {
                         >
                           Delete account
                         </Button>
-                        <span className="text-xs text-muted-foreground">
-                          Coming next
-                        </span>
                       </div>
                     </div>
 
@@ -373,11 +354,12 @@ export default function SettingsPage() {
                         Delete organization
                       </div>
                       <div className="mt-1 text-sm text-muted-foreground">
-                        Coming next: owner-only action + irreversible
-                        confirmation.
+                        Prepared for owner-only permissions, typed
+                        confirmation, and irreversible workspace
+                        removal.
                       </div>
 
-                      <div className="mt-3 flex items-center gap-2">
+                      <div className="mt-3">
                         <Button
                           type="button"
                           variant="destructive"
@@ -386,9 +368,6 @@ export default function SettingsPage() {
                         >
                           Delete organization
                         </Button>
-                        <span className="text-xs text-muted-foreground">
-                          Coming next
-                        </span>
                       </div>
                     </div>
                   </CardContent>
