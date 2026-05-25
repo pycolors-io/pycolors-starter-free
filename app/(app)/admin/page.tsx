@@ -5,7 +5,9 @@ import {
   Mail,
   MoreHorizontal,
   RefreshCw,
+  ShieldCheck,
   Trash2,
+  UserCheck,
   UserPlus,
   Users,
 } from 'lucide-react';
@@ -49,6 +51,7 @@ import {
 } from '@pycolors/ui';
 
 import { PageShell } from '@/components/app/page-shell';
+import { UpgradeGate } from '@/components/app/upgrade-gate';
 
 type Role = 'owner' | 'member';
 type InviteStatus = 'pending' | 'expired';
@@ -125,6 +128,38 @@ function InviteStatusBadge({
   };
 
   return <Badge>{labelByStatus[status]}</Badge>;
+}
+
+function AccessMetric({
+  label,
+  value,
+  description,
+  icon: Icon,
+}: Readonly<{
+  label: string;
+  value: string;
+  description: string;
+  icon: React.ComponentType<{ className?: string }>;
+}>) {
+  return (
+    <div className="rounded-md border border-border/60 p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div className="space-y-1">
+          <div className="text-xs text-muted-foreground">{label}</div>
+          <div className="text-2xl font-semibold tracking-tight">
+            {value}
+          </div>
+          <div className="text-sm text-muted-foreground">
+            {description}
+          </div>
+        </div>
+
+        <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-md border border-border/60 bg-muted/30 text-muted-foreground">
+          <Icon className="h-4 w-4" aria-hidden="true" />
+        </span>
+      </div>
+    </div>
+  );
 }
 
 function MembersRows({
@@ -398,97 +433,144 @@ export default function AdminMembersPage() {
         </Alert>
       }
     >
-      <Card className="p-4">
-        <CardHeader className="p-0">
-          <CardTitle className="flex items-center gap-2">
-            <Users
-              className="h-4 w-4 text-muted-foreground"
-              aria-hidden="true"
-            />
-            Organization access
-          </CardTitle>
-          <CardDescription>
-            Review active members, manage pending invitations, and
-            keep ownership controls explicit.
-          </CardDescription>
-        </CardHeader>
+      <div className="space-y-6">
+        <Card className="p-4">
+          <CardHeader className="p-0">
+            <CardTitle className="flex items-center gap-2">
+              <Users
+                className="h-4 w-4 text-muted-foreground"
+                aria-hidden="true"
+              />
+              Organization access
+            </CardTitle>
+            <CardDescription>
+              Review active members, manage pending invitations, and
+              keep ownership controls explicit.
+            </CardDescription>
+          </CardHeader>
 
-        <CardContent className="p-0 pt-4">
-          <Tabs
-            value={tab}
-            onValueChange={(value) => setTab(value as AdminTab)}
-          >
-            <TabsList>
-              <TabsTrigger value="members">Members</TabsTrigger>
-              <TabsTrigger value="invites">Invitations</TabsTrigger>
-            </TabsList>
+          <CardContent className="p-0 pt-4">
+            <Tabs
+              value={tab}
+              onValueChange={(value) => setTab(value as AdminTab)}
+            >
+              <TabsList>
+                <TabsTrigger value="members">Members</TabsTrigger>
+                <TabsTrigger value="invites">Invitations</TabsTrigger>
+              </TabsList>
 
-            <TabsContent value="members">
-              <div className="mt-4">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Email</TableHead>
-                      <TableHead>Role</TableHead>
-                      <TableHead className="text-right">
-                        Actions
-                      </TableHead>
-                    </TableRow>
-                  </TableHeader>
+              <TabsContent value="members">
+                <div className="mt-4">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Name</TableHead>
+                        <TableHead>Email</TableHead>
+                        <TableHead>Role</TableHead>
+                        <TableHead className="text-right">
+                          Actions
+                        </TableHead>
+                      </TableRow>
+                    </TableHeader>
 
-                  <TableBody>
-                    <MembersRows
-                      isLoading={isLoading}
-                      members={members}
-                      onRemoveMember={removeMember}
-                    />
-                  </TableBody>
-                </Table>
+                    <TableBody>
+                      <MembersRows
+                        isLoading={isLoading}
+                        members={members}
+                        onRemoveMember={removeMember}
+                      />
+                    </TableBody>
+                  </Table>
 
-                <div className="mt-3 text-xs text-muted-foreground">
-                  Owner access is protected to prevent accidental
-                  lockouts. Extend with permissions, seat limits, and
-                  audit trails as your product grows.
+                  <div className="mt-3 text-xs text-muted-foreground">
+                    Owner access is protected to prevent accidental
+                    lockouts. Extend with permissions, seat limits,
+                    and audit trails as your product grows.
+                  </div>
                 </div>
-              </div>
-            </TabsContent>
+              </TabsContent>
 
-            <TabsContent value="invites">
-              <div className="mt-4">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Email</TableHead>
-                      <TableHead>Role</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Invited</TableHead>
-                      <TableHead className="text-right">
-                        Actions
-                      </TableHead>
-                    </TableRow>
-                  </TableHeader>
+              <TabsContent value="invites">
+                <div className="mt-4">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Email</TableHead>
+                        <TableHead>Role</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Invited</TableHead>
+                        <TableHead className="text-right">
+                          Actions
+                        </TableHead>
+                      </TableRow>
+                    </TableHeader>
 
-                  <TableBody>
-                    <InvitationRows
-                      isLoading={isLoading}
-                      invites={invites}
-                      onResendInvite={resendInvite}
-                      onCancelInvite={cancelInvite}
-                    />
-                  </TableBody>
-                </Table>
+                    <TableBody>
+                      <InvitationRows
+                        isLoading={isLoading}
+                        invites={invites}
+                        onResendInvite={resendInvite}
+                        onCancelInvite={cancelInvite}
+                      />
+                    </TableBody>
+                  </Table>
 
-                <div className="mt-3 text-xs text-muted-foreground">
-                  Invitation flows are shaped for email delivery,
-                  expiry policies, revoke actions, and role-aware
-                  onboarding.
+                  <div className="mt-3 text-xs text-muted-foreground">
+                    Invitation flows are shaped for email delivery,
+                    expiry policies, revoke actions, and role-aware
+                    onboarding.
+                  </div>
                 </div>
-              </div>
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
+
+        <UpgradeGate
+          title="Role-aware access control"
+          description="Unlock protected admin routes, session-aware permissions, role enforcement, and organization-ready foundations."
+          features={[
+            'Protected admin routes',
+            'Role-aware access control',
+            'Organization foundations',
+            'Session-aware permissions',
+          ]}
+          previewHeightClassName="min-h-[320px]"
+        >
+          <Card className="p-4">
+            <CardHeader className="p-0">
+              <CardTitle>Access control overview</CardTitle>
+              <CardDescription>
+                Permissions, ownership rules, and secure workspace
+                administration.
+              </CardDescription>
+            </CardHeader>
+
+            <CardContent className="grid gap-4 p-0 pt-4 md:grid-cols-3">
+              <AccessMetric
+                label="Protected routes"
+                value="8"
+                description="Admin-only surfaces guarded by role."
+                icon={ShieldCheck}
+              />
+
+              <AccessMetric
+                label="Verified members"
+                value="16"
+                description="Users with active workspace access."
+                icon={UserCheck}
+              />
+
+              <AccessMetric
+                label="Pending invites"
+                value="2"
+                description="Role-aware invitations awaiting action."
+                icon={Mail}
+              />
+            </CardContent>
+          </Card>
+        </UpgradeGate>
+      </div>
 
       <Dialog open={inviteOpen} onOpenChange={closeInvite}>
         <DialogContent>
