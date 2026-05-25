@@ -10,75 +10,39 @@ import {
 } from 'lucide-react';
 
 import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Badge,
   Button,
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
-  Badge,
-  Alert,
-  AlertTitle,
-  AlertDescription,
+  Skeleton,
   Table,
-  TableHeader,
   TableBody,
-  TableRow,
-  TableHead,
   TableCell,
   TableEmpty,
+  TableHead,
+  TableHeader,
   TableLoading,
-  Skeleton,
+  TableRow,
 } from '@pycolors/ui';
 
 import { PageShell } from '@/components/app/page-shell';
 
-function formatDate(iso: string) {
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return iso;
-  return d.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
-}
-
-function formatMoneyEUR(amountCents: number) {
-  // simple mock helper; later: use Stripe amounts + currency
-  const v = amountCents / 100;
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'EUR',
-  }).format(v);
-}
-
 type BillingStatus = 'active' | 'trialing' | 'past_due';
-
-function StatusBadge({ status }: { status: BillingStatus }) {
-  const label =
-    status === 'active'
-      ? 'Active'
-      : status === 'trialing'
-        ? 'Trialing'
-        : 'Past due';
-  return <Badge>{label}</Badge>;
-}
-
 type InvoiceStatus = 'paid' | 'open' | 'void';
 
-type Invoice = {
+type Invoice = Readonly<{
   id: string;
   number: string;
   dateIso: string;
   amountCents: number;
   status: InvoiceStatus;
-};
-
-function InvoiceStatusBadge({ status }: { status: InvoiceStatus }) {
-  const label =
-    status === 'paid' ? 'Paid' : status === 'open' ? 'Open' : 'Void';
-  return <Badge>{label}</Badge>;
-}
+}>;
 
 const MOCK_INVOICES: Invoice[] = [
   {
@@ -97,15 +61,111 @@ const MOCK_INVOICES: Invoice[] = [
   },
 ];
 
+function formatDate(iso: string) {
+  const date = new Date(iso);
+
+  if (Number.isNaN(date.getTime())) {
+    return iso;
+  }
+
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+
+function formatMoneyEUR(amountCents: number) {
+  const amount = amountCents / 100;
+
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'EUR',
+  }).format(amount);
+}
+
+function StatusBadge({
+  status,
+}: Readonly<{
+  status: BillingStatus;
+}>) {
+  const labelByStatus: Record<BillingStatus, string> = {
+    active: 'Active',
+    trialing: 'Trialing',
+    past_due: 'Past due',
+  };
+
+  return <Badge>{labelByStatus[status]}</Badge>;
+}
+
+function InvoiceStatusBadge({
+  status,
+}: Readonly<{
+  status: InvoiceStatus;
+}>) {
+  const labelByStatus: Record<InvoiceStatus, string> = {
+    paid: 'Paid',
+    open: 'Open',
+    void: 'Void',
+  };
+
+  return <Badge variant="success">{labelByStatus[status]}</Badge>;
+}
+
+function InvoiceRows({
+  isLoading,
+  invoices,
+}: Readonly<{
+  isLoading: boolean;
+  invoices: Invoice[];
+}>) {
+  if (isLoading) {
+    return <TableLoading colSpan={5} />;
+  }
+
+  if (invoices.length === 0) {
+    return (
+      <TableEmpty
+        colSpan={5}
+        title="No invoices yet"
+        description="Invoices will appear here once billing history is connected."
+      />
+    );
+  }
+
+  return invoices.map((invoice) => (
+    <TableRow key={invoice.id}>
+      <TableCell className="font-medium">{invoice.number}</TableCell>
+
+      <TableCell className="text-muted-foreground">
+        {formatDate(invoice.dateIso)}
+      </TableCell>
+
+      <TableCell>
+        <InvoiceStatusBadge status={invoice.status} />
+      </TableCell>
+
+      <TableCell className="text-right">
+        {formatMoneyEUR(invoice.amountCents)}
+      </TableCell>
+
+      <TableCell className="text-right">
+        <Button type="button" variant="outline" size="sm" disabled>
+          Download
+        </Button>
+      </TableCell>
+    </TableRow>
+  ));
+}
+
 export default function BillingPage() {
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
-    const t = setTimeout(() => setIsLoading(false), 450);
-    return () => clearTimeout(t);
+    const timeout = setTimeout(() => setIsLoading(false), 450);
+    return () => clearTimeout(timeout);
   }, []);
 
-  // v1 mock — later comes from backend/Stripe
   const plan = {
     name: 'Pro',
     priceLabel: '€29 / month',
@@ -116,17 +176,18 @@ export default function BillingPage() {
 
   const invoices = MOCK_INVOICES;
 
-  const statusHint =
-    plan.status === 'active'
-      ? 'All features enabled'
-      : plan.status === 'trialing'
-        ? 'Trial period'
-        : 'Payment issue';
+  const statusHintByStatus: Record<BillingStatus, string> = {
+    active: 'All features enabled',
+    trialing: 'Trial period',
+    past_due: 'Payment issue',
+  };
+
+  const statusHint = statusHintByStatus[plan.status];
 
   return (
     <PageShell
       title="Billing"
-      description="Plan, invoices, and billing portal entrypoint (v1)."
+      description="Manage plan, subscription status, invoices, and payment operations."
       actions={
         <div className="flex items-center gap-2">
           <Button asChild variant="outline" size="sm">
@@ -137,28 +198,23 @@ export default function BillingPage() {
             type="button"
             variant="outline"
             size="sm"
-            onClick={() => setIsLoading((v) => !v)}
+            onClick={() => setIsLoading((value) => !value)}
           >
             Toggle loading
           </Button>
 
-          <div className="flex items-center gap-2">
-            <Button size="sm" type="button" disabled>
-              Manage billing
-            </Button>
-            <span className="text-xs text-muted-foreground">
-              Coming next
-            </span>
-          </div>
+          <Button size="sm" type="button" disabled>
+            Manage billing
+          </Button>
         </div>
       }
       meta={
         <Alert>
-          <AlertTitle>Stripe portal (coming next)</AlertTitle>
+          <AlertTitle>Billing-ready SaaS surface</AlertTitle>
           <AlertDescription>
-            This starter ships a complete billing UX surface. Next:
-            connect Stripe Customer Portal and load subscription +
-            invoices from the backend.
+            A complete billing experience shaped for subscriptions,
+            invoices, payment methods, customer portal access, and
+            Stripe-backed monetization.
           </AlertDescription>
         </Alert>
       }
@@ -175,8 +231,10 @@ export default function BillingPage() {
                   />
                   Current plan
                 </CardTitle>
+
                 <CardDescription>
-                  Subscription details and renewal.
+                  Subscription details, seats, renewal date, and plan
+                  status.
                 </CardDescription>
               </div>
 
@@ -195,6 +253,7 @@ export default function BillingPage() {
                 <div className="text-xs text-muted-foreground">
                   Plan
                 </div>
+
                 <div className="mt-1 text-sm font-medium">
                   {isLoading ? (
                     <Skeleton className="h-5 w-24" />
@@ -202,6 +261,7 @@ export default function BillingPage() {
                     plan.name
                   )}
                 </div>
+
                 <div className="mt-1 text-sm text-muted-foreground">
                   {isLoading ? (
                     <Skeleton className="h-4 w-28" />
@@ -215,6 +275,7 @@ export default function BillingPage() {
                 <div className="text-xs text-muted-foreground">
                   Seats
                 </div>
+
                 <div className="mt-1 text-sm font-medium">
                   {isLoading ? (
                     <Skeleton className="h-5 w-16" />
@@ -222,6 +283,7 @@ export default function BillingPage() {
                     plan.seats
                   )}
                 </div>
+
                 <div className="mt-1 text-sm text-muted-foreground">
                   Team members allowed on this plan.
                 </div>
@@ -231,6 +293,7 @@ export default function BillingPage() {
                 <div className="text-xs text-muted-foreground">
                   Renewal
                 </div>
+
                 <div className="mt-1 text-sm font-medium">
                   {isLoading ? (
                     <Skeleton className="h-5 w-40" />
@@ -238,35 +301,31 @@ export default function BillingPage() {
                     `Renews on ${formatDate(plan.renewalIso)}`
                   )}
                 </div>
+
                 <div className="mt-1 text-sm text-muted-foreground">
-                  Auto-renew enabled (v1 mock).
+                  Auto-renewal enabled for this subscription.
                 </div>
               </div>
             </div>
 
             <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div className="text-sm text-muted-foreground">
-                Upgrades, invoices, and payment method are managed in
-                the billing portal.
+                Upgrades, invoices, and payment methods are managed
+                through the billing portal.
               </div>
 
-              <div className="flex items-center gap-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  disabled
-                >
-                  <ExternalLink
-                    className="h-4 w-4"
-                    aria-hidden="true"
-                  />
-                  Open portal
-                </Button>
-                <span className="text-xs text-muted-foreground">
-                  Coming next
-                </span>
-              </div>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                disabled
+              >
+                <ExternalLink
+                  className="h-4 w-4"
+                  aria-hidden="true"
+                />
+                Open portal
+              </Button>
             </div>
           </CardContent>
         </Card>
@@ -280,16 +339,19 @@ export default function BillingPage() {
               />
               Payment method
             </CardTitle>
+
             <CardDescription>
-              Stored securely via Stripe.
+              Default payment method stored securely by your payment
+              provider.
             </CardDescription>
           </CardHeader>
 
-          <CardContent className="p-0 pt-4 space-y-3">
+          <CardContent className="space-y-3 p-0 pt-4">
             <div className="rounded-md border border-border/60 p-3">
               <div className="text-xs text-muted-foreground">
                 Default
               </div>
+
               <div className="mt-1 text-sm font-medium">
                 {isLoading ? (
                   <Skeleton className="h-5 w-36" />
@@ -297,6 +359,7 @@ export default function BillingPage() {
                   'Visa •••• 4242'
                 )}
               </div>
+
               <div className="mt-1 text-sm text-muted-foreground">
                 {isLoading ? (
                   <Skeleton className="h-4 w-24" />
@@ -317,8 +380,8 @@ export default function BillingPage() {
             </Button>
 
             <div className="text-xs text-muted-foreground">
-              Coming next: Stripe portal handles payment method
-              updates.
+              Payment method updates should be handled through a
+              secure customer portal flow.
             </div>
           </CardContent>
         </Card>
@@ -333,9 +396,9 @@ export default function BillingPage() {
             />
             Invoices
           </CardTitle>
+
           <CardDescription>
-            Billing history (v1 mock). In v2, invoices come from
-            Stripe.
+            Billing history prepared for downloadable invoice records.
           </CardDescription>
         </CardHeader>
 
@@ -352,70 +415,42 @@ export default function BillingPage() {
             </TableHeader>
 
             <TableBody>
-              {isLoading ? (
-                <TableLoading colSpan={5} />
-              ) : invoices.length === 0 ? (
-                <TableEmpty
-                  colSpan={5}
-                  title="No invoices yet"
-                  description="Invoices will appear here once Stripe is connected."
-                />
-              ) : (
-                invoices.map((inv) => (
-                  <TableRow key={inv.id}>
-                    <TableCell className="font-medium">
-                      {inv.number}
-                    </TableCell>
-                    <TableCell className="text-muted-foreground">
-                      {formatDate(inv.dateIso)}
-                    </TableCell>
-                    <TableCell>
-                      <InvoiceStatusBadge status={inv.status} />
-                    </TableCell>
-                    <TableCell className="text-right">
-                      {formatMoneyEUR(inv.amountCents)}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        disabled
-                      >
-                        Download
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
+              <InvoiceRows
+                isLoading={isLoading}
+                invoices={invoices}
+              />
             </TableBody>
           </Table>
 
           <div className="mt-3 text-xs text-muted-foreground">
-            Coming next: “Download” links to the Stripe invoice PDF.
+            Invoice rows are shaped for PDF downloads, receipt URLs,
+            tax metadata, and customer billing history.
           </div>
         </CardContent>
       </Card>
 
       <Card className="p-4">
         <CardHeader className="p-0">
-          <CardTitle>Next step</CardTitle>
+          <CardTitle>Monetization path</CardTitle>
+
           <CardDescription>
-            Make monetization real by wiring Stripe portal.
+            Connect the portal, subscription state, invoice records,
+            and access control to make billing production-ready.
           </CardDescription>
         </CardHeader>
 
-        <CardContent className="p-0 pt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <CardContent className="flex flex-col gap-2 p-0 pt-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="text-sm text-muted-foreground">
-            Add a server route that creates a Stripe portal session
-            and redirects the user.
+            Use a server route to create a secure customer portal
+            session and redirect the authenticated user.
           </div>
 
           <div className="flex items-center gap-2">
             <Button type="button" variant="outline" disabled>
-              <ExternalLink className=" h-4 w-4" aria-hidden="true" />
-              Open portal (mock)
+              <ExternalLink className="h-4 w-4" aria-hidden="true" />
+              Open portal
             </Button>
+
             <Button asChild>
               <Link href="/admin">Go to members</Link>
             </Button>
