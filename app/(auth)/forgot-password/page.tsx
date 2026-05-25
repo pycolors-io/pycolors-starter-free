@@ -4,11 +4,11 @@ import * as React from 'react';
 import Link from 'next/link';
 
 import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
   Button,
   Input,
-  Alert,
-  AlertTitle,
-  AlertDescription,
   Skeleton,
 } from '@pycolors/ui';
 
@@ -16,26 +16,27 @@ import { AuthShell } from '@/components/auth/auth-shell';
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = React.useState('');
-  const trimmedEmail = email.trim();
-
   const [isLoading, setIsLoading] = React.useState(true);
+
   React.useEffect(() => {
-    const t = setTimeout(() => setIsLoading(false), 320);
-    return () => clearTimeout(t);
+    const timeout = setTimeout(() => setIsLoading(false), 320);
+
+    return () => clearTimeout(timeout);
   }, []);
 
+  const trimmedEmail = email.trim();
   const canSubmit = trimmedEmail.length > 3;
 
   return (
     <AuthShell
       title="Reset password"
-      description="Request a reset link."
+      description="Request a secure reset link."
       footer={
         <>
           Remembered it?{' '}
           <Link
             href="/login"
-            className="underline underline-offset-4 font-medium"
+            className="font-medium underline underline-offset-4"
           >
             Back to sign in
           </Link>
@@ -44,10 +45,10 @@ export default function ForgotPasswordPage() {
       }
     >
       <Alert>
-        <AlertTitle>Email delivery (coming next)</AlertTitle>
+        <AlertTitle>Password recovery ready</AlertTitle>
+
         <AlertDescription>
-          In v2, this calls an API and sends a secure reset link. For
-          now, the starter exposes the UX surface.
+          Prepared for secure reset links and email delivery.
         </AlertDescription>
       </Alert>
 
@@ -69,10 +70,10 @@ export default function ForgotPasswordPage() {
             label="Email"
             placeholder="you@company.com"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(event) => setEmail(event.target.value)}
             autoComplete="email"
             inputMode="email"
-            helperText="We’ll send a reset link to this address."
+            helperText="Use the email associated with your workspace."
           />
 
           <div className="flex items-center justify-between">
@@ -90,8 +91,7 @@ export default function ForgotPasswordPage() {
           </div>
 
           <div className="text-xs text-muted-foreground">
-            Once wired, show a success toast + keep the response
-            generic to avoid account enumeration.
+            Keep reset responses generic to protect account privacy.
           </div>
         </form>
       )}
