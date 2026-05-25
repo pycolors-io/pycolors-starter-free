@@ -159,9 +159,11 @@ function InsightMetric({
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-1">
           <div className="text-xs text-muted-foreground">{label}</div>
+
           <div className="text-2xl font-semibold tracking-tight">
             {value}
           </div>
+
           <div className="text-sm text-muted-foreground">
             {description}
           </div>
@@ -194,6 +196,7 @@ export default function DashboardPage() {
           <h1 className="truncate text-lg font-semibold leading-tight tracking-tight">
             Dashboard
           </h1>
+
           <p className="mt-1 text-sm text-muted-foreground">
             A focused product overview for tracking users, projects,
             billing signals, and operational health.
@@ -216,6 +219,7 @@ export default function DashboardPage() {
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <CardTitle>Production-ready SaaS foundation</CardTitle>
+
               <CardDescription>
                 Next.js, Tailwind, design tokens, app layout, core
                 product surfaces, and upgrade-ready workflows.
@@ -312,16 +316,17 @@ export default function DashboardPage() {
         title="Production SaaS architecture"
         description="Unlock the business layer needed to move from a polished starter to a production-ready SaaS foundation."
         features={[
-          'Email & OAuth authentication',
-          'Stripe Checkout & billing portal',
+          'Email & password authentication',
+          'Google & GitHub OAuth',
           'Protected routes & session handling',
-          'Webhook synchronization',
+          'Stripe Checkout & billing portal',
         ]}
         previewHeightClassName="min-h-[320px]"
       >
         <Card className="p-4">
           <CardHeader className="p-0">
             <CardTitle>Business layer overview</CardTitle>
+
             <CardDescription>
               Authentication, billing, subscriptions, and access
               control connected across the product.
@@ -357,6 +362,7 @@ export default function DashboardPage() {
         <Card className="p-4 lg:col-span-2">
           <CardHeader className="p-0">
             <CardTitle>Recent activity</CardTitle>
+
             <CardDescription>
               Product activity designed to validate navigation and
               common SaaS workflows.
@@ -401,6 +407,7 @@ export default function DashboardPage() {
           <Card className="p-4">
             <CardHeader className="p-0">
               <CardTitle>Quick actions</CardTitle>
+
               <CardDescription>
                 Common product paths for account, billing, and team
                 operations.
@@ -425,6 +432,7 @@ export default function DashboardPage() {
           <Card className="p-4">
             <CardHeader className="p-0">
               <CardTitle>Product path</CardTitle>
+
               <CardDescription>
                 Extend the starter through focused vertical slices:
                 projects, members, billing, and authentication.
