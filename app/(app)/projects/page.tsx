@@ -2,22 +2,21 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { LayoutGrid } from 'lucide-react';
+import { LayoutGrid, Plus } from 'lucide-react';
 
 import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
   Button,
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
-  Alert,
-  AlertTitle,
-  AlertDescription,
 } from '@pycolors/ui';
 
 import { PageShell } from '@/components/app/page-shell';
-
 import { ProjectTable } from '@/components/projects/project-table';
 import {
   MOCK_PROJECTS,
@@ -30,8 +29,8 @@ export default function ProjectsPage() {
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
-    const t = setTimeout(() => setIsLoading(false), 450);
-    return () => clearTimeout(t);
+    const timeout = setTimeout(() => setIsLoading(false), 450);
+    return () => clearTimeout(timeout);
   }, []);
 
   function onRename(id: string, name: string) {
@@ -39,18 +38,22 @@ export default function ProjectsPage() {
     if (!next) return;
 
     setProjects((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, name: next } : p)),
+      prev.map((project) =>
+        project.id === id ? { ...project, name: next } : project,
+      ),
     );
   }
 
   function onDelete(id: string) {
-    setProjects((prev) => prev.filter((p) => p.id !== id));
+    setProjects((prev) =>
+      prev.filter((project) => project.id !== id),
+    );
   }
 
   return (
     <PageShell
       title="Projects"
-      description="Your core SaaS entity. Table + row actions + dialogs (v1)."
+      description="A structured entity workspace for modern SaaS products."
       actions={
         <div className="flex items-center gap-2">
           <Button asChild variant="outline" size="sm">
@@ -61,28 +64,24 @@ export default function ProjectsPage() {
             type="button"
             variant="outline"
             size="sm"
-            onClick={() => setIsLoading((v) => !v)}
+            onClick={() => setIsLoading((value) => !value)}
           >
             Toggle loading
           </Button>
 
-          <div className="flex items-center gap-2">
-            <Button size="sm" type="button" disabled>
-              New project
-            </Button>
-            <span className="text-xs text-muted-foreground">
-              Coming next
-            </span>
-          </div>
+          <Button type="button" size="sm" disabled>
+            <Plus className="h-4 w-4" aria-hidden="true" />
+            New project
+          </Button>
         </div>
       }
       meta={
         <Alert>
-          <AlertTitle>CRUD surface (v1)</AlertTitle>
+          <AlertTitle>Production-shaped entity workflow</AlertTitle>
           <AlertDescription>
-            This page proves the “core entity” workflow: list, row
-            actions, rename/delete dialogs, and loading/empty states.
-            Next: create project (Dialog + local state, then API).
+            This surface demonstrates a credible SaaS entity flow:
+            list management, row actions, rename/delete dialogs,
+            loading states, and a clean path toward real data wiring.
           </AlertDescription>
         </Alert>
       }
@@ -94,11 +93,11 @@ export default function ProjectsPage() {
               className="h-4 w-4 text-muted-foreground"
               aria-hidden="true"
             />
-            Projects list
+            Project directory
           </CardTitle>
           <CardDescription>
-            Patterns: list, row actions, rename/delete dialogs,
-            loading/empty states.
+            Manage project records with reusable table, dialog,
+            action, loading, and empty-state patterns.
           </CardDescription>
         </CardHeader>
 
@@ -112,8 +111,8 @@ export default function ProjectsPage() {
         </CardContent>
 
         <div className="mt-3 text-xs text-muted-foreground">
-          Coming next: create project (Dialog + local state, then
-          API).
+          Designed to support project creation, permissions,
+          organization workflows, and billing-aware product logic.
         </div>
       </Card>
     </PageShell>

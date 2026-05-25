@@ -1,41 +1,73 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { Activity, CalendarClock, Pencil, Users } from 'lucide-react';
 
 import {
+  Badge,
   Button,
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
-  Badge,
 } from '@pycolors/ui';
 
 import { MOCK_PROJECTS } from '@/components/projects/project-types';
 
+type ProjectStatus = 'active' | 'trialing' | 'paused';
+
 function StatusBadge({
   status,
-}: {
-  status: 'active' | 'trialing' | 'paused';
-}) {
-  const label =
-    status === 'active'
-      ? 'Active'
-      : status === 'trialing'
-        ? 'Trialing'
-        : 'Paused';
+}: Readonly<{
+  status: ProjectStatus;
+}>) {
+  const labelByStatus: Record<ProjectStatus, string> = {
+    active: 'Active',
+    trialing: 'Trialing',
+    paused: 'Paused',
+  };
 
-  return <Badge>{label}</Badge>;
+  return <Badge>{labelByStatus[status]}</Badge>;
+}
+
+function MetricCard({
+  title,
+  value,
+  description,
+  icon: Icon,
+}: Readonly<{
+  title: string;
+  value: React.ReactNode;
+  description: string;
+  icon: React.ComponentType<{ className?: string }>;
+}>) {
+  return (
+    <div className="rounded-md border border-border/60 p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div className="space-y-1">
+          <div className="text-xs text-muted-foreground">{title}</div>
+          <div className="text-sm font-medium">{value}</div>
+          <div className="text-sm text-muted-foreground">
+            {description}
+          </div>
+        </div>
+
+        <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-md border border-border/60 bg-muted/30 text-muted-foreground">
+          <Icon className="h-4 w-4" aria-hidden="true" />
+        </span>
+      </div>
+    </div>
+  );
 }
 
 export default async function ProjectDetailsPage({
   params,
-}: {
+}: Readonly<{
   params: Promise<{ id: string }>;
-}) {
+}>) {
   const { id } = await params;
 
-  const project = MOCK_PROJECTS.find((p) => p.id === id);
+  const project = MOCK_PROJECTS.find((item) => item.id === id);
   if (!project) notFound();
 
   return (
@@ -50,8 +82,8 @@ export default async function ProjectDetailsPage({
           </div>
 
           <p className="mt-1 text-sm text-muted-foreground">
-            Project details (v1). ID:{' '}
-            <span className="font-medium">{id}</span>
+            Project workspace overview ·{' '}
+            <span className="font-medium text-foreground">{id}</span>
           </p>
         </div>
 
@@ -60,14 +92,10 @@ export default async function ProjectDetailsPage({
             <Link href="/projects">Back</Link>
           </Button>
 
-          <div className="flex items-center gap-2">
-            <Button size="sm" disabled>
-              Edit project
-            </Button>
-            <span className="rounded-md bg-muted px-2 py-0.5 text-xs text-muted-foreground">
-              Coming next
-            </span>
-          </div>
+          <Button size="sm" disabled>
+            <Pencil className="h-4 w-4" aria-hidden="true" />
+            Edit project
+          </Button>
         </div>
       </div>
 
@@ -75,55 +103,43 @@ export default async function ProjectDetailsPage({
         <CardHeader className="p-0">
           <CardTitle>Overview</CardTitle>
           <CardDescription>
-            This page validates deep-link navigation and the “details”
-            surface.
+            A focused detail surface for reviewing project status,
+            membership, and workspace activity.
           </CardDescription>
         </CardHeader>
 
         <CardContent className="p-0 pt-4">
           <div className="grid gap-4 md:grid-cols-3">
-            <div className="rounded-md border border-border/60 p-3">
-              <div className="text-xs text-muted-foreground">
-                Status
-              </div>
-              <div className="mt-1 text-sm font-medium">
-                <StatusBadge status={project.status} />
-              </div>
-              <div className="mt-1 text-sm text-muted-foreground">
-                v2: connect to subscription & usage rules.
-              </div>
-            </div>
+            <MetricCard
+              title="Status"
+              value={<StatusBadge status={project.status} />}
+              description="Ready to connect with subscription and usage rules."
+              icon={Activity}
+            />
 
-            <div className="rounded-md border border-border/60 p-3">
-              <div className="text-xs text-muted-foreground">
-                Members
-              </div>
-              <div className="mt-1 text-sm font-medium">
-                {project.members}
-              </div>
-              <div className="mt-1 text-sm text-muted-foreground">
-                v2: list members + roles + invites.
-              </div>
-            </div>
+            <MetricCard
+              title="Members"
+              value={project.members}
+              description="Designed for roles, invites, and workspace access."
+              icon={Users}
+            />
 
-            <div className="rounded-md border border-border/60 p-3">
-              <div className="text-xs text-muted-foreground">
-                Updated
-              </div>
-              <div className="mt-1 text-sm font-medium">
-                {project.updatedAt}
-              </div>
-              <div className="mt-1 text-sm text-muted-foreground">
-                v2: real timestamps from DB.
-              </div>
-            </div>
+            <MetricCard
+              title="Updated"
+              value={project.updatedAt}
+              description="Structured for database-backed timestamps."
+              icon={CalendarClock}
+            />
           </div>
 
-          <div className="mt-4 rounded-md border border-border/60 p-3 text-sm">
-            <div className="font-medium">Next steps</div>
-            <div className="mt-1 text-muted-foreground">
-              Add: rename from details, members management, billing
-              status, audit events.
+          <div className="mt-4 rounded-md border border-border/60 p-4">
+            <div className="text-sm font-medium">
+              Production extension path
+            </div>
+            <div className="mt-1 text-sm leading-6 text-muted-foreground">
+              Extend this page with project editing, member
+              management, billing status, permissions, and audit
+              events as your product grows.
             </div>
           </div>
         </CardContent>
