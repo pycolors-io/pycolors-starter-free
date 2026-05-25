@@ -5,6 +5,7 @@
 ### Minor Changes
 
 - d7c94eb: Update Starter Free to use the latest PyColors tokens and refreshed visual foundation.
+- Enhance Starter Free with more production-ready SaaS surfaces, improved navigation, authentication flows, billing UX, and upgrade-ready product patterns.
 
 ### Patch Changes
 
