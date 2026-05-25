@@ -1,5 +1,17 @@
 # @pycolors/starter-free
 
+## 1.2.0
+
+### Minor Changes
+
+- d7c94eb: Update Starter Free to use the latest PyColors tokens and refreshed visual foundation.
+- Enhance Starter Free with more production-ready SaaS surfaces, improved navigation, authentication flows, billing UX, and upgrade-ready product patterns.
+
+### Patch Changes
+
+- Updated dependencies [52e9c18]
+  - @pycolors/ui@1.1.0
+
 ## 0.0.5
 
 ### Patch Changes

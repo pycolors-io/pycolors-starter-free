@@ -4,11 +4,11 @@ import * as React from 'react';
 import Link from 'next/link';
 
 import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
   Button,
   Input,
-  Alert,
-  AlertTitle,
-  AlertDescription,
   PasswordInput,
   Skeleton,
 } from '@pycolors/ui';
@@ -19,11 +19,12 @@ export default function LoginPage() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  // simulate loading → validates skeleton
   const [isLoading, setIsLoading] = React.useState(true);
+
   React.useEffect(() => {
-    const t = setTimeout(() => setIsLoading(false), 350);
-    return () => clearTimeout(t);
+    const timeout = setTimeout(() => setIsLoading(false), 350);
+
+    return () => clearTimeout(timeout);
   }, []);
 
   const canSubmit =
@@ -32,13 +33,13 @@ export default function LoginPage() {
   return (
     <AuthShell
       title="Sign in"
-      description="Access your workspace."
+      description="Access your workspace and continue building."
       footer={
         <>
           Don’t have an account?{' '}
           <Link
             href="/register"
-            className="underline underline-offset-4 font-medium"
+            className="font-medium underline underline-offset-4"
           >
             Create one
           </Link>
@@ -47,11 +48,12 @@ export default function LoginPage() {
       }
     >
       <Alert>
-        <AlertTitle>Authentication not wired</AlertTitle>
+        <AlertTitle>Authentication-ready surface</AlertTitle>
+
         <AlertDescription>
-          This starter ships a complete authentication surface. Next
-          step: connect your provider (Auth.js, Clerk, Supabase, or
-          custom backend).
+          This authentication flow is prepared for providers such as
+          Auth.js, Clerk, Supabase, Cognito, or custom backend
+          integrations.
         </AlertDescription>
       </Alert>
 
@@ -59,9 +61,11 @@ export default function LoginPage() {
         <div className="space-y-3">
           <Skeleton className="h-4 w-20" />
           <Skeleton className="h-10 w-full" />
+
           <Skeleton className="h-4 w-24" />
           <Skeleton className="h-10 w-full" />
-          <Skeleton className="h-10 w-32 ml-auto" />
+
+          <Skeleton className="ml-auto h-10 w-32" />
         </div>
       ) : (
         <form className="space-y-3">
@@ -69,18 +73,18 @@ export default function LoginPage() {
             label="Email"
             placeholder="you@company.com"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(event) => setEmail(event.target.value)}
             autoComplete="email"
-            helperText="Use your work email."
+            helperText="Use the email associated with your workspace."
           />
 
           <PasswordInput
             label="Password"
             placeholder="••••••••"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(event) => setPassword(event.target.value)}
             autoComplete="current-password"
-            helperText="Minimum 6 characters."
+            helperText="Prepared for secure authentication flows and validation."
           />
 
           <div className="flex items-center justify-between">
@@ -101,8 +105,8 @@ export default function LoginPage() {
           </div>
 
           <div className="text-xs text-muted-foreground">
-            After wiring auth, redirect users to{' '}
-            <code className="font-mono">/dashboard</code>.
+            After authentication succeeds, redirect users to their
+            workspace dashboard and initialize the active session.
           </div>
         </form>
       )}

@@ -4,12 +4,12 @@ import * as React from 'react';
 import Link from 'next/link';
 
 import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
   Button,
   Input,
   PasswordInput,
-  Alert,
-  AlertTitle,
-  AlertDescription,
   Skeleton,
 } from '@pycolors/ui';
 
@@ -22,13 +22,16 @@ export default function RegisterPage() {
   const [confirm, setConfirm] = React.useState('');
 
   const [isLoading, setIsLoading] = React.useState(true);
+
   React.useEffect(() => {
-    const t = setTimeout(() => setIsLoading(false), 350);
-    return () => clearTimeout(t);
+    const timeout = setTimeout(() => setIsLoading(false), 350);
+
+    return () => clearTimeout(timeout);
   }, []);
 
   const trimmedName = name.trim();
   const trimmedEmail = email.trim();
+
   const passwordsMatch =
     confirm.length === 0 ? true : password === confirm;
 
@@ -42,13 +45,13 @@ export default function RegisterPage() {
   return (
     <AuthShell
       title="Create account"
-      description="Start your workspace."
+      description="Create your workspace and start building."
       footer={
         <>
           Already have an account?{' '}
           <Link
             href="/login"
-            className="underline underline-offset-4 font-medium"
+            className="font-medium underline underline-offset-4"
           >
             Sign in
           </Link>
@@ -57,10 +60,10 @@ export default function RegisterPage() {
       }
     >
       <Alert>
-        <AlertTitle>Workspace onboarding (coming next)</AlertTitle>
+        <AlertTitle>Workspace-ready signup flow</AlertTitle>
+
         <AlertDescription>
-          In v2, after signup you’ll pick an organization name and
-          invite members.
+          Ready for authentication and workspace onboarding flows.
         </AlertDescription>
       </Alert>
 
@@ -70,19 +73,23 @@ export default function RegisterPage() {
             <Skeleton className="h-4 w-24" />
             <Skeleton className="h-10 w-full" />
           </div>
+
           <div className="space-y-2">
             <Skeleton className="h-4 w-16" />
             <Skeleton className="h-10 w-full" />
           </div>
+
           <div className="space-y-2">
             <Skeleton className="h-4 w-24" />
             <Skeleton className="h-10 w-full" />
           </div>
+
           <div className="space-y-2">
             <Skeleton className="h-4 w-36" />
             <Skeleton className="h-10 w-full" />
           </div>
-          <Skeleton className="h-10 w-44 ml-auto" />
+
+          <Skeleton className="ml-auto h-10 w-44" />
         </div>
       ) : (
         <form className="space-y-3">
@@ -90,34 +97,34 @@ export default function RegisterPage() {
             label="Full name"
             placeholder="Patrice Doe"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(event) => setName(event.target.value)}
             autoComplete="name"
-            helperText="Used for team display and invitations."
+            helperText="Used for profile display, team visibility, and invitations."
           />
 
           <Input
             label="Work email"
             placeholder="you@company.com"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(event) => setEmail(event.target.value)}
             autoComplete="email"
-            helperText="Used for login, billing, and team access."
+            helperText="Used for login, billing, and workspace access."
           />
 
           <PasswordInput
             label="Password"
             placeholder="Create a strong password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(event) => setPassword(event.target.value)}
             autoComplete="new-password"
-            helperText="Minimum 8 characters."
+            helperText="Use at least 8 characters for a secure account."
           />
 
           <PasswordInput
             label="Confirm password"
             placeholder="Repeat your password"
             value={confirm}
-            onChange={(e) => setConfirm(e.target.value)}
+            onChange={(event) => setConfirm(event.target.value)}
             autoComplete="new-password"
             helperText={
               passwordsMatch
@@ -129,25 +136,24 @@ export default function RegisterPage() {
             }
           />
 
-          <div className="flex items-center justify-between">
-            <div className="text-xs text-muted-foreground">
-              By creating an account, <br />
-              you agree to Terms (link later).
+          <div className="flex items-center justify-between gap-4">
+            <div className="text-xs leading-5 text-muted-foreground">
+              By creating an account, you agree to the product terms
+              and workspace policies.
             </div>
 
             <Button
               type="button"
               disabled={!canSubmit}
-              className="gap-2"
+              className="shrink-0 gap-2"
             >
               Create account
             </Button>
           </div>
 
           <div className="text-xs text-muted-foreground">
-            After wiring auth, redirect users to{' '}
-            <code className="font-mono">/dashboard</code> or
-            onboarding.
+            After signup succeeds, continue to onboarding or open the
+            workspace dashboard.
           </div>
         </form>
       )}

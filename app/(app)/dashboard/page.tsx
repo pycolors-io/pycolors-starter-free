@@ -1,3 +1,4 @@
+import type * as React from 'react';
 import Link from 'next/link';
 import {
   Activity,
@@ -5,19 +6,24 @@ import {
   BadgeCheck,
   CreditCard,
   FolderKanban,
+  ShieldCheck,
   Users,
 } from 'lucide-react';
 
 import {
+  Badge,
   Button,
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
-  Badge,
   cn,
 } from '@pycolors/ui';
+
+import { UpgradeGate } from '@/components/app/upgrade-gate';
+
+type TrendIntent = 'good' | 'neutral' | 'bad';
 
 function StatCard({
   label,
@@ -27,21 +33,27 @@ function StatCard({
   hrefLabel = 'View',
   footer,
   trend,
-}: {
+}: Readonly<{
   label: string;
   value: string | number;
   hint: string;
   href?: string;
   hrefLabel?: string;
   footer?: React.ReactNode;
-  trend?: { label: string; intent?: 'good' | 'neutral' | 'bad' };
-}) {
-  const trendClass =
-    trend?.intent === 'good'
-      ? 'text-emerald-600'
-      : trend?.intent === 'bad'
-        ? 'text-rose-600'
-        : 'text-muted-foreground';
+  trend?: Readonly<{
+    label: string;
+    intent?: TrendIntent;
+  }>;
+}>) {
+  const trendClassByIntent: Record<TrendIntent, string> = {
+    good: 'text-emerald-600',
+    neutral: 'text-muted-foreground',
+    bad: 'text-rose-600',
+  };
+
+  const trendClass = trend
+    ? trendClassByIntent[trend.intent ?? 'neutral']
+    : undefined;
 
   return (
     <Card className="p-4">
@@ -50,6 +62,7 @@ function StatCard({
           <div className="min-w-0">
             <CardDescription className="flex items-center gap-2">
               <span>{label}</span>
+
               {trend ? (
                 <span className={cn('text-xs', trendClass)}>
                   {trend.label}
@@ -73,7 +86,7 @@ function StatCard({
         </div>
       </CardHeader>
 
-      <CardContent className="p-0 space-y-2 pt-4">
+      <CardContent className="space-y-2 p-0 pt-4">
         <div className="text-sm text-muted-foreground">{hint}</div>
 
         {footer ? (
@@ -92,13 +105,13 @@ function ActivityItem({
   href,
   hrefLabel = 'Open',
   icon,
-}: {
+}: Readonly<{
   title: string;
   subtitle: string;
   href?: string;
   hrefLabel?: string;
   icon?: React.ReactNode;
-}) {
+}>) {
   return (
     <div className="rounded-md border border-border/60 p-3">
       <div className="flex items-start justify-between gap-3">
@@ -130,15 +143,47 @@ function ActivityItem({
   );
 }
 
+function InsightMetric({
+  label,
+  value,
+  description,
+  icon: Icon,
+}: Readonly<{
+  label: string;
+  value: string;
+  description: string;
+  icon: React.ComponentType<{ className?: string }>;
+}>) {
+  return (
+    <div className="rounded-md border border-border/60 p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div className="space-y-1">
+          <div className="text-xs text-muted-foreground">{label}</div>
+
+          <div className="text-2xl font-semibold tracking-tight">
+            {value}
+          </div>
+
+          <div className="text-sm text-muted-foreground">
+            {description}
+          </div>
+        </div>
+
+        <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-md border border-border/60 bg-muted/30 text-muted-foreground">
+          <Icon className="h-4 w-4" aria-hidden="true" />
+        </span>
+      </div>
+    </div>
+  );
+}
+
 export default function DashboardPage() {
-  // v1: keep deterministic (no fetch) — page should feel instant
   const isReady = true;
 
   const projectsCount = 3;
   const membersCount = 16;
-  const plan = 'Pro';
+  const plan = 'Free';
 
-  // SaaS KPI placeholders (mocked)
   const mrr = 1240;
   const activeUsers = 312;
   const churn = '2.1%';
@@ -151,8 +196,10 @@ export default function DashboardPage() {
           <h1 className="truncate text-lg font-semibold leading-tight tracking-tight">
             Dashboard
           </h1>
+
           <p className="mt-1 text-sm text-muted-foreground">
-            Your product overview (v1). KPIs are mocked by design.
+            A focused product overview for tracking users, projects,
+            billing signals, and operational health.
           </p>
         </div>
 
@@ -161,14 +208,9 @@ export default function DashboardPage() {
             <Link href="/projects">View projects</Link>
           </Button>
 
-          <div className="flex items-center gap-2">
-            <Button size="sm" disabled>
-              New report
-            </Button>
-            <span className="rounded-md bg-muted px-2 py-0.5 text-xs text-muted-foreground">
-              Coming next
-            </span>
-          </div>
+          <Button size="sm" disabled>
+            New report
+          </Button>
         </div>
       </div>
 
@@ -176,10 +218,11 @@ export default function DashboardPage() {
         <CardHeader className="p-0">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <CardTitle>Starter SaaS v1</CardTitle>
+              <CardTitle>Production-ready SaaS foundation</CardTitle>
+
               <CardDescription>
-                Next 15 + Tailwind v4 + tokens + app layout + core
-                pages.
+                Next.js, Tailwind, design tokens, app layout, core
+                product surfaces, and upgrade-ready workflows.
               </CardDescription>
             </div>
 
@@ -203,7 +246,7 @@ export default function DashboardPage() {
           trend={{ label: '▲ 12% MoM', intent: 'good' }}
           href="/billing"
           hrefLabel="Billing"
-          footer="Mocked KPI — wire Stripe later."
+          footer="Prepared for Stripe-backed subscription metrics."
         />
 
         <StatCard
@@ -213,17 +256,17 @@ export default function DashboardPage() {
           trend={{ label: '▲ 8%', intent: 'good' }}
           href="/admin"
           hrefLabel="Admin"
-          footer="Mocked KPI — wire events later."
+          footer="Prepared for event-backed product analytics."
         />
 
         <StatCard
           label="Churn"
           value={churn}
           hint="Last 30 days"
-          trend={{ label: '▲ 0.4%', intent: 'good' }}
+          trend={{ label: '▲ 0.4%', intent: 'bad' }}
           href="/billing"
           hrefLabel="Billing"
-          footer="Mocked KPI — computed from subscriptions later."
+          footer="Prepared for subscription lifecycle tracking."
         />
 
         <StatCard
@@ -233,11 +276,10 @@ export default function DashboardPage() {
           trend={{ label: 'Stable', intent: 'neutral' }}
           href="/projects"
           hrefLabel="Projects"
-          footer="Mocked KPI — wire monitoring later."
+          footer="Prepared for monitoring and incident workflows."
         />
       </div>
 
-      {/* Product KPIs (surface) */}
       <div className="grid gap-4 md:grid-cols-3">
         <StatCard
           label="Total projects"
@@ -246,7 +288,7 @@ export default function DashboardPage() {
           href="/projects"
           hrefLabel="Projects"
           trend={{ label: 'Stable', intent: 'neutral' }}
-          footer="CRUD v1: table + row actions + dialogs (local-only)."
+          footer="Entity management with tables, actions, dialogs, and detail navigation."
         />
 
         <StatCard
@@ -256,28 +298,74 @@ export default function DashboardPage() {
           href="/admin"
           hrefLabel="Admin"
           trend={{ label: '▲ 2 invited', intent: 'good' }}
-          footer="B2B readiness: members + invitations (mock)."
+          footer="Team-ready surface for members, roles, and invitations."
         />
 
         <StatCard
           label="Plan"
           value={plan}
-          hint="Subscription status"
+          hint="Starter Free"
           href="/billing"
           hrefLabel="Billing"
-          trend={{ label: 'Renews monthly', intent: 'neutral' }}
-          footer="Stripe portal coming next (server route + redirect)."
+          trend={{ label: 'Upgradeable', intent: 'neutral' }}
+          footer="Upgrade path prepared for auth, billing, and protected access."
         />
       </div>
 
-      {/* Main content */}
+      <UpgradeGate
+        title="Production SaaS architecture"
+        description="Unlock the business layer needed to move from a polished starter to a production-ready SaaS foundation."
+        features={[
+          'Email & password authentication',
+          'Google & GitHub OAuth',
+          'Protected routes & session handling',
+          'Stripe Checkout & billing portal',
+        ]}
+        previewHeightClassName="min-h-[320px]"
+      >
+        <Card className="p-4">
+          <CardHeader className="p-0">
+            <CardTitle>Business layer overview</CardTitle>
+
+            <CardDescription>
+              Authentication, billing, subscriptions, and access
+              control connected across the product.
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent className="grid gap-4 p-0 pt-4 md:grid-cols-3">
+            <InsightMetric
+              label="Protected routes"
+              value="12"
+              description="Authenticated app surfaces."
+              icon={ShieldCheck}
+            />
+
+            <InsightMetric
+              label="Subscriptions"
+              value="182"
+              description="Active billing relationships."
+              icon={CreditCard}
+            />
+
+            <InsightMetric
+              label="Team access"
+              value="16"
+              description="Members with scoped permissions."
+              icon={Users}
+            />
+          </CardContent>
+        </Card>
+      </UpgradeGate>
+
       <div className="grid gap-6 lg:grid-cols-3">
-        {/* Primary */}
         <Card className="p-4 lg:col-span-2">
           <CardHeader className="p-0">
             <CardTitle>Recent activity</CardTitle>
+
             <CardDescription>
-              Minimal but actionable (links validate navigation).
+              Product activity designed to validate navigation and
+              common SaaS workflows.
             </CardDescription>
           </CardHeader>
 
@@ -294,6 +382,7 @@ export default function DashboardPage() {
               href="/projects"
               hrefLabel="Projects"
             />
+
             <ActivityItem
               icon={<Users className="h-4 w-4" aria-hidden="true" />}
               title="Member invited"
@@ -301,6 +390,7 @@ export default function DashboardPage() {
               href="/admin"
               hrefLabel="Admin"
             />
+
             <ActivityItem
               icon={
                 <CreditCard className="h-4 w-4" aria-hidden="true" />
@@ -317,8 +407,10 @@ export default function DashboardPage() {
           <Card className="p-4">
             <CardHeader className="p-0">
               <CardTitle>Quick actions</CardTitle>
+
               <CardDescription>
-                Common paths users expect.
+                Common product paths for account, billing, and team
+                operations.
               </CardDescription>
             </CardHeader>
 
@@ -326,9 +418,11 @@ export default function DashboardPage() {
               <Button asChild variant="outline">
                 <Link href="/settings">Update profile</Link>
               </Button>
+
               <Button asChild variant="outline">
                 <Link href="/billing">Manage billing</Link>
               </Button>
+
               <Button asChild variant="outline">
                 <Link href="/admin">Invite members</Link>
               </Button>
@@ -337,19 +431,21 @@ export default function DashboardPage() {
 
           <Card className="p-4">
             <CardHeader className="p-0">
-              <CardTitle>Next step</CardTitle>
+              <CardTitle>Product path</CardTitle>
+
               <CardDescription>
-                Keep shipping vertical slices: Projects → Admin →
-                Billing → Auth.
+                Extend the starter through focused vertical slices:
+                projects, members, billing, and authentication.
               </CardDescription>
             </CardHeader>
 
             <CardContent className="flex flex-col gap-2 p-0 pt-4">
               <Button asChild variant="outline">
-                <Link href="/projects">Projects CRUD</Link>
+                <Link href="/projects">Open projects</Link>
               </Button>
+
               <Button asChild>
-                <Link href="/admin">Members management</Link>
+                <Link href="/admin">Manage members</Link>
               </Button>
             </CardContent>
           </Card>

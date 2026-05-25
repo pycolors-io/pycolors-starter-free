@@ -3,10 +3,10 @@ import Link from 'next/link';
 
 import {
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
 } from '@pycolors/ui';
 
 export function AuthShell({
@@ -14,15 +14,15 @@ export function AuthShell({
   description,
   footer,
   children,
-}: {
+}: Readonly<{
   title: string;
   description?: string;
   footer?: ReactNode;
   children: ReactNode;
-}) {
+}>) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted/40 px-4">
-      <Card className="w-full max-w-md p-4">
+    <div className="mx-auto w-full max-w-md">
+      <Card className="p-4">
         <CardHeader className="p-0 text-center">
           <CardTitle className="text-xl">{title}</CardTitle>
 
@@ -31,23 +31,23 @@ export function AuthShell({
           ) : null}
         </CardHeader>
 
-        <CardContent className="p-0 pt-4 space-y-4">
+        <CardContent className="space-y-4 p-0 pt-4">
           {children}
 
           <div className="rounded-md border border-border/60 bg-muted/30 p-3 text-sm">
             <div className="font-medium">OAuth</div>
             <div className="mt-1 text-muted-foreground">
-              Google / GitHub sign-in coming soon.
+              Ready for Google, GitHub, or enterprise SSO providers.
             </div>
           </div>
 
           {footer ? (
-            <div className="pt-1 text-sm text-muted-foreground text-center">
+            <div className="pt-1 text-center text-sm text-muted-foreground">
               {footer}
             </div>
           ) : null}
 
-          <div className="pt-1 text-xs text-muted-foreground text-center">
+          <div className="pt-1 text-center text-xs text-muted-foreground">
             <Link
               href="/dashboard"
               className="underline underline-offset-4"
