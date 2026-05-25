@@ -11,63 +11,63 @@ import {
 } from 'lucide-react';
 
 import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Badge,
   Button,
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
-  Input,
-  Badge,
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  TabsContent,
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHead,
-  TableCell,
-  TableEmpty,
-  TableLoading,
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuLabel,
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
-  Alert,
-  AlertTitle,
-  AlertDescription,
+  DialogHeader,
+  DialogTitle,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  Input,
+  Table,
+  TableBody,
+  TableCell,
+  TableEmpty,
+  TableHead,
+  TableHeader,
+  TableLoading,
+  TableRow,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
 } from '@pycolors/ui';
 
 import { PageShell } from '@/components/app/page-shell';
 
 type Role = 'owner' | 'member';
+type InviteStatus = 'pending' | 'expired';
+type AdminTab = 'members' | 'invites';
 
-type Member = {
+type Member = Readonly<{
   id: string;
   name: string;
   email: string;
   role: Role;
-};
+}>;
 
-type InviteStatus = 'pending' | 'expired';
-
-type Invitation = {
+type Invitation = Readonly<{
   id: string;
   email: string;
   role: Role;
   status: InviteStatus;
   invitedAt: string;
-};
+}>;
 
 const INITIAL_MEMBERS: Member[] = [
   {
@@ -78,14 +78,14 @@ const INITIAL_MEMBERS: Member[] = [
   },
   {
     id: 'u_002',
-    name: 'Marie D.',
-    email: 'marie@company.com',
+    name: 'Ashley D.',
+    email: 'ashley@company.com',
     role: 'member',
   },
   {
     id: 'u_003',
-    name: 'Alex R.',
-    email: 'alex@company.com',
+    name: 'Alan R.',
+    email: 'alan@company.com',
     role: 'member',
   },
 ];
@@ -107,21 +107,199 @@ const INITIAL_INVITES: Invitation[] = [
   },
 ];
 
-function RoleBadge({ role }: { role: Role }) {
-  return <Badge>{role === 'owner' ? 'Owner' : 'Member'}</Badge>;
+function RoleBadge({ role }: Readonly<{ role: Role }>) {
+  const labelByRole: Record<Role, string> = {
+    owner: 'Owner',
+    member: 'Member',
+  };
+
+  return <Badge>{labelByRole[role]}</Badge>;
 }
 
-function InviteStatusBadge({ status }: { status: InviteStatus }) {
-  return (
-    <Badge>{status === 'pending' ? 'Pending' : 'Expired'}</Badge>
-  );
+function InviteStatusBadge({
+  status,
+}: Readonly<{ status: InviteStatus }>) {
+  const labelByStatus: Record<InviteStatus, string> = {
+    pending: 'Pending',
+    expired: 'Expired',
+  };
+
+  return <Badge>{labelByStatus[status]}</Badge>;
+}
+
+function MembersRows({
+  isLoading,
+  members,
+  onRemoveMember,
+}: Readonly<{
+  isLoading: boolean;
+  members: Member[];
+  onRemoveMember: (id: string) => void;
+}>) {
+  if (isLoading) {
+    return <TableLoading colSpan={4} />;
+  }
+
+  if (members.length === 0) {
+    return (
+      <TableEmpty
+        colSpan={4}
+        title="No members yet"
+        description="Invite your first member to start collaborating."
+      />
+    );
+  }
+
+  return members.map((member) => (
+    <TableRow key={member.id}>
+      <TableCell className="font-medium">{member.name}</TableCell>
+
+      <TableCell className="text-muted-foreground">
+        {member.email}
+      </TableCell>
+
+      <TableCell>
+        <RoleBadge role={member.role} />
+      </TableCell>
+
+      <TableCell className="text-right">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="outline"
+              size="sm"
+              aria-label="Member actions"
+            >
+              <MoreHorizontal
+                className="h-4 w-4"
+                aria-hidden="true"
+              />
+            </Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+
+            <DropdownMenuItem disabled>Change role</DropdownMenuItem>
+
+            <DropdownMenuSeparator />
+
+            {member.role === 'owner' ? (
+              <DropdownMenuItem disabled>
+                Owner cannot be removed
+              </DropdownMenuItem>
+            ) : (
+              <DropdownMenuItem
+                onSelect={(event) => {
+                  event.preventDefault();
+                  onRemoveMember(member.id);
+                }}
+                className="text-destructive focus:text-destructive"
+              >
+                <Trash2 className="mr-2 h-4 w-4" aria-hidden="true" />
+                Remove
+              </DropdownMenuItem>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </TableCell>
+    </TableRow>
+  ));
+}
+
+function InvitationRows({
+  isLoading,
+  invites,
+  onResendInvite,
+  onCancelInvite,
+}: Readonly<{
+  isLoading: boolean;
+  invites: Invitation[];
+  onResendInvite: (id: string) => void;
+  onCancelInvite: (id: string) => void;
+}>) {
+  if (isLoading) {
+    return <TableLoading colSpan={5} />;
+  }
+
+  if (invites.length === 0) {
+    return (
+      <TableEmpty
+        colSpan={5}
+        title="No invitations"
+        description="Invite members to join your organization."
+      />
+    );
+  }
+
+  return invites.map((invite) => (
+    <TableRow key={invite.id}>
+      <TableCell className="font-medium">{invite.email}</TableCell>
+
+      <TableCell>
+        <RoleBadge role={invite.role} />
+      </TableCell>
+
+      <TableCell>
+        <InviteStatusBadge status={invite.status} />
+      </TableCell>
+
+      <TableCell className="text-muted-foreground">
+        {invite.invitedAt}
+      </TableCell>
+
+      <TableCell className="text-right">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="outline"
+              size="sm"
+              aria-label="Invite actions"
+            >
+              <MoreHorizontal
+                className="h-4 w-4"
+                aria-hidden="true"
+              />
+            </Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+
+            <DropdownMenuItem
+              onSelect={(event) => {
+                event.preventDefault();
+                onResendInvite(invite.id);
+              }}
+            >
+              <RefreshCw
+                className="mr-2 h-4 w-4"
+                aria-hidden="true"
+              />
+              Resend invite
+            </DropdownMenuItem>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem
+              onSelect={(event) => {
+                event.preventDefault();
+                onCancelInvite(invite.id);
+              }}
+              className="text-destructive focus:text-destructive"
+            >
+              <Trash2 className="mr-2 h-4 w-4" aria-hidden="true" />
+              Cancel invite
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </TableCell>
+    </TableRow>
+  ));
 }
 
 export default function AdminMembersPage() {
-  const [tab, setTab] = React.useState<'members' | 'invites'>(
-    'members',
-  );
-
+  const [tab, setTab] = React.useState<AdminTab>('members');
   const [isLoading, setIsLoading] = React.useState(true);
 
   const [members, setMembers] =
@@ -134,20 +312,21 @@ export default function AdminMembersPage() {
   const [inviteRole, setInviteRole] = React.useState<Role>('member');
 
   React.useEffect(() => {
-    const t = setTimeout(() => setIsLoading(false), 500);
-    return () => clearTimeout(t);
+    const timeout = setTimeout(() => setIsLoading(false), 500);
+    return () => clearTimeout(timeout);
   }, []);
 
   function closeInvite(next: boolean) {
     setInviteOpen(next);
+
     if (!next) {
       setInviteEmail('');
       setInviteRole('member');
     }
   }
 
-  function onInviteSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  function onInviteSubmit(event: React.FormEvent) {
+    event.preventDefault();
 
     const email = inviteEmail.trim();
     if (!email) return;
@@ -166,44 +345,34 @@ export default function AdminMembersPage() {
   }
 
   function removeMember(id: string) {
-    setMembers((prev) => prev.filter((m) => m.id !== id));
-  }
-
-  function changeRoleMock(id: string) {
-    setMembers((prev) =>
-      prev.map((m) => {
-        if (m.id !== id) return m;
-        if (m.role === 'owner') return m;
-        return { ...m, role: 'member' };
-      }),
-    );
+    setMembers((prev) => prev.filter((member) => member.id !== id));
   }
 
   function resendInvite(id: string) {
     setInvites((prev) =>
-      prev.map((i) =>
-        i.id === id
-          ? { ...i, status: 'pending', invitedAt: 'Resent now' }
-          : i,
+      prev.map((invite) =>
+        invite.id === id
+          ? { ...invite, status: 'pending', invitedAt: 'Resent now' }
+          : invite,
       ),
     );
   }
 
   function cancelInvite(id: string) {
-    setInvites((prev) => prev.filter((i) => i.id !== id));
+    setInvites((prev) => prev.filter((invite) => invite.id !== id));
   }
 
   return (
     <PageShell
       title="Admin"
-      description="Members, roles, and invitations."
+      description="Manage organization members, roles, and invitations."
       actions={
         <div className="flex items-center gap-2">
           <Button
             type="button"
             variant="outline"
             size="sm"
-            onClick={() => setIsLoading((v) => !v)}
+            onClick={() => setIsLoading((value) => !value)}
           >
             Toggle loading
           </Button>
@@ -220,11 +389,11 @@ export default function AdminMembersPage() {
       }
       meta={
         <Alert>
-          <AlertTitle>B2B-ready surface</AlertTitle>
+          <AlertTitle>B2B-ready administration surface</AlertTitle>
           <AlertDescription>
-            Manage members, roles, and invitations — essential
-            building blocks for any B2B SaaS. Connect your backend and
-            email provider to make these flows fully functional.
+            A structured admin experience for members, roles,
+            invitations, protected ownership, and team collaboration
+            workflows.
           </AlertDescription>
         </Alert>
       }
@@ -236,16 +405,19 @@ export default function AdminMembersPage() {
               className="h-4 w-4 text-muted-foreground"
               aria-hidden="true"
             />
-            Organization
+            Organization access
           </CardTitle>
           <CardDescription>
-            Roles, members, pending invites, resend/cancel flows. All
-            local-only in v1.
+            Review active members, manage pending invitations, and
+            keep ownership controls explicit.
           </CardDescription>
         </CardHeader>
 
         <CardContent className="p-0 pt-4">
-          <Tabs value={tab} onValueChange={(v) => setTab(v as 'members' | 'invites')}>
+          <Tabs
+            value={tab}
+            onValueChange={(value) => setTab(value as AdminTab)}
+          >
             <TabsList>
               <TabsTrigger value="members">Members</TabsTrigger>
               <TabsTrigger value="invites">Invitations</TabsTrigger>
@@ -266,89 +438,18 @@ export default function AdminMembersPage() {
                   </TableHeader>
 
                   <TableBody>
-                    {isLoading ? (
-                      <TableLoading colSpan={4} />
-                    ) : members.length === 0 ? (
-                      <TableEmpty
-                        colSpan={4}
-                        title="No members yet"
-                        description="Invite your first member to collaborate."
-                      />
-                    ) : (
-                      members.map((m) => (
-                        <TableRow key={m.id}>
-                          <TableCell className="font-medium">
-                            {m.name}
-                          </TableCell>
-                          <TableCell className="text-muted-foreground">
-                            {m.email}
-                          </TableCell>
-                          <TableCell>
-                            <RoleBadge role={m.role} />
-                          </TableCell>
-                          <TableCell className="text-right">
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  aria-label="Member actions"
-                                >
-                                  <MoreHorizontal
-                                    className="h-4 w-4"
-                                    aria-hidden="true"
-                                  />
-                                </Button>
-                              </DropdownMenuTrigger>
-
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>
-                                  Actions
-                                </DropdownMenuLabel>
-
-                                <DropdownMenuItem
-                                  onSelect={(e) => {
-                                    e.preventDefault();
-                                    changeRoleMock(m.id);
-                                  }}
-                                >
-                                  Change role (mock)
-                                </DropdownMenuItem>
-
-                                <DropdownMenuSeparator />
-
-                                {m.role === 'owner' ? (
-                                  <DropdownMenuItem disabled>
-                                    Owner cannot be removed
-                                  </DropdownMenuItem>
-                                ) : (
-                                  <DropdownMenuItem
-                                    onSelect={(e) => {
-                                      e.preventDefault();
-                                      removeMember(m.id);
-                                    }}
-                                    className="text-destructive focus:text-destructive"
-                                  >
-                                    <Trash2
-                                      className="mr-2 h-4 w-4"
-                                      aria-hidden="true"
-                                    />
-                                    Remove
-                                  </DropdownMenuItem>
-                                )}
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    )}
+                    <MembersRows
+                      isLoading={isLoading}
+                      members={members}
+                      onRemoveMember={removeMember}
+                    />
                   </TableBody>
                 </Table>
 
                 <div className="mt-3 text-xs text-muted-foreground">
-                  Owner is protected to prevent accidental lockouts.
-                  v2 can add: permissions model, seat limits, audit
-                  logs.
+                  Owner access is protected to prevent accidental
+                  lockouts. Extend with permissions, seat limits, and
+                  audit trails as your product grows.
                 </div>
               </div>
             </TabsContent>
@@ -369,89 +470,19 @@ export default function AdminMembersPage() {
                   </TableHeader>
 
                   <TableBody>
-                    {isLoading ? (
-                      <TableLoading colSpan={5} />
-                    ) : invites.length === 0 ? (
-                      <TableEmpty
-                        colSpan={5}
-                        title="No invitations"
-                        description="Invite members to join your organization."
-                      />
-                    ) : (
-                      invites.map((i) => (
-                        <TableRow key={i.id}>
-                          <TableCell className="font-medium">
-                            {i.email}
-                          </TableCell>
-                          <TableCell>
-                            <RoleBadge role={i.role} />
-                          </TableCell>
-                          <TableCell>
-                            <InviteStatusBadge status={i.status} />
-                          </TableCell>
-                          <TableCell className="text-muted-foreground">
-                            {i.invitedAt}
-                          </TableCell>
-                          <TableCell className="text-right">
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  aria-label="Invite actions"
-                                >
-                                  <MoreHorizontal
-                                    className="h-4 w-4"
-                                    aria-hidden="true"
-                                  />
-                                </Button>
-                              </DropdownMenuTrigger>
-
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>
-                                  Actions
-                                </DropdownMenuLabel>
-
-                                <DropdownMenuItem
-                                  onSelect={(e) => {
-                                    e.preventDefault();
-                                    resendInvite(i.id);
-                                  }}
-                                >
-                                  <RefreshCw
-                                    className="h-4 w-4"
-                                    aria-hidden="true"
-                                  />
-                                  Resend invite
-                                </DropdownMenuItem>
-
-                                <DropdownMenuSeparator />
-
-                                <DropdownMenuItem
-                                  onSelect={(e) => {
-                                    e.preventDefault();
-                                    cancelInvite(i.id);
-                                  }}
-                                  className="text-destructive focus:text-destructive"
-                                >
-                                  <Trash2
-                                    className="h-4 w-4"
-                                    aria-hidden="true"
-                                  />
-                                  Cancel invite
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    )}
+                    <InvitationRows
+                      isLoading={isLoading}
+                      invites={invites}
+                      onResendInvite={resendInvite}
+                      onCancelInvite={cancelInvite}
+                    />
                   </TableBody>
                 </Table>
 
                 <div className="mt-3 text-xs text-muted-foreground">
-                  v1 local-only. Later: POST /org/invitations, resend,
-                  revoke, expiry policies.
+                  Invitation flows are shaped for email delivery,
+                  expiry policies, revoke actions, and role-aware
+                  onboarding.
                 </div>
               </div>
             </TabsContent>
@@ -464,8 +495,8 @@ export default function AdminMembersPage() {
           <DialogHeader>
             <DialogTitle>Invite member</DialogTitle>
             <DialogDescription>
-              Create a pending invitation. No email is sent in v1
-              (mock).
+              Create a pending invitation and prepare the member for
+              workspace access.
             </DialogDescription>
           </DialogHeader>
 
@@ -474,17 +505,18 @@ export default function AdminMembersPage() {
               label="Email"
               type="email"
               value={inviteEmail}
-              onChange={(e) => setInviteEmail(e.target.value)}
+              onChange={(event) => setInviteEmail(event.target.value)}
               placeholder="teammate@company.com"
               autoFocus
               leftIcon={
                 <Mail className="h-4 w-4" aria-hidden="true" />
               }
-              helperText="This will appear under “Invitations”."
+              helperText="The invitation will appear under Invitations."
             />
 
             <div className="space-y-2">
               <label className="text-sm font-medium">Role</label>
+
               <div className="flex items-center gap-2">
                 <Button
                   type="button"
@@ -496,6 +528,7 @@ export default function AdminMembersPage() {
                 >
                   Member
                 </Button>
+
                 <Button
                   type="button"
                   size="sm"
@@ -507,8 +540,10 @@ export default function AdminMembersPage() {
                   Owner
                 </Button>
               </div>
+
               <p className="text-sm text-muted-foreground">
-                v2: replace with Select + permissions model.
+                Owner access should be reserved for trusted workspace
+                administrators.
               </p>
             </div>
 
@@ -520,6 +555,7 @@ export default function AdminMembersPage() {
               >
                 Cancel
               </Button>
+
               <Button type="submit" disabled={!inviteEmail.trim()}>
                 Invite
               </Button>
