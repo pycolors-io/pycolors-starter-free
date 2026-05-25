@@ -6,6 +6,7 @@ import {
   BadgeCheck,
   CreditCard,
   FolderKanban,
+  ShieldCheck,
   Users,
 } from 'lucide-react';
 
@@ -19,6 +20,8 @@ import {
   CardTitle,
   cn,
 } from '@pycolors/ui';
+
+import { UpgradeGate } from '@/components/app/upgrade-gate';
 
 type TrendIntent = 'good' | 'neutral' | 'bad';
 
@@ -140,12 +143,44 @@ function ActivityItem({
   );
 }
 
+function InsightMetric({
+  label,
+  value,
+  description,
+  icon: Icon,
+}: Readonly<{
+  label: string;
+  value: string;
+  description: string;
+  icon: React.ComponentType<{ className?: string }>;
+}>) {
+  return (
+    <div className="rounded-md border border-border/60 p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div className="space-y-1">
+          <div className="text-xs text-muted-foreground">{label}</div>
+          <div className="text-2xl font-semibold tracking-tight">
+            {value}
+          </div>
+          <div className="text-sm text-muted-foreground">
+            {description}
+          </div>
+        </div>
+
+        <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-md border border-border/60 bg-muted/30 text-muted-foreground">
+          <Icon className="h-4 w-4" aria-hidden="true" />
+        </span>
+      </div>
+    </div>
+  );
+}
+
 export default function DashboardPage() {
   const isReady = true;
 
   const projectsCount = 3;
   const membersCount = 16;
-  const plan = 'Pro';
+  const plan = 'Free';
 
   const mrr = 1240;
   const activeUsers = 312;
@@ -160,8 +195,8 @@ export default function DashboardPage() {
             Dashboard
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            A focused product overview for tracking revenue, users,
-            projects, and operational health.
+            A focused product overview for tracking users, projects,
+            billing signals, and operational health.
           </p>
         </div>
 
@@ -265,13 +300,58 @@ export default function DashboardPage() {
         <StatCard
           label="Plan"
           value={plan}
-          hint="Subscription status"
+          hint="Starter Free"
           href="/billing"
           hrefLabel="Billing"
-          trend={{ label: 'Renews monthly', intent: 'neutral' }}
-          footer="Billing-ready surface for plans, invoices, and payment methods."
+          trend={{ label: 'Upgradeable', intent: 'neutral' }}
+          footer="Upgrade path prepared for auth, billing, and protected access."
         />
       </div>
+
+      <UpgradeGate
+        title="Production SaaS architecture"
+        description="Unlock the business layer needed to move from a polished starter to a production-ready SaaS foundation."
+        features={[
+          'Email & OAuth authentication',
+          'Stripe Checkout & billing portal',
+          'Protected routes & session handling',
+          'Webhook synchronization',
+        ]}
+        previewHeightClassName="min-h-[320px]"
+      >
+        <Card className="p-4">
+          <CardHeader className="p-0">
+            <CardTitle>Business layer overview</CardTitle>
+            <CardDescription>
+              Authentication, billing, subscriptions, and access
+              control connected across the product.
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent className="grid gap-4 p-0 pt-4 md:grid-cols-3">
+            <InsightMetric
+              label="Protected routes"
+              value="12"
+              description="Authenticated app surfaces."
+              icon={ShieldCheck}
+            />
+
+            <InsightMetric
+              label="Subscriptions"
+              value="182"
+              description="Active billing relationships."
+              icon={CreditCard}
+            />
+
+            <InsightMetric
+              label="Team access"
+              value="16"
+              description="Members with scoped permissions."
+              icon={Users}
+            />
+          </CardContent>
+        </Card>
+      </UpgradeGate>
 
       <div className="grid gap-6 lg:grid-cols-3">
         <Card className="p-4 lg:col-span-2">
