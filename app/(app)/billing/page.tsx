@@ -7,6 +7,9 @@ import {
   ExternalLink,
   FileText,
   ShieldCheck,
+  TrendingDown,
+  TrendingUp,
+  Users,
 } from 'lucide-react';
 
 import {
@@ -32,6 +35,7 @@ import {
 } from '@pycolors/ui';
 
 import { PageShell } from '@/components/app/page-shell';
+import { UpgradeGate } from '@/components/app/upgrade-gate';
 
 type BillingStatus = 'active' | 'trialing' | 'past_due';
 type InvoiceStatus = 'paid' | 'open' | 'void';
@@ -75,13 +79,14 @@ function formatDate(iso: string) {
   });
 }
 
-function formatMoneyEUR(amountCents: number) {
-  const amount = amountCents / 100;
-
+function formatMoney(
+  amountCents: number,
+  currency: 'USD' | 'EUR' = 'USD',
+) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'EUR',
-  }).format(amount);
+    currency,
+  }).format(amountCents / 100);
 }
 
 function StatusBadge({
@@ -110,6 +115,40 @@ function InvoiceStatusBadge({
   };
 
   return <Badge variant="success">{labelByStatus[status]}</Badge>;
+}
+
+function BillingMetric({
+  label,
+  value,
+  description,
+  icon: Icon,
+}: Readonly<{
+  label: string;
+  value: string;
+  description: string;
+  icon: React.ComponentType<{ className?: string }>;
+}>) {
+  return (
+    <div className="rounded-md border border-border/60 p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div className="space-y-1">
+          <div className="text-xs text-muted-foreground">{label}</div>
+
+          <div className="text-2xl font-semibold tracking-tight">
+            {value}
+          </div>
+
+          <div className="text-sm text-muted-foreground">
+            {description}
+          </div>
+        </div>
+
+        <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-md border border-border/60 bg-muted/30 text-muted-foreground">
+          <Icon className="h-4 w-4" aria-hidden="true" />
+        </span>
+      </div>
+    </div>
+  );
 }
 
 function InvoiceRows({
@@ -146,7 +185,7 @@ function InvoiceRows({
       </TableCell>
 
       <TableCell className="text-right">
-        {formatMoneyEUR(invoice.amountCents)}
+        {formatMoney(invoice.amountCents)}
       </TableCell>
 
       <TableCell className="text-right">
@@ -168,7 +207,7 @@ export default function BillingPage() {
 
   const plan = {
     name: 'Pro',
-    priceLabel: '€29 / month',
+    priceLabel: '$29 / month',
     seats: 10,
     renewalIso: '2026-03-01',
     status: 'active' as const satisfies BillingStatus,
@@ -219,99 +258,155 @@ export default function BillingPage() {
         </Alert>
       }
     >
-      <div className="grid gap-6 lg:grid-cols-3">
-        <Card className="p-4 lg:col-span-2">
-          <CardHeader className="p-0">
-            <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0">
-                <CardTitle className="flex items-center gap-2">
-                  <ShieldCheck
-                    className="h-4 w-4 text-muted-foreground"
+      <div className="space-y-6">
+        <div className="grid gap-6 lg:grid-cols-3">
+          <Card className="p-4 lg:col-span-2">
+            <CardHeader className="p-0">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <CardTitle className="flex items-center gap-2">
+                    <ShieldCheck
+                      className="h-4 w-4 text-muted-foreground"
+                      aria-hidden="true"
+                    />
+                    Current plan
+                  </CardTitle>
+
+                  <CardDescription>
+                    Subscription details, seats, renewal date, and
+                    plan status.
+                  </CardDescription>
+                </div>
+
+                <div className="flex flex-col items-end gap-1">
+                  <StatusBadge status={plan.status} />
+                  <span className="text-xs text-muted-foreground">
+                    {statusHint}
+                  </span>
+                </div>
+              </div>
+            </CardHeader>
+
+            <CardContent className="p-0 pt-4">
+              <div className="grid gap-4 md:grid-cols-3">
+                <div className="rounded-md border border-border/60 p-3">
+                  <div className="text-xs text-muted-foreground">
+                    Plan
+                  </div>
+
+                  <div className="mt-1 text-sm font-medium">
+                    {isLoading ? (
+                      <Skeleton className="h-5 w-24" />
+                    ) : (
+                      plan.name
+                    )}
+                  </div>
+
+                  <div className="mt-1 text-sm text-muted-foreground">
+                    {isLoading ? (
+                      <Skeleton className="h-4 w-28" />
+                    ) : (
+                      plan.priceLabel
+                    )}
+                  </div>
+                </div>
+
+                <div className="rounded-md border border-border/60 p-3">
+                  <div className="text-xs text-muted-foreground">
+                    Seats
+                  </div>
+
+                  <div className="mt-1 text-sm font-medium">
+                    {isLoading ? (
+                      <Skeleton className="h-5 w-16" />
+                    ) : (
+                      plan.seats
+                    )}
+                  </div>
+
+                  <div className="mt-1 text-sm text-muted-foreground">
+                    Team members allowed on this plan.
+                  </div>
+                </div>
+
+                <div className="rounded-md border border-border/60 p-3">
+                  <div className="text-xs text-muted-foreground">
+                    Renewal
+                  </div>
+
+                  <div className="mt-1 text-sm font-medium">
+                    {isLoading ? (
+                      <Skeleton className="h-5 w-40" />
+                    ) : (
+                      `Renews on ${formatDate(plan.renewalIso)}`
+                    )}
+                  </div>
+
+                  <div className="mt-1 text-sm text-muted-foreground">
+                    Auto-renewal enabled for this subscription.
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <div className="text-sm text-muted-foreground">
+                  Upgrades, invoices, and payment methods are managed
+                  through the billing portal.
+                </div>
+
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  disabled
+                >
+                  <ExternalLink
+                    className="h-4 w-4"
                     aria-hidden="true"
                   />
-                  Current plan
-                </CardTitle>
-
-                <CardDescription>
-                  Subscription details, seats, renewal date, and plan
-                  status.
-                </CardDescription>
+                  Open portal
+                </Button>
               </div>
+            </CardContent>
+          </Card>
 
-              <div className="flex flex-col items-end gap-1">
-                <StatusBadge status={plan.status} />
-                <span className="text-xs text-muted-foreground">
-                  {statusHint}
-                </span>
-              </div>
-            </div>
-          </CardHeader>
+          <Card className="p-4">
+            <CardHeader className="p-0">
+              <CardTitle className="flex items-center gap-2">
+                <CreditCard
+                  className="h-4 w-4 text-muted-foreground"
+                  aria-hidden="true"
+                />
+                Payment method
+              </CardTitle>
 
-          <CardContent className="p-0 pt-4">
-            <div className="grid gap-4 md:grid-cols-3">
+              <CardDescription>
+                Default payment method stored securely by your payment
+                provider.
+              </CardDescription>
+            </CardHeader>
+
+            <CardContent className="space-y-3 p-0 pt-4">
               <div className="rounded-md border border-border/60 p-3">
                 <div className="text-xs text-muted-foreground">
-                  Plan
+                  Default
                 </div>
 
                 <div className="mt-1 text-sm font-medium">
                   {isLoading ? (
-                    <Skeleton className="h-5 w-24" />
+                    <Skeleton className="h-5 w-36" />
                   ) : (
-                    plan.name
+                    'Visa •••• 4242'
                   )}
                 </div>
 
                 <div className="mt-1 text-sm text-muted-foreground">
                   {isLoading ? (
-                    <Skeleton className="h-4 w-28" />
+                    <Skeleton className="h-4 w-24" />
                   ) : (
-                    plan.priceLabel
+                    'Expires 12/29'
                   )}
                 </div>
-              </div>
-
-              <div className="rounded-md border border-border/60 p-3">
-                <div className="text-xs text-muted-foreground">
-                  Seats
-                </div>
-
-                <div className="mt-1 text-sm font-medium">
-                  {isLoading ? (
-                    <Skeleton className="h-5 w-16" />
-                  ) : (
-                    plan.seats
-                  )}
-                </div>
-
-                <div className="mt-1 text-sm text-muted-foreground">
-                  Team members allowed on this plan.
-                </div>
-              </div>
-
-              <div className="rounded-md border border-border/60 p-3">
-                <div className="text-xs text-muted-foreground">
-                  Renewal
-                </div>
-
-                <div className="mt-1 text-sm font-medium">
-                  {isLoading ? (
-                    <Skeleton className="h-5 w-40" />
-                  ) : (
-                    `Renews on ${formatDate(plan.renewalIso)}`
-                  )}
-                </div>
-
-                <div className="mt-1 text-sm text-muted-foreground">
-                  Auto-renewal enabled for this subscription.
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-              <div className="text-sm text-muted-foreground">
-                Upgrades, invoices, and payment methods are managed
-                through the billing portal.
               </div>
 
               <Button
@@ -319,144 +414,139 @@ export default function BillingPage() {
                 variant="outline"
                 size="sm"
                 disabled
+                className="w-full"
               >
+                Update payment method
+              </Button>
+
+              <div className="text-xs text-muted-foreground">
+                Payment method updates should be handled through a
+                secure customer portal flow.
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <Card className="p-4">
+          <CardHeader className="p-0">
+            <CardTitle className="flex items-center gap-2">
+              <FileText
+                className="h-4 w-4 text-muted-foreground"
+                aria-hidden="true"
+              />
+              Invoices
+            </CardTitle>
+
+            <CardDescription>
+              Billing history prepared for downloadable invoice
+              records.
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent className="p-0 pt-4">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Invoice</TableHead>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead className="text-right">Amount</TableHead>
+                  <TableHead className="text-right">Action</TableHead>
+                </TableRow>
+              </TableHeader>
+
+              <TableBody>
+                <InvoiceRows
+                  isLoading={isLoading}
+                  invoices={invoices}
+                />
+              </TableBody>
+            </Table>
+
+            <div className="mt-3 text-xs text-muted-foreground">
+              Invoice rows are shaped for PDF downloads, receipt URLs,
+              tax metadata, and customer billing history.
+            </div>
+          </CardContent>
+        </Card>
+
+        <UpgradeGate
+          title="Advanced billing & subscription insights"
+          description="Unlock subscription analytics, usage-based billing, VAT handling, and customer billing intelligence."
+          features={[
+            'Stripe Checkout integration',
+            'Billing portal flows',
+            'Subscription lifecycle handling',
+            'Webhook synchronization',
+          ]}
+          previewHeightClassName="min-h-[320px]"
+        >
+          <Card className="p-4">
+            <CardHeader className="p-0">
+              <CardTitle>Billing analytics</CardTitle>
+
+              <CardDescription>
+                Subscription performance and monetization signals.
+              </CardDescription>
+            </CardHeader>
+
+            <CardContent className="grid gap-4 p-0 pt-4 md:grid-cols-3">
+              <BillingMetric
+                label="Monthly revenue"
+                value="$12,420"
+                description="Recurring subscription revenue."
+                icon={TrendingUp}
+              />
+
+              <BillingMetric
+                label="Active subscriptions"
+                value="182"
+                description="Paying workspaces on active plans."
+                icon={Users}
+              />
+
+              <BillingMetric
+                label="Churn rate"
+                value="2.1%"
+                description="Rolling 30-day subscription churn."
+                icon={TrendingDown}
+              />
+            </CardContent>
+          </Card>
+        </UpgradeGate>
+
+        <Card className="p-4">
+          <CardHeader className="p-0">
+            <CardTitle>Monetization path</CardTitle>
+
+            <CardDescription>
+              Connect the portal, subscription state, invoice records,
+              and access control to make billing production-ready.
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent className="flex flex-col gap-2 p-0 pt-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="text-sm text-muted-foreground">
+              Use a server route to create a secure customer portal
+              session and redirect the authenticated user.
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Button type="button" variant="outline" disabled>
                 <ExternalLink
                   className="h-4 w-4"
                   aria-hidden="true"
                 />
                 Open portal
               </Button>
-            </div>
-          </CardContent>
-        </Card>
 
-        <Card className="p-4">
-          <CardHeader className="p-0">
-            <CardTitle className="flex items-center gap-2">
-              <CreditCard
-                className="h-4 w-4 text-muted-foreground"
-                aria-hidden="true"
-              />
-              Payment method
-            </CardTitle>
-
-            <CardDescription>
-              Default payment method stored securely by your payment
-              provider.
-            </CardDescription>
-          </CardHeader>
-
-          <CardContent className="space-y-3 p-0 pt-4">
-            <div className="rounded-md border border-border/60 p-3">
-              <div className="text-xs text-muted-foreground">
-                Default
-              </div>
-
-              <div className="mt-1 text-sm font-medium">
-                {isLoading ? (
-                  <Skeleton className="h-5 w-36" />
-                ) : (
-                  'Visa •••• 4242'
-                )}
-              </div>
-
-              <div className="mt-1 text-sm text-muted-foreground">
-                {isLoading ? (
-                  <Skeleton className="h-4 w-24" />
-                ) : (
-                  'Expires 12/29'
-                )}
-              </div>
-            </div>
-
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              disabled
-              className="w-full"
-            >
-              Update payment method
-            </Button>
-
-            <div className="text-xs text-muted-foreground">
-              Payment method updates should be handled through a
-              secure customer portal flow.
+              <Button asChild>
+                <Link href="/admin">Go to members</Link>
+              </Button>
             </div>
           </CardContent>
         </Card>
       </div>
-
-      <Card className="p-4">
-        <CardHeader className="p-0">
-          <CardTitle className="flex items-center gap-2">
-            <FileText
-              className="h-4 w-4 text-muted-foreground"
-              aria-hidden="true"
-            />
-            Invoices
-          </CardTitle>
-
-          <CardDescription>
-            Billing history prepared for downloadable invoice records.
-          </CardDescription>
-        </CardHeader>
-
-        <CardContent className="p-0 pt-4">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Invoice</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Amount</TableHead>
-                <TableHead className="text-right">Action</TableHead>
-              </TableRow>
-            </TableHeader>
-
-            <TableBody>
-              <InvoiceRows
-                isLoading={isLoading}
-                invoices={invoices}
-              />
-            </TableBody>
-          </Table>
-
-          <div className="mt-3 text-xs text-muted-foreground">
-            Invoice rows are shaped for PDF downloads, receipt URLs,
-            tax metadata, and customer billing history.
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="p-4">
-        <CardHeader className="p-0">
-          <CardTitle>Monetization path</CardTitle>
-
-          <CardDescription>
-            Connect the portal, subscription state, invoice records,
-            and access control to make billing production-ready.
-          </CardDescription>
-        </CardHeader>
-
-        <CardContent className="flex flex-col gap-2 p-0 pt-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="text-sm text-muted-foreground">
-            Use a server route to create a secure customer portal
-            session and redirect the authenticated user.
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Button type="button" variant="outline" disabled>
-              <ExternalLink className="h-4 w-4" aria-hidden="true" />
-              Open portal
-            </Button>
-
-            <Button asChild>
-              <Link href="/admin">Go to members</Link>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
     </PageShell>
   );
 }
