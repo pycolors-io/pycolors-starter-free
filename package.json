@@ -1,7 +1,7 @@
 {
   "name": "@pycolors/starter-free",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.2.1",
   "type": "module",
   "description": "Free Next.js SaaS starter by PyColors — UI + Tokens + best-practice structure, synced from the PyColors monorepo.",
   "homepage": "https://pycolors.io/starters",
@@ -40,8 +40,8 @@
     "verify": "pnpm lint && pnpm types:check && pnpm build"
   },
   "dependencies": {
-    "@pycolors/tokens": "^1.1.0",
-    "@pycolors/ui": "^1.0.6",
+    "@pycolors/tokens": "^1.2.0",
+    "@pycolors/ui": "^1.1.1",
     "lucide-react": "^0.552.0",
     "next": "15.5.12",
     "react": "^19.0.0",

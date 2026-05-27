@@ -1,5 +1,11 @@
 # @pycolors/starter-free
 
+## 1.2.1
+
+### Patch Changes
+
+- Update Starter Free to use the latest PyColors UI and tokens packages
+
 ## 1.2.0
 
 ### Minor Changes
