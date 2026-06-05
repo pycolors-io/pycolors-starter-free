@@ -28,7 +28,7 @@ const EXTERNAL = {
   free: 'https://pycolors.io/starters/free',
   pricing: 'https://pycolors.io/pricing',
   upgrade: 'https://pycolors.io/upgrade',
-  pro: 'https://pycolors.io//starters/pro',
+  pro: 'https://pycolors.io/starters/pro',
   docs: 'https://pycolors.io/docs/starter',
   github: 'https://github.com/pycolors-io/pycolors-starter-free',
   ui: 'https://pycolors.io/ui',
