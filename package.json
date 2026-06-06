@@ -42,6 +42,7 @@
   "dependencies": {
     "@pycolors/tokens": "^1.2.0",
     "@pycolors/ui": "^1.1.1",
+    "@vercel/analytics": "^2.0.1",
     "lucide-react": "^0.552.0",
     "next": "15.5.12",
     "react": "^19.0.0",
