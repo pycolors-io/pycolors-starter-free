@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from 'next';
+import { Analytics } from '@vercel/analytics/react';
 
 import './globals.css';
 
 const APP_NAME = 'PyColors Starter Free';
+
 const APP_DESCRIPTION =
   'Production-ready SaaS foundation for modern Next.js applications.';
 
@@ -69,8 +71,17 @@ export const metadata: Metadata = {
   },
 
   robots: {
-    index: true,
+    index: false,
     follow: true,
+
+    googleBot: {
+      index: false,
+      follow: true,
+    },
+  },
+
+  alternates: {
+    canonical: 'https://starter-demo.pycolors.io',
   },
 };
 
@@ -90,6 +101,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen bg-background text-foreground antialiased">
         {children}
+        <Analytics />
       </body>
     </html>
   );
