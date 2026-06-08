@@ -1,5 +1,16 @@
 # @pycolors/starter-free
 
+## 1.2.2
+
+### Patch Changes
+
+- Improve Starter Free SEO controls and analytics
+  - disable search engine indexing for the public demo
+  - add explicit googleBot no-index directives
+  - add canonical alternate URL
+  - add Vercel Analytics to the root layout
+  - fix Starter Pro external URL
+
 ## 1.2.1
 
 ### Patch Changes
