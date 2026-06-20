@@ -233,15 +233,6 @@ export default function BillingPage() {
             <Link href="/settings">Settings</Link>
           </Button>
 
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => setIsLoading((value) => !value)}
-          >
-            Toggle loading
-          </Button>
-
           <Button size="sm" type="button" disabled>
             Manage billing
           </Button>
@@ -253,7 +244,8 @@ export default function BillingPage() {
           <AlertDescription>
             A complete billing experience shaped for subscriptions,
             invoices, payment methods, customer portal access, and
-            Stripe-backed monetization.
+            Stripe-backed monetization. Starter Free uses illustrative
+            demo data here; Starter Pro is sold separately by PyColors.
           </AlertDescription>
         </Alert>
       }
@@ -308,6 +300,11 @@ export default function BillingPage() {
                     ) : (
                       plan.priceLabel
                     )}
+                  </div>
+
+                  <div className="mt-2 text-xs leading-5 text-muted-foreground">
+                    Demo pricing only, not the Starter Pro purchase
+                    price.
                   </div>
                 </div>
 

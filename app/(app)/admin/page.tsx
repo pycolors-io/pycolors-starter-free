@@ -405,15 +405,6 @@ export default function AdminMembersPage() {
         <div className="flex items-center gap-2">
           <Button
             type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => setIsLoading((value) => !value)}
-          >
-            Toggle loading
-          </Button>
-
-          <Button
-            type="button"
             size="sm"
             onClick={() => setInviteOpen(true)}
           >
