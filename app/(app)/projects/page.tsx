@@ -99,15 +99,6 @@ export default function ProjectsPage() {
             <Link href="/dashboard">Back</Link>
           </Button>
 
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => setIsLoading((value) => !value)}
-          >
-            Toggle loading
-          </Button>
-
           <Button type="button" size="sm" disabled>
             <Plus className="h-4 w-4" aria-hidden="true" />
             New project
