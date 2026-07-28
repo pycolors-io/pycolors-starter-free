@@ -1,5 +1,5 @@
-import type * as React from 'react';
-import Link from 'next/link';
+import type * as React from "react";
+import Link from "next/link";
 import {
   Activity,
   ArrowUpRight,
@@ -8,7 +8,7 @@ import {
   FolderKanban,
   ShieldCheck,
   Users,
-} from 'lucide-react';
+} from "lucide-react";
 
 import {
   Badge,
@@ -19,18 +19,18 @@ import {
   CardHeader,
   CardTitle,
   cn,
-} from '@pycolors/ui';
+} from "@/components/ui";
 
-import { UpgradeGate } from '@/components/app/upgrade-gate';
+import { UpgradeGate } from "@/components/app/upgrade-gate";
 
-type TrendIntent = 'good' | 'neutral' | 'bad';
+type TrendIntent = "good" | "neutral" | "bad";
 
 function StatCard({
   label,
   value,
   hint,
   href,
-  hrefLabel = 'View',
+  hrefLabel = "View",
   footer,
   trend,
 }: Readonly<{
@@ -46,13 +46,13 @@ function StatCard({
   }>;
 }>) {
   const trendClassByIntent: Record<TrendIntent, string> = {
-    good: 'text-emerald-600',
-    neutral: 'text-muted-foreground',
-    bad: 'text-rose-600',
+    good: "text-emerald-600",
+    neutral: "text-muted-foreground",
+    bad: "text-rose-600",
   };
 
   const trendClass = trend
-    ? trendClassByIntent[trend.intent ?? 'neutral']
+    ? trendClassByIntent[trend.intent ?? "neutral"]
     : undefined;
 
   return (
@@ -64,9 +64,7 @@ function StatCard({
               <span>{label}</span>
 
               {trend ? (
-                <span className={cn('text-xs', trendClass)}>
-                  {trend.label}
-                </span>
+                <span className={cn("text-xs", trendClass)}>{trend.label}</span>
               ) : null}
             </CardDescription>
 
@@ -90,9 +88,7 @@ function StatCard({
         <div className="text-sm text-muted-foreground">{hint}</div>
 
         {footer ? (
-          <div className="text-xs text-muted-foreground">
-            {footer}
-          </div>
+          <div className="text-xs text-muted-foreground">{footer}</div>
         ) : null}
       </CardContent>
     </Card>
@@ -103,7 +99,7 @@ function ActivityItem({
   title,
   subtitle,
   href,
-  hrefLabel = 'Open',
+  hrefLabel = "Open",
   icon,
 }: Readonly<{
   title: string;
@@ -124,9 +120,7 @@ function ActivityItem({
 
           <div className="min-w-0">
             <div className="text-sm font-medium">{title}</div>
-            <div className="mt-1 text-sm text-muted-foreground">
-              {subtitle}
-            </div>
+            <div className="mt-1 text-sm text-muted-foreground">{subtitle}</div>
           </div>
         </div>
 
@@ -160,13 +154,9 @@ function InsightMetric({
         <div className="space-y-1">
           <div className="text-xs text-muted-foreground">{label}</div>
 
-          <div className="text-2xl font-semibold tracking-tight">
-            {value}
-          </div>
+          <div className="text-2xl font-semibold tracking-tight">{value}</div>
 
-          <div className="text-sm text-muted-foreground">
-            {description}
-          </div>
+          <div className="text-sm text-muted-foreground">{description}</div>
         </div>
 
         <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-md border border-border/60 bg-muted/30 text-muted-foreground">
@@ -182,12 +172,12 @@ export default function DashboardPage() {
 
   const projectsCount = 3;
   const membersCount = 16;
-  const plan = 'Free';
+  const plan = "Free";
 
   const mrr = 1240;
   const activeUsers = 312;
-  const churn = '2.1%';
-  const uptime = '99.95%';
+  const churn = "2.1%";
+  const uptime = "99.95%";
 
   return (
     <div className="space-y-6">
@@ -198,8 +188,8 @@ export default function DashboardPage() {
           </h1>
 
           <p className="mt-1 text-sm text-muted-foreground">
-            A focused product overview for tracking users, projects,
-            billing signals, and operational health.
+            A focused product overview for tracking users, projects, billing
+            signals, and operational health.
           </p>
         </div>
 
@@ -221,8 +211,8 @@ export default function DashboardPage() {
               <CardTitle>Production-ready SaaS foundation</CardTitle>
 
               <CardDescription>
-                Next.js, Tailwind, design tokens, app layout, core
-                product surfaces, and upgrade-ready workflows.
+                Next.js, Tailwind, design tokens, app layout, core product
+                surfaces, and upgrade-ready workflows.
               </CardDescription>
             </div>
 
@@ -232,7 +222,7 @@ export default function DashboardPage() {
               ) : (
                 <Activity className="h-4 w-4" aria-hidden="true" />
               )}
-              {isReady ? 'Ready' : 'Loading'}
+              {isReady ? "Ready" : "Loading"}
             </Badge>
           </div>
         </CardHeader>
@@ -243,7 +233,7 @@ export default function DashboardPage() {
           label="MRR"
           value={`$${mrr.toLocaleString()}`}
           hint="Monthly recurring revenue"
-          trend={{ label: '▲ 12% MoM', intent: 'good' }}
+          trend={{ label: "▲ 12% MoM", intent: "good" }}
           href="/billing"
           hrefLabel="Billing"
           footer="Prepared for Stripe-backed subscription metrics."
@@ -253,7 +243,7 @@ export default function DashboardPage() {
           label="Active users"
           value={activeUsers}
           hint="Last 7 days"
-          trend={{ label: '▲ 8%', intent: 'good' }}
+          trend={{ label: "▲ 8%", intent: "good" }}
           href="/admin"
           hrefLabel="Admin"
           footer="Prepared for event-backed product analytics."
@@ -263,7 +253,7 @@ export default function DashboardPage() {
           label="Churn"
           value={churn}
           hint="Last 30 days"
-          trend={{ label: '▲ 0.4%', intent: 'bad' }}
+          trend={{ label: "▲ 0.4%", intent: "bad" }}
           href="/billing"
           hrefLabel="Billing"
           footer="Prepared for subscription lifecycle tracking."
@@ -273,7 +263,7 @@ export default function DashboardPage() {
           label="Uptime"
           value={uptime}
           hint="Rolling 30 days"
-          trend={{ label: 'Stable', intent: 'neutral' }}
+          trend={{ label: "Stable", intent: "neutral" }}
           href="/projects"
           hrefLabel="Projects"
           footer="Prepared for monitoring and incident workflows."
@@ -287,7 +277,7 @@ export default function DashboardPage() {
           hint="Across your organization"
           href="/projects"
           hrefLabel="Projects"
-          trend={{ label: 'Stable', intent: 'neutral' }}
+          trend={{ label: "Stable", intent: "neutral" }}
           footer="Entity management with tables, actions, dialogs, and detail navigation."
         />
 
@@ -297,7 +287,7 @@ export default function DashboardPage() {
           hint="Active across projects"
           href="/admin"
           hrefLabel="Admin"
-          trend={{ label: '▲ 2 invited', intent: 'good' }}
+          trend={{ label: "▲ 2 invited", intent: "good" }}
           footer="Team-ready surface for members, roles, and invitations."
         />
 
@@ -307,7 +297,7 @@ export default function DashboardPage() {
           hint="Starter Free"
           href="/billing"
           hrefLabel="Billing"
-          trend={{ label: 'Upgradeable', intent: 'neutral' }}
+          trend={{ label: "Upgradeable", intent: "neutral" }}
           footer="Upgrade path prepared for auth, billing, and protected access."
         />
       </div>
@@ -316,10 +306,10 @@ export default function DashboardPage() {
         title="Production SaaS architecture"
         description="Unlock the business layer needed to move from a polished starter to a production-ready SaaS foundation."
         features={[
-          'Email & password authentication',
-          'Google & GitHub OAuth',
-          'Protected routes & session handling',
-          'Stripe Checkout & billing portal',
+          "Email & password authentication",
+          "Google & GitHub OAuth",
+          "Protected routes & session handling",
+          "Stripe Checkout & billing portal",
         ]}
         previewHeightClassName="min-h-[320px]"
       >
@@ -328,8 +318,8 @@ export default function DashboardPage() {
             <CardTitle>Business layer overview</CardTitle>
 
             <CardDescription>
-              Authentication, billing, subscriptions, and access
-              control connected across the product.
+              Authentication, billing, subscriptions, and access control
+              connected across the product.
             </CardDescription>
           </CardHeader>
 
@@ -364,19 +354,14 @@ export default function DashboardPage() {
             <CardTitle>Recent activity</CardTitle>
 
             <CardDescription>
-              Product activity designed to validate navigation and
-              common SaaS workflows.
+              Product activity designed to validate navigation and common SaaS
+              workflows.
             </CardDescription>
           </CardHeader>
 
           <CardContent className="space-y-3 p-0 pt-4">
             <ActivityItem
-              icon={
-                <FolderKanban
-                  className="h-4 w-4"
-                  aria-hidden="true"
-                />
-              }
+              icon={<FolderKanban className="h-4 w-4" aria-hidden="true" />}
               title="Deploy completed"
               subtitle="Acme Workspace · 11:42"
               href="/projects"
@@ -392,9 +377,7 @@ export default function DashboardPage() {
             />
 
             <ActivityItem
-              icon={
-                <CreditCard className="h-4 w-4" aria-hidden="true" />
-              }
+              icon={<CreditCard className="h-4 w-4" aria-hidden="true" />}
               title="Subscription renewed"
               subtitle="Yesterday"
               href="/billing"
@@ -409,8 +392,7 @@ export default function DashboardPage() {
               <CardTitle>Quick actions</CardTitle>
 
               <CardDescription>
-                Common product paths for account, billing, and team
-                operations.
+                Common product paths for account, billing, and team operations.
               </CardDescription>
             </CardHeader>
 
@@ -434,8 +416,8 @@ export default function DashboardPage() {
               <CardTitle>Product path</CardTitle>
 
               <CardDescription>
-                Extend the starter through focused vertical slices:
-                projects, members, billing, and authentication.
+                Extend the starter through focused vertical slices: projects,
+                members, billing, and authentication.
               </CardDescription>
             </CardHeader>
 

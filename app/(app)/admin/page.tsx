@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import * as React from "react";
 import {
   Mail,
   MoreHorizontal,
@@ -10,7 +10,7 @@ import {
   UserCheck,
   UserPlus,
   Users,
-} from 'lucide-react';
+} from "lucide-react";
 
 import {
   Alert,
@@ -48,14 +48,14 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '@pycolors/ui';
+} from "@/components/ui";
 
-import { PageShell } from '@/components/app/page-shell';
-import { UpgradeGate } from '@/components/app/upgrade-gate';
+import { PageShell } from "@/components/app/page-shell";
+import { UpgradeGate } from "@/components/app/upgrade-gate";
 
-type Role = 'owner' | 'member';
-type InviteStatus = 'pending' | 'expired';
-type AdminTab = 'members' | 'invites';
+type Role = "owner" | "member";
+type InviteStatus = "pending" | "expired";
+type AdminTab = "members" | "invites";
 
 type Member = Readonly<{
   id: string;
@@ -74,57 +74,55 @@ type Invitation = Readonly<{
 
 const INITIAL_MEMBERS: Member[] = [
   {
-    id: 'u_001',
-    name: 'Patrice P.',
-    email: 'patrice@pycolors.io',
-    role: 'owner',
+    id: "u_001",
+    name: "Patrice P.",
+    email: "patrice@pycolors.io",
+    role: "owner",
   },
   {
-    id: 'u_002',
-    name: 'Ashley D.',
-    email: 'ashley@company.com',
-    role: 'member',
+    id: "u_002",
+    name: "Ashley D.",
+    email: "ashley@company.com",
+    role: "member",
   },
   {
-    id: 'u_003',
-    name: 'Alan R.',
-    email: 'alan@company.com',
-    role: 'member',
+    id: "u_003",
+    name: "Alan R.",
+    email: "alan@company.com",
+    role: "member",
   },
 ];
 
 const INITIAL_INVITES: Invitation[] = [
   {
-    id: 'i_001',
-    email: 'sarah@company.com',
-    role: 'member',
-    status: 'pending',
-    invitedAt: 'Today 10:12',
+    id: "i_001",
+    email: "sarah@company.com",
+    role: "member",
+    status: "pending",
+    invitedAt: "Today 10:12",
   },
   {
-    id: 'i_002',
-    email: 'cto@company.com',
-    role: 'owner',
-    status: 'expired',
-    invitedAt: '2 days ago',
+    id: "i_002",
+    email: "cto@company.com",
+    role: "owner",
+    status: "expired",
+    invitedAt: "2 days ago",
   },
 ];
 
 function RoleBadge({ role }: Readonly<{ role: Role }>) {
   const labelByRole: Record<Role, string> = {
-    owner: 'Owner',
-    member: 'Member',
+    owner: "Owner",
+    member: "Member",
   };
 
   return <Badge>{labelByRole[role]}</Badge>;
 }
 
-function InviteStatusBadge({
-  status,
-}: Readonly<{ status: InviteStatus }>) {
+function InviteStatusBadge({ status }: Readonly<{ status: InviteStatus }>) {
   const labelByStatus: Record<InviteStatus, string> = {
-    pending: 'Pending',
-    expired: 'Expired',
+    pending: "Pending",
+    expired: "Expired",
   };
 
   return <Badge>{labelByStatus[status]}</Badge>;
@@ -146,12 +144,8 @@ function AccessMetric({
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-1">
           <div className="text-xs text-muted-foreground">{label}</div>
-          <div className="text-2xl font-semibold tracking-tight">
-            {value}
-          </div>
-          <div className="text-sm text-muted-foreground">
-            {description}
-          </div>
+          <div className="text-2xl font-semibold tracking-tight">{value}</div>
+          <div className="text-sm text-muted-foreground">{description}</div>
         </div>
 
         <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-md border border-border/60 bg-muted/30 text-muted-foreground">
@@ -189,9 +183,7 @@ function MembersRows({
     <TableRow key={member.id}>
       <TableCell className="font-medium">{member.name}</TableCell>
 
-      <TableCell className="text-muted-foreground">
-        {member.email}
-      </TableCell>
+      <TableCell className="text-muted-foreground">{member.email}</TableCell>
 
       <TableCell>
         <RoleBadge role={member.role} />
@@ -200,15 +192,8 @@ function MembersRows({
       <TableCell className="text-right">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              size="sm"
-              aria-label="Member actions"
-            >
-              <MoreHorizontal
-                className="h-4 w-4"
-                aria-hidden="true"
-              />
+            <Button variant="outline" size="sm" aria-label="Member actions">
+              <MoreHorizontal className="h-4 w-4" aria-hidden="true" />
             </Button>
           </DropdownMenuTrigger>
 
@@ -219,7 +204,7 @@ function MembersRows({
 
             <DropdownMenuSeparator />
 
-            {member.role === 'owner' ? (
+            {member.role === "owner" ? (
               <DropdownMenuItem disabled>
                 Owner cannot be removed
               </DropdownMenuItem>
@@ -286,15 +271,8 @@ function InvitationRows({
       <TableCell className="text-right">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              size="sm"
-              aria-label="Invite actions"
-            >
-              <MoreHorizontal
-                className="h-4 w-4"
-                aria-hidden="true"
-              />
+            <Button variant="outline" size="sm" aria-label="Invite actions">
+              <MoreHorizontal className="h-4 w-4" aria-hidden="true" />
             </Button>
           </DropdownMenuTrigger>
 
@@ -307,10 +285,7 @@ function InvitationRows({
                 onResendInvite(invite.id);
               }}
             >
-              <RefreshCw
-                className="mr-2 h-4 w-4"
-                aria-hidden="true"
-              />
+              <RefreshCw className="mr-2 h-4 w-4" aria-hidden="true" />
               Resend invite
             </DropdownMenuItem>
 
@@ -334,17 +309,15 @@ function InvitationRows({
 }
 
 export default function AdminMembersPage() {
-  const [tab, setTab] = React.useState<AdminTab>('members');
+  const [tab, setTab] = React.useState<AdminTab>("members");
   const [isLoading, setIsLoading] = React.useState(true);
 
-  const [members, setMembers] =
-    React.useState<Member[]>(INITIAL_MEMBERS);
-  const [invites, setInvites] =
-    React.useState<Invitation[]>(INITIAL_INVITES);
+  const [members, setMembers] = React.useState<Member[]>(INITIAL_MEMBERS);
+  const [invites, setInvites] = React.useState<Invitation[]>(INITIAL_INVITES);
 
   const [inviteOpen, setInviteOpen] = React.useState(false);
-  const [inviteEmail, setInviteEmail] = React.useState('');
-  const [inviteRole, setInviteRole] = React.useState<Role>('member');
+  const [inviteEmail, setInviteEmail] = React.useState("");
+  const [inviteRole, setInviteRole] = React.useState<Role>("member");
 
   React.useEffect(() => {
     const timeout = setTimeout(() => setIsLoading(false), 500);
@@ -355,8 +328,8 @@ export default function AdminMembersPage() {
     setInviteOpen(next);
 
     if (!next) {
-      setInviteEmail('');
-      setInviteRole('member');
+      setInviteEmail("");
+      setInviteRole("member");
     }
   }
 
@@ -370,13 +343,13 @@ export default function AdminMembersPage() {
       id: `i_${Math.random().toString(16).slice(2, 8)}`,
       email,
       role: inviteRole,
-      status: 'pending',
-      invitedAt: 'Just now',
+      status: "pending",
+      invitedAt: "Just now",
     };
 
     setInvites((prev) => [newInvite, ...prev]);
     closeInvite(false);
-    setTab('invites');
+    setTab("invites");
   }
 
   function removeMember(id: string) {
@@ -387,7 +360,7 @@ export default function AdminMembersPage() {
     setInvites((prev) =>
       prev.map((invite) =>
         invite.id === id
-          ? { ...invite, status: 'pending', invitedAt: 'Resent now' }
+          ? { ...invite, status: "pending", invitedAt: "Resent now" }
           : invite,
       ),
     );
@@ -403,11 +376,7 @@ export default function AdminMembersPage() {
       description="Manage organization members, roles, and invitations."
       actions={
         <div className="flex items-center gap-2">
-          <Button
-            type="button"
-            size="sm"
-            onClick={() => setInviteOpen(true)}
-          >
+          <Button type="button" size="sm" onClick={() => setInviteOpen(true)}>
             <UserPlus className="h-4 w-4" aria-hidden="true" />
             Invite member
           </Button>
@@ -417,9 +386,8 @@ export default function AdminMembersPage() {
         <Alert>
           <AlertTitle>B2B-ready administration surface</AlertTitle>
           <AlertDescription>
-            A structured admin experience for members, roles,
-            invitations, protected ownership, and team collaboration
-            workflows.
+            A structured admin experience for members, roles, invitations,
+            protected ownership, and team collaboration workflows.
           </AlertDescription>
         </Alert>
       }
@@ -435,8 +403,8 @@ export default function AdminMembersPage() {
               Organization access
             </CardTitle>
             <CardDescription>
-              Review active members, manage pending invitations, and
-              keep ownership controls explicit.
+              Review active members, manage pending invitations, and keep
+              ownership controls explicit.
             </CardDescription>
           </CardHeader>
 
@@ -458,9 +426,7 @@ export default function AdminMembersPage() {
                         <TableHead>Name</TableHead>
                         <TableHead>Email</TableHead>
                         <TableHead>Role</TableHead>
-                        <TableHead className="text-right">
-                          Actions
-                        </TableHead>
+                        <TableHead className="text-right">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
 
@@ -474,9 +440,9 @@ export default function AdminMembersPage() {
                   </Table>
 
                   <div className="mt-3 text-xs text-muted-foreground">
-                    Owner access is protected to prevent accidental
-                    lockouts. Extend with permissions, seat limits,
-                    and audit trails as your product grows.
+                    Owner access is protected to prevent accidental lockouts.
+                    Extend with permissions, seat limits, and audit trails as
+                    your product grows.
                   </div>
                 </div>
               </TabsContent>
@@ -490,9 +456,7 @@ export default function AdminMembersPage() {
                         <TableHead>Role</TableHead>
                         <TableHead>Status</TableHead>
                         <TableHead>Invited</TableHead>
-                        <TableHead className="text-right">
-                          Actions
-                        </TableHead>
+                        <TableHead className="text-right">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
 
@@ -507,9 +471,8 @@ export default function AdminMembersPage() {
                   </Table>
 
                   <div className="mt-3 text-xs text-muted-foreground">
-                    Invitation flows are shaped for email delivery,
-                    expiry policies, revoke actions, and role-aware
-                    onboarding.
+                    Invitation flows are shaped for email delivery, expiry
+                    policies, revoke actions, and role-aware onboarding.
                   </div>
                 </div>
               </TabsContent>
@@ -521,10 +484,10 @@ export default function AdminMembersPage() {
           title="Role-aware access control"
           description="Unlock protected admin routes, session-aware permissions, role enforcement, and organization-ready foundations."
           features={[
-            'Protected admin routes',
-            'Role-aware access control',
-            'Organization foundations',
-            'Session-aware permissions',
+            "Protected admin routes",
+            "Role-aware access control",
+            "Organization foundations",
+            "Session-aware permissions",
           ]}
           previewHeightClassName="min-h-[320px]"
         >
@@ -568,8 +531,8 @@ export default function AdminMembersPage() {
           <DialogHeader>
             <DialogTitle>Invite member</DialogTitle>
             <DialogDescription>
-              Create a pending invitation and prepare the member for
-              workspace access.
+              Create a pending invitation and prepare the member for workspace
+              access.
             </DialogDescription>
           </DialogHeader>
 
@@ -581,9 +544,7 @@ export default function AdminMembersPage() {
               onChange={(event) => setInviteEmail(event.target.value)}
               placeholder="teammate@company.com"
               autoFocus
-              leftIcon={
-                <Mail className="h-4 w-4" aria-hidden="true" />
-              }
+              leftIcon={<Mail className="h-4 w-4" aria-hidden="true" />}
               helperText="The invitation will appear under Invitations."
             />
 
@@ -594,10 +555,8 @@ export default function AdminMembersPage() {
                 <Button
                   type="button"
                   size="sm"
-                  variant={
-                    inviteRole === 'member' ? 'default' : 'outline'
-                  }
-                  onClick={() => setInviteRole('member')}
+                  variant={inviteRole === "member" ? "default" : "outline"}
+                  onClick={() => setInviteRole("member")}
                 >
                   Member
                 </Button>
@@ -605,10 +564,8 @@ export default function AdminMembersPage() {
                 <Button
                   type="button"
                   size="sm"
-                  variant={
-                    inviteRole === 'owner' ? 'default' : 'outline'
-                  }
-                  onClick={() => setInviteRole('owner')}
+                  variant={inviteRole === "owner" ? "default" : "outline"}
+                  onClick={() => setInviteRole("owner")}
                 >
                   Owner
                 </Button>

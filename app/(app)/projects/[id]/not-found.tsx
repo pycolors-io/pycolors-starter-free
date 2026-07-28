@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import { FolderSearch } from 'lucide-react';
+import Link from "next/link";
+import { FolderSearch } from "lucide-react";
 
 import {
   Button,
@@ -7,7 +7,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@pycolors/ui';
+} from "@/components/ui";
 
 export default function NotFound() {
   return (
@@ -22,9 +22,8 @@ export default function NotFound() {
             <CardTitle>Project not found</CardTitle>
 
             <CardDescription className="leading-6">
-              The requested project could not be located in this
-              workspace. It may have been removed, renamed, or the URL
-              may be invalid.
+              The requested project could not be located in this workspace. It
+              may have been removed, renamed, or the URL may be invalid.
             </CardDescription>
           </div>
         </CardHeader>

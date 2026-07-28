@@ -1,13 +1,13 @@
-import type * as React from 'react';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import type * as React from "react";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 import {
   Activity,
   CalendarClock,
   Pencil,
   ShieldCheck,
   Users,
-} from 'lucide-react';
+} from "lucide-react";
 
 import {
   Alert,
@@ -20,11 +20,11 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@pycolors/ui';
+} from "@/components/ui";
 
-import { MOCK_PROJECTS } from '@/components/projects/project-types';
+import { MOCK_PROJECTS } from "@/components/projects/project-types";
 
-type ProjectStatus = 'active' | 'trialing' | 'paused';
+type ProjectStatus = "active" | "trialing" | "paused";
 
 function StatusBadge({
   status,
@@ -32,9 +32,9 @@ function StatusBadge({
   status: ProjectStatus;
 }>) {
   const labelByStatus: Record<ProjectStatus, string> = {
-    active: 'Active',
-    trialing: 'Trialing',
-    paused: 'Paused',
+    active: "Active",
+    trialing: "Trialing",
+    paused: "Paused",
   };
 
   return <Badge>{labelByStatus[status]}</Badge>;
@@ -98,10 +98,8 @@ export default async function ProjectDetailsPage({
           </div>
 
           <p className="mt-1 text-sm text-muted-foreground">
-            Project workspace overview ·{' '}
-            <span className="font-medium text-foreground">
-              {project.id}
-            </span>
+            Project workspace overview ·{" "}
+            <span className="font-medium text-foreground">{project.id}</span>
           </p>
         </div>
 
@@ -121,9 +119,8 @@ export default async function ProjectDetailsPage({
         <AlertTitle>Production-ready project surface</AlertTitle>
 
         <AlertDescription>
-          A scalable workspace detail page prepared for permissions,
-          activity history, billing state, collaboration, and backend
-          synchronization.
+          A scalable workspace detail page prepared for permissions, activity
+          history, billing state, collaboration, and backend synchronization.
         </AlertDescription>
       </Alert>
 
@@ -134,8 +131,8 @@ export default async function ProjectDetailsPage({
               <CardTitle>Overview</CardTitle>
 
               <CardDescription className="mt-1">
-                Structured project details with reusable metrics,
-                status surfaces, and workspace management patterns.
+                Structured project details with reusable metrics, status
+                surfaces, and workspace management patterns.
               </CardDescription>
             </div>
 
@@ -170,15 +167,12 @@ export default async function ProjectDetailsPage({
           </div>
 
           <div className="mt-5 rounded-md border border-border/60 bg-muted/20 p-4">
-            <div className="text-sm font-medium">
-              Production extension path
-            </div>
+            <div className="text-sm font-medium">Production extension path</div>
 
             <div className="mt-2 text-sm leading-6 text-muted-foreground">
-              Extend this workspace with project settings, member
-              management, permissions, billing visibility, audit
-              events, notifications, and organization-aware access
-              control as your product evolves.
+              Extend this workspace with project settings, member management,
+              permissions, billing visibility, audit events, notifications, and
+              organization-aware access control as your product evolves.
             </div>
           </div>
         </CardContent>

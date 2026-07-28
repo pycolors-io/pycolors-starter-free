@@ -1,5 +1,5 @@
-import type * as React from 'react';
-import Link from 'next/link';
+import type * as React from "react";
+import Link from "next/link";
 import {
   ArrowRight,
   Check,
@@ -9,7 +9,7 @@ import {
   ShieldCheck,
   Sparkles,
   Zap,
-} from 'lucide-react';
+} from "lucide-react";
 
 import {
   Badge,
@@ -19,63 +19,63 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@pycolors/ui';
+} from "@/components/ui";
 
-import { STARTER_VERSION_TAG } from '@/lib/version';
+import { STARTER_VERSION_TAG } from "@/lib/version";
 
 const EXTERNAL = {
-  starters: 'https://pycolors.io/starters',
-  free: 'https://pycolors.io/starters/free',
-  pricing: 'https://pycolors.io/pricing',
-  upgrade: 'https://pycolors.io/upgrade',
-  pro: 'https://pycolors.io/starters/pro',
-  docs: 'https://pycolors.io/docs/starter',
-  github: 'https://github.com/pycolors-io/pycolors-starter-free',
-  ui: 'https://pycolors.io/ui',
+  starters: "https://pycolors.io/starters",
+  free: "https://pycolors.io/starters/free",
+  pricing: "https://pycolors.io/pricing",
+  upgrade: "https://pycolors.io/upgrade",
+  pro: "https://pycolors.io/starters/pro",
+  docs: "https://pycolors.io/docs/starter",
+  github: "https://github.com/pycolors-io/pycolors-starter-free",
+  ui: "https://pycolors.io/ui",
 } as const;
 
 const INCLUDED = [
   {
-    title: 'Dashboard',
+    title: "Dashboard",
     description:
-      'KPI metrics, activity feeds, quick actions, and upgrade-ready product analytics.',
-    href: '/dashboard',
-    badge: 'Core',
+      "KPI metrics, activity feeds, quick actions, and upgrade-ready product analytics.",
+    href: "/dashboard",
+    badge: "Core",
   },
   {
-    title: 'Projects',
+    title: "Projects",
     description:
-      'Project entities, table actions, rename flows, dialogs, navigation states, and scalable workspace patterns.',
-    href: '/projects',
-    badge: 'Data',
+      "Project entities, table actions, rename flows, dialogs, navigation states, and scalable workspace patterns.",
+    href: "/projects",
+    badge: "Data",
   },
   {
-    title: 'Admin',
+    title: "Admin",
     description:
-      'Members, invitations, protected ownership, and collaborative workspace management.',
-    href: '/admin',
-    badge: 'Team',
+      "Members, invitations, protected ownership, and collaborative workspace management.",
+    href: "/admin",
+    badge: "Team",
   },
   {
-    title: 'Billing',
+    title: "Billing",
     description:
-      'Subscription plans, invoices, payment methods, and billing portal entrypoints.',
-    href: '/billing',
-    badge: 'Revenue',
+      "Subscription plans, invoices, payment methods, and billing portal entrypoints.",
+    href: "/billing",
+    badge: "Revenue",
   },
   {
-    title: 'Settings',
+    title: "Settings",
     description:
-      'Profile preferences, organization controls, security flows, and danger-zone actions.',
-    href: '/settings',
-    badge: 'App',
+      "Profile preferences, organization controls, security flows, and danger-zone actions.",
+    href: "/settings",
+    badge: "App",
   },
   {
-    title: 'Auth',
+    title: "Auth",
     description:
-      'Authentication flows, password recovery, account access, and onboarding surfaces.',
-    href: '/login',
-    badge: 'Flow',
+      "Authentication flows, password recovery, account access, and onboarding surfaces.",
+    href: "/login",
+    badge: "Flow",
   },
 ] satisfies ReadonlyArray<{
   title: string;
@@ -85,12 +85,12 @@ const INCLUDED = [
 }>;
 
 const PRO_FEATURES = [
-  'Email & password authentication',
-  'Google & GitHub OAuth',
-  'Stripe Checkout & billing portal',
-  'Protected routes & session handling',
-  'Webhook synchronization',
-  'Subscription lifecycle flows',
+  "Email & password authentication",
+  "Google & GitHub OAuth",
+  "Stripe Checkout & billing portal",
+  "Protected routes & session handling",
+  "Webhook synchronization",
+  "Subscription lifecycle flows",
 ] satisfies ReadonlyArray<string>;
 
 function Pill({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -110,13 +110,9 @@ function SectionTitle({
 }>) {
   return (
     <div className="space-y-1">
-      <h2 className="text-lg font-semibold tracking-tight">
-        {title}
-      </h2>
+      <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
       {description ? (
-        <p className="max-w-2xl text-sm text-muted-foreground">
-          {description}
-        </p>
+        <p className="max-w-2xl text-sm text-muted-foreground">{description}</p>
       ) : null}
     </div>
   );
@@ -221,38 +217,23 @@ export default function HomePage() {
             <span>Production-shaped SaaS starter</span>
             <span className="text-muted-foreground/70">·</span>
             <span>
-              Version{' '}
-              <span className="font-mono">{STARTER_VERSION_TAG}</span>
+              Version <span className="font-mono">{STARTER_VERSION_TAG}</span>
             </span>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
           <Button asChild variant="outline" size="sm">
-            <a
-              href={EXTERNAL.docs}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
+            <a href={EXTERNAL.docs} target="_blank" rel="noreferrer noopener">
               Docs
-              <ExternalLink
-                className="ml-2 h-4 w-4"
-                aria-hidden="true"
-              />
+              <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
             </a>
           </Button>
 
           <Button asChild variant="outline" size="sm">
-            <a
-              href={EXTERNAL.github}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
+            <a href={EXTERNAL.github} target="_blank" rel="noreferrer noopener">
               GitHub
-              <ExternalLink
-                className="ml-2 h-4 w-4"
-                aria-hidden="true"
-              />
+              <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
             </a>
           </Button>
         </div>
@@ -270,16 +251,15 @@ export default function HomePage() {
 
           <div className="max-w-3xl space-y-4">
             <h1 className="text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
-              A SaaS starter that feels like a real product from day
-              one.
+              A SaaS starter that feels like a real product from day one.
             </h1>
 
             <p className="text-sm leading-7 text-muted-foreground md:text-base">
-              Starter Free gives you the product shell, application
-              surfaces, states, navigation, tables, settings, billing
-              previews, and auth flows needed to validate a SaaS
-              quickly — then upgrade when you need authentication,
-              billing, protected routes, and production wiring.
+              Starter Free gives you the product shell, application surfaces,
+              states, navigation, tables, settings, billing previews, and auth
+              flows needed to validate a SaaS quickly — then upgrade when you
+              need authentication, billing, protected routes, and production
+              wiring.
             </p>
           </div>
         </div>
@@ -288,10 +268,7 @@ export default function HomePage() {
           <Button asChild>
             <Link href="/dashboard">
               Open live demo
-              <ArrowRight
-                className="ml-2 h-4 w-4"
-                aria-hidden="true"
-              />
+              <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
             </Link>
           </Button>
 
@@ -302,19 +279,12 @@ export default function HomePage() {
               rel="noreferrer noopener"
             >
               Upgrade to Starter Pro
-              <ExternalLink
-                className="ml-2 h-4 w-4"
-                aria-hidden="true"
-              />
+              <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
             </a>
           </Button>
 
           <Button asChild variant="outline">
-            <a
-              href={EXTERNAL.docs}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
+            <a href={EXTERNAL.docs} target="_blank" rel="noreferrer noopener">
               Read docs
             </a>
           </Button>
@@ -361,8 +331,8 @@ export default function HomePage() {
               <div>
                 <CardTitle>Built to convert to Starter Pro</CardTitle>
                 <CardDescription className="mt-1">
-                  Starter Free validates the product experience.
-                  Starter Pro adds the production business layer.
+                  Starter Free validates the product experience. Starter Pro
+                  adds the production business layer.
                 </CardDescription>
               </div>
 
@@ -379,10 +349,7 @@ export default function HomePage() {
           <CardContent className="p-0 pt-5">
             <div className="grid gap-2 text-sm text-muted-foreground sm:grid-cols-2">
               {PRO_FEATURES.map((feature) => (
-                <div
-                  key={feature}
-                  className="flex items-center gap-2"
-                >
+                <div key={feature} className="flex items-center gap-2">
                   <Check
                     className="h-3.5 w-3.5 shrink-0 text-brand-primary"
                     aria-hidden="true"
@@ -400,10 +367,7 @@ export default function HomePage() {
                   rel="noreferrer noopener"
                 >
                   View Starter Pro
-                  <ExternalLink
-                    className="ml-2 h-4 w-4"
-                    aria-hidden="true"
-                  />
+                  <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
                 </a>
               </Button>
 
@@ -435,8 +399,8 @@ export default function HomePage() {
                 aria-hidden="true"
               />
               <span>
-                Use Starter Free to test the product shape, IA, UI
-                patterns, and user flows.
+                Use Starter Free to test the product shape, IA, UI patterns, and
+                user flows.
               </span>
             </div>
 
@@ -446,9 +410,8 @@ export default function HomePage() {
                 aria-hidden="true"
               />
               <span>
-                Upgrade when you need authentication, billing,
-                subscriptions, protected routes, and production
-                wiring.
+                Upgrade when you need authentication, billing, subscriptions,
+                protected routes, and production wiring.
               </span>
             </div>
           </CardContent>
@@ -464,54 +427,36 @@ export default function HomePage() {
         <div className="grid gap-4 lg:grid-cols-2">
           <Card className="p-4">
             <CardHeader className="p-0">
-              <CardTitle className="text-base">
-                Interaction contracts
-              </CardTitle>
+              <CardTitle className="text-base">Interaction contracts</CardTitle>
               <CardDescription>
-                Tables, actions, dialogs, loading states, empty
-                states, and destructive flows work together.
+                Tables, actions, dialogs, loading states, empty states, and
+                destructive flows work together.
               </CardDescription>
             </CardHeader>
 
             <CardContent className="p-0 pt-4">
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>
-                  • Tables with loading, empty states, and actions.
-                </li>
-                <li>
-                  • Forms with labels, helper text, and validation
-                  slots.
-                </li>
-                <li>
-                  • Navigation with active routes and stable layout.
-                </li>
+                <li>• Tables with loading, empty states, and actions.</li>
+                <li>• Forms with labels, helper text, and validation slots.</li>
+                <li>• Navigation with active routes and stable layout.</li>
               </ul>
             </CardContent>
           </Card>
 
           <Card className="p-4">
             <CardHeader className="p-0">
-              <CardTitle className="text-base">
-                Design-system first
-              </CardTitle>
+              <CardTitle className="text-base">Design-system first</CardTitle>
               <CardDescription>
-                Built with PyColors UI primitives and tokens for a
-                consistent, extensible product baseline.
+                Built with PyColors UI primitives and tokens for a consistent,
+                extensible product baseline.
               </CardDescription>
             </CardHeader>
 
             <CardContent className="p-0 pt-4">
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>
-                  • Token-driven color, border, radius, and elevation.
-                </li>
-                <li>
-                  • Accessible overlays, focus states, and controls.
-                </li>
-                <li>
-                  • Reusable states: Skeleton, EmptyState,
-                  TableLoading.
-                </li>
+                <li>• Token-driven color, border, radius, and elevation.</li>
+                <li>• Accessible overlays, focus states, and controls.</li>
+                <li>• Reusable states: Skeleton, EmptyState, TableLoading.</li>
               </ul>
             </CardContent>
           </Card>
@@ -532,21 +477,14 @@ pnpm dev`}
 
           <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div className="text-sm text-muted-foreground">
-              Read the guide for architecture notes, customization,
-              and release workflow.
+              Read the guide for architecture notes, customization, and release
+              workflow.
             </div>
 
             <Button asChild variant="outline" size="sm">
-              <a
-                href={EXTERNAL.docs}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
+              <a href={EXTERNAL.docs} target="_blank" rel="noreferrer noopener">
                 Read docs
-                <ExternalLink
-                  className="ml-2 h-4 w-4"
-                  aria-hidden="true"
-                />
+                <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
               </a>
             </Button>
           </div>
@@ -556,9 +494,8 @@ pnpm dev`}
       <footer className="mt-12 border-t border-border/60 pt-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div className="text-xs text-muted-foreground">
-            Starter{' '}
-            <span className="font-mono">{STARTER_VERSION_TAG}</span> ·
-            mock data · no backend · built with{' '}
+            Starter <span className="font-mono">{STARTER_VERSION_TAG}</span> ·
+            mock data · no backend · built with{" "}
             <a
               href={EXTERNAL.ui}
               target="_blank"
@@ -588,10 +525,7 @@ pnpm dev`}
               Docs
             </a>
 
-            <Link
-              href="/dashboard"
-              className="underline underline-offset-4"
-            >
+            <Link href="/dashboard" className="underline underline-offset-4">
               Demo
             </Link>
           </div>

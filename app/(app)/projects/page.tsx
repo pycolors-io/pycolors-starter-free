@@ -1,14 +1,8 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import Link from 'next/link';
-import {
-  Activity,
-  LayoutGrid,
-  Plus,
-  ShieldCheck,
-  Users,
-} from 'lucide-react';
+import * as React from "react";
+import Link from "next/link";
+import { Activity, LayoutGrid, Plus, ShieldCheck, Users } from "lucide-react";
 
 import {
   Alert,
@@ -20,15 +14,15 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@pycolors/ui';
+} from "@/components/ui";
 
-import { PageShell } from '@/components/app/page-shell';
-import { UpgradeGate } from '@/components/app/upgrade-gate';
-import { ProjectTable } from '@/components/projects/project-table';
+import { PageShell } from "@/components/app/page-shell";
+import { UpgradeGate } from "@/components/app/upgrade-gate";
+import { ProjectTable } from "@/components/projects/project-table";
 import {
   MOCK_PROJECTS,
   type Project,
-} from '@/components/projects/project-types';
+} from "@/components/projects/project-types";
 
 function AnalyticsMetric({
   label,
@@ -46,12 +40,8 @@ function AnalyticsMetric({
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-1">
           <div className="text-xs text-muted-foreground">{label}</div>
-          <div className="text-2xl font-semibold tracking-tight">
-            {value}
-          </div>
-          <div className="text-sm text-muted-foreground">
-            {description}
-          </div>
+          <div className="text-2xl font-semibold tracking-tight">{value}</div>
+          <div className="text-sm text-muted-foreground">{description}</div>
         </div>
 
         <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-md border border-border/60 bg-muted/30 text-muted-foreground">
@@ -63,8 +53,7 @@ function AnalyticsMetric({
 }
 
 export default function ProjectsPage() {
-  const [projects, setProjects] =
-    React.useState<Project[]>(MOCK_PROJECTS);
+  const [projects, setProjects] = React.useState<Project[]>(MOCK_PROJECTS);
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
@@ -84,9 +73,7 @@ export default function ProjectsPage() {
   }
 
   function onDelete(id: string) {
-    setProjects((prev) =>
-      prev.filter((project) => project.id !== id),
-    );
+    setProjects((prev) => prev.filter((project) => project.id !== id));
   }
 
   return (
@@ -109,9 +96,8 @@ export default function ProjectsPage() {
         <Alert>
           <AlertTitle>Production-shaped entity workflow</AlertTitle>
           <AlertDescription>
-            A credible SaaS entity surface with reusable table
-            patterns, row actions, dialogs, loading states, and
-            upgrade-ready extension paths.
+            A credible SaaS entity surface with reusable table patterns, row
+            actions, dialogs, loading states, and upgrade-ready extension paths.
           </AlertDescription>
         </Alert>
       }
@@ -128,8 +114,8 @@ export default function ProjectsPage() {
             </CardTitle>
 
             <CardDescription>
-              Manage project records with reusable table, action,
-              dialog, loading, and empty-state patterns.
+              Manage project records with reusable table, action, dialog,
+              loading, and empty-state patterns.
             </CardDescription>
           </CardHeader>
 
@@ -152,10 +138,10 @@ export default function ProjectsPage() {
           title="Protected project workflows"
           description="Unlock production-ready project architecture with protected access, plan gating, and organization-ready foundations."
           features={[
-            'Protected app architecture',
-            'Plan gating & feature access',
-            'Organization-ready foundations',
-            'Production-ready SaaS structure',
+            "Protected app architecture",
+            "Plan gating & feature access",
+            "Organization-ready foundations",
+            "Production-ready SaaS structure",
           ]}
           previewHeightClassName="min-h-[320px]"
         >
@@ -164,8 +150,8 @@ export default function ProjectsPage() {
               <CardTitle>Project insights</CardTitle>
 
               <CardDescription>
-                Usage, access, and product signals connected to your
-                workspace entities.
+                Usage, access, and product signals connected to your workspace
+                entities.
               </CardDescription>
             </CardHeader>
 
