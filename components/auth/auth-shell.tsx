@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
-import Link from 'next/link';
+import type { ReactNode } from "react";
+import Link from "next/link";
 
 import {
   Card,
@@ -7,7 +7,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@pycolors/ui';
+} from "@/components/ui";
 
 export function AuthShell({
   title,
@@ -48,10 +48,7 @@ export function AuthShell({
           ) : null}
 
           <div className="pt-1 text-center text-xs text-muted-foreground">
-            <Link
-              href="/dashboard"
-              className="underline underline-offset-4"
-            >
+            <Link href="/dashboard" className="underline underline-offset-4">
               Back to dashboard
             </Link>
           </div>

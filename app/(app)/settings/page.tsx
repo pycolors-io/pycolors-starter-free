@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import * as React from "react";
 
 import {
   Alert,
@@ -20,14 +20,14 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '@pycolors/ui';
+} from "@/components/ui";
 
-import { PageShell } from '@/components/app/page-shell';
+import { PageShell } from "@/components/app/page-shell";
 
-type SettingsTab = 'profile' | 'organization' | 'security' | 'danger';
+type SettingsTab = "profile" | "organization" | "security" | "danger";
 
 export default function SettingsPage() {
-  const [tab, setTab] = React.useState<SettingsTab>('profile');
+  const [tab, setTab] = React.useState<SettingsTab>("profile");
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
@@ -35,10 +35,10 @@ export default function SettingsPage() {
     return () => clearTimeout(timeout);
   }, []);
 
-  const profile = { name: 'Patrice', email: 'patrice@pycolors.io' };
+  const profile = { name: "Patrice", email: "patrice@pycolors.io" };
   const organization = {
-    name: 'PyColors SaaS',
-    slug: 'pycolors-saas',
+    name: "PyColors SaaS",
+    slug: "pycolors-saas",
   };
 
   return (
@@ -54,9 +54,9 @@ export default function SettingsPage() {
         <Alert>
           <AlertTitle>Production-ready settings surface</AlertTitle>
           <AlertDescription>
-            A structured settings experience with tabs, forms, helper
-            text, loading states, and safe destructive patterns for
-            modern SaaS products.
+            A structured settings experience with tabs, forms, helper text,
+            loading states, and safe destructive patterns for modern SaaS
+            products.
           </AlertDescription>
         </Alert>
       }
@@ -65,8 +65,8 @@ export default function SettingsPage() {
         <CardHeader className="p-0">
           <CardTitle>Account</CardTitle>
           <CardDescription>
-            Manage profile, organization, security, and account-level
-            controls from a single workspace surface.
+            Manage profile, organization, security, and account-level controls
+            from a single workspace surface.
           </CardDescription>
         </CardHeader>
 
@@ -77,9 +77,7 @@ export default function SettingsPage() {
           >
             <TabsList className="w-full justify-start">
               <TabsTrigger value="profile">Profile</TabsTrigger>
-              <TabsTrigger value="organization">
-                Organization
-              </TabsTrigger>
+              <TabsTrigger value="organization">Organization</TabsTrigger>
               <TabsTrigger value="security">Security</TabsTrigger>
               <TabsTrigger value="danger">Danger zone</TabsTrigger>
             </TabsList>
@@ -90,8 +88,8 @@ export default function SettingsPage() {
                   <CardHeader className="p-0">
                     <CardTitle>Profile</CardTitle>
                     <CardDescription>
-                      Personal identity fields prepared for
-                      authenticated user data.
+                      Personal identity fields prepared for authenticated user
+                      data.
                     </CardDescription>
                   </CardHeader>
 
@@ -136,8 +134,8 @@ export default function SettingsPage() {
                   <CardHeader className="p-0">
                     <CardTitle>Preferences</CardTitle>
                     <CardDescription>
-                      Product preferences for localization,
-                      notifications, and workspace experience.
+                      Product preferences for localization, notifications, and
+                      workspace experience.
                     </CardDescription>
                   </CardHeader>
 
@@ -167,8 +165,8 @@ export default function SettingsPage() {
                   <CardHeader className="p-0">
                     <CardTitle>Organization</CardTitle>
                     <CardDescription>
-                      Workspace identity fields prepared for
-                      team-based SaaS products.
+                      Workspace identity fields prepared for team-based SaaS
+                      products.
                     </CardDescription>
                   </CardHeader>
 
@@ -290,8 +288,7 @@ export default function SettingsPage() {
                   <CardHeader className="p-0">
                     <CardTitle>Sessions</CardTitle>
                     <CardDescription>
-                      Device and token management for secure account
-                      control.
+                      Device and token management for secure account control.
                     </CardDescription>
                   </CardHeader>
 
@@ -321,20 +318,17 @@ export default function SettingsPage() {
                   <CardHeader className="p-0">
                     <CardTitle>Danger zone</CardTitle>
                     <CardDescription>
-                      Destructive actions are isolated, explicit, and
-                      designed for confirmation-first workflows.
+                      Destructive actions are isolated, explicit, and designed
+                      for confirmation-first workflows.
                     </CardDescription>
                   </CardHeader>
 
                   <CardContent className="space-y-4 p-0 pt-4">
                     <div className="rounded-md border border-border/60 p-3">
-                      <div className="text-sm font-medium">
-                        Delete account
-                      </div>
+                      <div className="text-sm font-medium">Delete account</div>
                       <div className="mt-1 text-sm text-muted-foreground">
-                        Prepared for confirmation dialogs, typed
-                        verification, and irreversible account
-                        removal.
+                        Prepared for confirmation dialogs, typed verification,
+                        and irreversible account removal.
                       </div>
 
                       <div className="mt-3">
@@ -354,9 +348,8 @@ export default function SettingsPage() {
                         Delete organization
                       </div>
                       <div className="mt-1 text-sm text-muted-foreground">
-                        Prepared for owner-only permissions, typed
-                        confirmation, and irreversible workspace
-                        removal.
+                        Prepared for owner-only permissions, typed confirmation,
+                        and irreversible workspace removal.
                       </div>
 
                       <div className="mt-3">

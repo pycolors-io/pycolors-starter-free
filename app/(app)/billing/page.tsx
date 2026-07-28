@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import Link from 'next/link';
+import * as React from "react";
+import Link from "next/link";
 import {
   CreditCard,
   ExternalLink,
@@ -10,7 +10,7 @@ import {
   TrendingDown,
   TrendingUp,
   Users,
-} from 'lucide-react';
+} from "lucide-react";
 
 import {
   Alert,
@@ -32,13 +32,13 @@ import {
   TableHeader,
   TableLoading,
   TableRow,
-} from '@pycolors/ui';
+} from "@/components/ui";
 
-import { PageShell } from '@/components/app/page-shell';
-import { UpgradeGate } from '@/components/app/upgrade-gate';
+import { PageShell } from "@/components/app/page-shell";
+import { UpgradeGate } from "@/components/app/upgrade-gate";
 
-type BillingStatus = 'active' | 'trialing' | 'past_due';
-type InvoiceStatus = 'paid' | 'open' | 'void';
+type BillingStatus = "active" | "trialing" | "past_due";
+type InvoiceStatus = "paid" | "open" | "void";
 
 type Invoice = Readonly<{
   id: string;
@@ -50,18 +50,18 @@ type Invoice = Readonly<{
 
 const MOCK_INVOICES: Invoice[] = [
   {
-    id: 'inv_001',
-    number: 'INV-0001',
-    dateIso: '2026-02-01',
+    id: "inv_001",
+    number: "INV-0001",
+    dateIso: "2026-02-01",
     amountCents: 2900,
-    status: 'paid',
+    status: "paid",
   },
   {
-    id: 'inv_002',
-    number: 'INV-0002',
-    dateIso: '2026-01-01',
+    id: "inv_002",
+    number: "INV-0002",
+    dateIso: "2026-01-01",
     amountCents: 2900,
-    status: 'paid',
+    status: "paid",
   },
 ];
 
@@ -72,19 +72,16 @@ function formatDate(iso: string) {
     return iso;
   }
 
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
   });
 }
 
-function formatMoney(
-  amountCents: number,
-  currency: 'USD' | 'EUR' = 'USD',
-) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
+function formatMoney(amountCents: number, currency: "USD" | "EUR" = "USD") {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
     currency,
   }).format(amountCents / 100);
 }
@@ -95,9 +92,9 @@ function StatusBadge({
   status: BillingStatus;
 }>) {
   const labelByStatus: Record<BillingStatus, string> = {
-    active: 'Active',
-    trialing: 'Trialing',
-    past_due: 'Past due',
+    active: "Active",
+    trialing: "Trialing",
+    past_due: "Past due",
   };
 
   return <Badge>{labelByStatus[status]}</Badge>;
@@ -109,9 +106,9 @@ function InvoiceStatusBadge({
   status: InvoiceStatus;
 }>) {
   const labelByStatus: Record<InvoiceStatus, string> = {
-    paid: 'Paid',
-    open: 'Open',
-    void: 'Void',
+    paid: "Paid",
+    open: "Open",
+    void: "Void",
   };
 
   return <Badge variant="success">{labelByStatus[status]}</Badge>;
@@ -134,13 +131,9 @@ function BillingMetric({
         <div className="space-y-1">
           <div className="text-xs text-muted-foreground">{label}</div>
 
-          <div className="text-2xl font-semibold tracking-tight">
-            {value}
-          </div>
+          <div className="text-2xl font-semibold tracking-tight">{value}</div>
 
-          <div className="text-sm text-muted-foreground">
-            {description}
-          </div>
+          <div className="text-sm text-muted-foreground">{description}</div>
         </div>
 
         <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-md border border-border/60 bg-muted/30 text-muted-foreground">
@@ -206,19 +199,19 @@ export default function BillingPage() {
   }, []);
 
   const plan = {
-    name: 'Pro',
-    priceLabel: '$29 / month',
+    name: "Pro",
+    priceLabel: "$29 / month",
     seats: 10,
-    renewalIso: '2026-03-01',
-    status: 'active' as const satisfies BillingStatus,
+    renewalIso: "2026-03-01",
+    status: "active" as const satisfies BillingStatus,
   };
 
   const invoices = MOCK_INVOICES;
 
   const statusHintByStatus: Record<BillingStatus, string> = {
-    active: 'All features enabled',
-    trialing: 'Trial period',
-    past_due: 'Payment issue',
+    active: "All features enabled",
+    trialing: "Trial period",
+    past_due: "Payment issue",
   };
 
   const statusHint = statusHintByStatus[plan.status];
@@ -242,10 +235,10 @@ export default function BillingPage() {
         <Alert>
           <AlertTitle>Billing-ready SaaS surface</AlertTitle>
           <AlertDescription>
-            A complete billing experience shaped for subscriptions,
-            invoices, payment methods, customer portal access, and
-            Stripe-backed monetization. Starter Free uses illustrative
-            demo data here; Starter Pro is sold separately by PyColors.
+            A complete billing experience shaped for subscriptions, invoices,
+            payment methods, customer portal access, and Stripe-backed
+            monetization. Starter Free uses illustrative demo data here; Starter
+            Pro is sold separately by PyColors.
           </AlertDescription>
         </Alert>
       }
@@ -265,8 +258,7 @@ export default function BillingPage() {
                   </CardTitle>
 
                   <CardDescription>
-                    Subscription details, seats, renewal date, and
-                    plan status.
+                    Subscription details, seats, renewal date, and plan status.
                   </CardDescription>
                 </div>
 
@@ -282,16 +274,10 @@ export default function BillingPage() {
             <CardContent className="p-0 pt-4">
               <div className="grid gap-4 md:grid-cols-3">
                 <div className="rounded-md border border-border/60 p-3">
-                  <div className="text-xs text-muted-foreground">
-                    Plan
-                  </div>
+                  <div className="text-xs text-muted-foreground">Plan</div>
 
                   <div className="mt-1 text-sm font-medium">
-                    {isLoading ? (
-                      <Skeleton className="h-5 w-24" />
-                    ) : (
-                      plan.name
-                    )}
+                    {isLoading ? <Skeleton className="h-5 w-24" /> : plan.name}
                   </div>
 
                   <div className="mt-1 text-sm text-muted-foreground">
@@ -303,22 +289,15 @@ export default function BillingPage() {
                   </div>
 
                   <div className="mt-2 text-xs leading-5 text-muted-foreground">
-                    Demo pricing only, not the Starter Pro purchase
-                    price.
+                    Demo pricing only, not the Starter Pro purchase price.
                   </div>
                 </div>
 
                 <div className="rounded-md border border-border/60 p-3">
-                  <div className="text-xs text-muted-foreground">
-                    Seats
-                  </div>
+                  <div className="text-xs text-muted-foreground">Seats</div>
 
                   <div className="mt-1 text-sm font-medium">
-                    {isLoading ? (
-                      <Skeleton className="h-5 w-16" />
-                    ) : (
-                      plan.seats
-                    )}
+                    {isLoading ? <Skeleton className="h-5 w-16" /> : plan.seats}
                   </div>
 
                   <div className="mt-1 text-sm text-muted-foreground">
@@ -327,9 +306,7 @@ export default function BillingPage() {
                 </div>
 
                 <div className="rounded-md border border-border/60 p-3">
-                  <div className="text-xs text-muted-foreground">
-                    Renewal
-                  </div>
+                  <div className="text-xs text-muted-foreground">Renewal</div>
 
                   <div className="mt-1 text-sm font-medium">
                     {isLoading ? (
@@ -347,20 +324,12 @@ export default function BillingPage() {
 
               <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <div className="text-sm text-muted-foreground">
-                  Upgrades, invoices, and payment methods are managed
-                  through the billing portal.
+                  Upgrades, invoices, and payment methods are managed through
+                  the billing portal.
                 </div>
 
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  disabled
-                >
-                  <ExternalLink
-                    className="h-4 w-4"
-                    aria-hidden="true"
-                  />
+                <Button type="button" variant="outline" size="sm" disabled>
+                  <ExternalLink className="h-4 w-4" aria-hidden="true" />
                   Open portal
                 </Button>
               </div>
@@ -378,22 +347,19 @@ export default function BillingPage() {
               </CardTitle>
 
               <CardDescription>
-                Default payment method stored securely by your payment
-                provider.
+                Default payment method stored securely by your payment provider.
               </CardDescription>
             </CardHeader>
 
             <CardContent className="space-y-3 p-0 pt-4">
               <div className="rounded-md border border-border/60 p-3">
-                <div className="text-xs text-muted-foreground">
-                  Default
-                </div>
+                <div className="text-xs text-muted-foreground">Default</div>
 
                 <div className="mt-1 text-sm font-medium">
                   {isLoading ? (
                     <Skeleton className="h-5 w-36" />
                   ) : (
-                    'Visa •••• 4242'
+                    "Visa •••• 4242"
                   )}
                 </div>
 
@@ -401,7 +367,7 @@ export default function BillingPage() {
                   {isLoading ? (
                     <Skeleton className="h-4 w-24" />
                   ) : (
-                    'Expires 12/29'
+                    "Expires 12/29"
                   )}
                 </div>
               </div>
@@ -417,8 +383,8 @@ export default function BillingPage() {
               </Button>
 
               <div className="text-xs text-muted-foreground">
-                Payment method updates should be handled through a
-                secure customer portal flow.
+                Payment method updates should be handled through a secure
+                customer portal flow.
               </div>
             </CardContent>
           </Card>
@@ -435,8 +401,7 @@ export default function BillingPage() {
             </CardTitle>
 
             <CardDescription>
-              Billing history prepared for downloadable invoice
-              records.
+              Billing history prepared for downloadable invoice records.
             </CardDescription>
           </CardHeader>
 
@@ -453,16 +418,13 @@ export default function BillingPage() {
               </TableHeader>
 
               <TableBody>
-                <InvoiceRows
-                  isLoading={isLoading}
-                  invoices={invoices}
-                />
+                <InvoiceRows isLoading={isLoading} invoices={invoices} />
               </TableBody>
             </Table>
 
             <div className="mt-3 text-xs text-muted-foreground">
-              Invoice rows are shaped for PDF downloads, receipt URLs,
-              tax metadata, and customer billing history.
+              Invoice rows are shaped for PDF downloads, receipt URLs, tax
+              metadata, and customer billing history.
             </div>
           </CardContent>
         </Card>
@@ -471,10 +433,10 @@ export default function BillingPage() {
           title="Advanced billing & subscription insights"
           description="Unlock subscription analytics, usage-based billing, VAT handling, and customer billing intelligence."
           features={[
-            'Stripe Checkout integration',
-            'Billing portal flows',
-            'Subscription lifecycle handling',
-            'Webhook synchronization',
+            "Stripe Checkout integration",
+            "Billing portal flows",
+            "Subscription lifecycle handling",
+            "Webhook synchronization",
           ]}
           previewHeightClassName="min-h-[320px]"
         >
@@ -517,23 +479,20 @@ export default function BillingPage() {
             <CardTitle>Monetization path</CardTitle>
 
             <CardDescription>
-              Connect the portal, subscription state, invoice records,
-              and access control to make billing production-ready.
+              Connect the portal, subscription state, invoice records, and
+              access control to make billing production-ready.
             </CardDescription>
           </CardHeader>
 
           <CardContent className="flex flex-col gap-2 p-0 pt-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="text-sm text-muted-foreground">
-              Use a server route to create a secure customer portal
-              session and redirect the authenticated user.
+              Use a server route to create a secure customer portal session and
+              redirect the authenticated user.
             </div>
 
             <div className="flex items-center gap-2">
               <Button type="button" variant="outline" disabled>
-                <ExternalLink
-                  className="h-4 w-4"
-                  aria-hidden="true"
-                />
+                <ExternalLink className="h-4 w-4" aria-hidden="true" />
                 Open portal
               </Button>
 
