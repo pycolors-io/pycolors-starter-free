@@ -52,7 +52,7 @@
   "devDependencies": {
     "@pycolors/eslint-config": "^1.0.1",
     "@pycolors/typescript-config": "^1.0.0",
-    "@tailwindcss/postcss": "^4.1.16",
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^24.0.0",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
