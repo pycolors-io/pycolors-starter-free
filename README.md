@@ -14,50 +14,64 @@ Clone → run → ship your first product screens in minutes.
 👉 UI library: https://pycolors.io/ui \
 👉 Discussions: https://github.com/pycolors-io/pycolors-starter-free/discussions
 
-------------------------------------------------------------------------
+---
 
 ## Why this exists
 
 Most starters are either:
 
--   Too empty → you still build everything
--   Too complex → you spend days deleting code
+- Too empty → you still build everything
+- Too complex → you spend days deleting code
 
 PyColors Starter Free sits in the middle.
 
 It gives you a clean production baseline so you can focus on building
 your product instead of reinventing the foundation.
 
-------------------------------------------------------------------------
+---
 
 ## What you get
 
 ### App foundation
 
--   Next.js App Router setup
--   Production-ready folder structure
--   Dashboard shell + auth flows
--   Clean layout architecture ready to scale
+- Next.js App Router setup
+- Production-ready folder structure
+- Dashboard shell + auth flows
+- Clean layout architecture ready to scale
 
 ### Design system included
 
--   PyColors UI pre-integrated
--   Tailwind v4 + semantic design tokens
--   Accessible Radix-based components
--   Copy/paste components → ship screens fast
+- PyColors UI pre-integrated
+- Tailwind v4 + semantic design tokens
+- Accessible Radix-based components
+- Copy/paste components → ship screens fast
 
 ### Developer experience
 
--   TypeScript strict config
--   ESLint baseline
--   `pnpm verify` quality checks
--   Opinionated conventions that scale
+- TypeScript strict config
+- ESLint baseline
+- `pnpm verify` quality checks
+- Opinionated conventions that scale
 
-------------------------------------------------------------------------
+---
+
+## Light and dark appearance
+
+Use the sun/moon button in the public or application header to switch between
+light and dark mode. The Free authentication screens also include this control.
+On first visit, appearance follows your system preference. An explicit choice
+is saved in this browser for this starter, takes precedence over the system,
+and is restored before rendering on reload. Other open tabs of the same starter
+receive the saved choice.
+
+The preference is local to the browser and origin, not your account. If browser
+storage is blocked, switching still works on the current page, but the choice
+may not survive a reload. Clearing storage restores the system default on the
+next visit. Both modes use the existing PyColors semantic tokens.
 
 ## Quick start
 
-``` bash
+```bash
 pnpm install
 pnpm dev
 ```
@@ -66,57 +80,57 @@ Open: http://localhost:3000
 
 Start building your product.
 
-------------------------------------------------------------------------
+---
 
 ## Included screens
 
 This starter already contains real product surfaces:
 
--   Authentication flows (login / register / reset)
--   Dashboard layout
--   Projects module (table + dialogs)
--   Settings / Billing / Admin pages structure
+- Authentication flows (login / register / reset)
+- Dashboard layout
+- Projects module (table + dialogs)
+- Settings / Billing / Admin pages structure
 
 It's intentionally minimal but realistic.
 
-------------------------------------------------------------------------
+---
 
 ## Tokens setup
 
-``` css
+```css
 /* app/globals.css */
 @import "@pycolors/tokens/tokens.css";
 ```
 
 This keeps marketing, docs, templates and apps visually consistent.
 
-------------------------------------------------------------------------
+---
 
 ## Who this starter is for
 
 Perfect if you are:
 
--   Building a SaaS
--   Prototyping a startup idea
--   Creating internal tools
--   Starting a new product from scratch
+- Building a SaaS
+- Prototyping a startup idea
+- Creating internal tools
+- Starting a new product from scratch
 
 Not meant to be a full SaaS — \
 meant to be the fastest starting point.
 
-------------------------------------------------------------------------
+---
 
 ## The ecosystem
 
-| Layer        | Purpose                 |
-| ------------ | ----------------------- |
-| PyColors UI  | UI primitives           |
-| Tokens       | Design language         |
-| Starter Free | App foundation          |
-| Starter Pro  | Full SaaS architecture  |
-| Templates    | Ready-to-sell products  |
+| Layer        | Purpose                |
+| ------------ | ---------------------- |
+| PyColors UI  | UI primitives          |
+| Tokens       | Design language        |
+| Starter Free | App foundation         |
+| Starter Pro  | Full SaaS architecture |
+| Templates    | Ready-to-sell products |
 
-------------------------------------------------------------------------
+---
 
 ## Starter Pro (next)
 
@@ -152,7 +166,7 @@ Designed for founders and product engineers shipping their first paid version.
 
 👉 Early access & roadmap: https://pycolors.io/starters
 
-------------------------------------------------------------------------
+---
 
 ## Community
 
@@ -164,7 +178,7 @@ Have a question, idea, or feedback?
 Discussions are the best place to get help with setup, integrations,
 and deployment.
 
-------------------------------------------------------------------------
+---
 
 ## Read-only mirror
 
@@ -173,7 +187,7 @@ Source of truth: `apps/starter-free`.
 
 You can open Issues and participate in Discussions in this repository.
 
-------------------------------------------------------------------------
+---
 
 ## License
 

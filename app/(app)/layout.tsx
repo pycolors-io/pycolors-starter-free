@@ -1,6 +1,7 @@
-import { AppSidebar } from '@/components/app/app-sidebar';
-import { MobileNav } from '@/components/app/mobile-nav';
-import { UserMenu } from '@/components/app/user-menu';
+import { ThemeToggle } from "@/components/theme-toggle";
+import { AppSidebar } from "@/components/app/app-sidebar";
+import { MobileNav } from "@/components/app/mobile-nav";
+import { UserMenu } from "@/components/app/user-menu";
 
 export default function AppLayout({
   children,
@@ -30,15 +31,14 @@ export default function AppLayout({
               </div>
 
               <div className="flex items-center gap-2">
+                <ThemeToggle />
                 <MobileNav />
                 <UserMenu />
               </div>
             </div>
           </header>
 
-          <main className="min-w-0 flex-1 px-4 py-6 md:px-6">
-            {children}
-          </main>
+          <main className="min-w-0 flex-1 px-4 py-6 md:px-6">{children}</main>
         </div>
       </div>
     </div>
