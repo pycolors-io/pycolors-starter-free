@@ -204,6 +204,15 @@ export default function DashboardPage() {
         </div>
       </div>
 
+      <p className="rounded-md border border-border/60 bg-muted/30 px-4 py-3 text-sm leading-6 text-muted-foreground">
+        <span className="font-medium text-foreground">
+          Illustrative demo data.
+        </span>{" "}
+        Dashboard metrics, trends, activity, and gated-feature previews use
+        fictional sample values, not live data from billing, analytics,
+        monitoring, or account services.
+      </p>
+
       <Card className="p-4">
         <CardHeader className="p-0">
           <div className="flex items-start justify-between gap-3">
