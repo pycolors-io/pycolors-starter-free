@@ -14,50 +14,50 @@ Clone → run → ship your first product screens in minutes.
 👉 UI library: https://pycolors.io/ui \
 👉 Discussions: https://github.com/pycolors-io/pycolors-starter-free/discussions
 
-------------------------------------------------------------------------
+---
 
 ## Why this exists
 
 Most starters are either:
 
--   Too empty → you still build everything
--   Too complex → you spend days deleting code
+- Too empty → you still build everything
+- Too complex → you spend days deleting code
 
 PyColors Starter Free sits in the middle.
 
-It gives you a clean production baseline so you can focus on building
+It gives you a clean frontend baseline so you can focus on building
 your product instead of reinventing the foundation.
 
-------------------------------------------------------------------------
+---
 
 ## What you get
 
 ### App foundation
 
--   Next.js App Router setup
--   Production-ready folder structure
--   Dashboard shell + auth flows
--   Clean layout architecture ready to scale
+- Next.js App Router setup
+- Production-ready folder structure
+- Dashboard shell + demo auth screens
+- Clean layout architecture ready to scale
 
 ### Design system included
 
--   PyColors UI pre-integrated
--   Tailwind v4 + semantic design tokens
--   Accessible Radix-based components
--   Copy/paste components → ship screens fast
+- PyColors UI pre-integrated
+- Tailwind v4 + semantic design tokens
+- Accessible Radix-based components
+- Copy/paste components → ship screens fast
 
 ### Developer experience
 
--   TypeScript strict config
--   ESLint baseline
--   `pnpm verify` quality checks
--   Opinionated conventions that scale
+- TypeScript strict config
+- ESLint baseline
+- `pnpm verify` quality checks
+- Opinionated conventions that scale
 
-------------------------------------------------------------------------
+---
 
 ## Quick start
 
-``` bash
+```bash
 pnpm install
 pnpm dev
 ```
@@ -66,93 +66,89 @@ Open: http://localhost:3000
 
 Start building your product.
 
-------------------------------------------------------------------------
+---
 
 ## Included screens
 
 This starter already contains real product surfaces:
 
--   Authentication flows (login / register / reset)
--   Dashboard layout
--   Projects module (table + dialogs)
--   Settings / Billing / Admin pages structure
+- Demo authentication screens (login / register / reset)
+- Dashboard layout
+- Projects module (table + dialogs)
+- Settings / Billing / Admin pages structure
 
 It's intentionally minimal but realistic.
 
-------------------------------------------------------------------------
+---
 
 ## Tokens setup
 
-``` css
+```css
 /* app/globals.css */
 @import "@pycolors/tokens/tokens.css";
 ```
 
 This keeps marketing, docs, templates and apps visually consistent.
 
-------------------------------------------------------------------------
+---
 
 ## Who this starter is for
 
 Perfect if you are:
 
--   Building a SaaS
--   Prototyping a startup idea
--   Creating internal tools
--   Starting a new product from scratch
+- Building a SaaS
+- Prototyping a startup idea
+- Creating internal tools
+- Starting a new product from scratch
 
 Not meant to be a full SaaS — \
 meant to be the fastest starting point.
 
-------------------------------------------------------------------------
+---
 
 ## The ecosystem
 
-| Layer        | Purpose                 |
-| ------------ | ----------------------- |
-| PyColors UI  | UI primitives           |
-| Tokens       | Design language         |
-| Starter Free | App foundation          |
-| Starter Pro  | Full SaaS architecture  |
-| Templates    | Ready-to-sell products  |
-
-------------------------------------------------------------------------
-
-## Starter Pro (next)
-
-Starter Free gives you the full SaaS surface.
-
-Starter Pro keeps the same screens and UX contracts —
-but wires the foundations for production so you can ship the **money path** faster.
-
-From sign up → onboarding → subscription → team management.
+| Layer        | Purpose                |
+| ------------ | ---------------------- |
+| PyColors UI  | UI primitives          |
+| Tokens       | Design language        |
+| Starter Free | App foundation         |
+| Starter Pro  | Full SaaS architecture |
+| Templates    | Ready-to-sell products |
 
 ---
 
-### What you get with Pro
+## Local project demo
 
-- **Authentication + organizations architecture**
-  Sessions, teams, invites, and role-based access patterns — production-ready.
+Open `/projects` to create a project, open its details, rename it, or delete it.
+Projects are stored in this browser's `localStorage` and survive page reloads.
+Use **Reset demo** to restore the sample projects after confirming the reset.
 
-- **Stripe billing foundations**
-  Checkout + customer portal flows, subscription states, and billing UX wired end-to-end.
+This is a frontend demo: no account, shared database, authorization, or
+cross-device synchronization is connected. Use sample data, not sensitive
+information. Clearing browser storage removes your changes. If storage is
+unavailable, the app keeps changes for the current visit and displays a notice.
+Project status, member counts, and update labels are illustrative demo values.
 
-- **Production data layer conventions**
-  Structured CRUD patterns, validation, loading/error states, and API contracts aligned with real backend wiring.
+## When to choose Starter Pro
 
-- **Advanced dashboard patterns**
-  Onboarding cues, empty states, scalable layouts, and real product UX decisions baked in.
+Use Free to explore the UI and prototype your product workflows. Choose Pro
+when you need the connected foundations behind those screens:
 
-- **Less glue code. Fewer edge cases.**
-  Opinionated defaults and automation so you focus on product — not wiring.
+- Auth.js authentication and protected routes.
+- Prisma with PostgreSQL for your application's data layer.
+- Stripe Checkout, customer portal, and webhook-driven billing foundations.
+- Transactional email and PWA foundations.
+
+Starter Pro is source code to configure and adapt for your product. Purchasing
+it does not unlock this running demo or automatically migrate its local projects.
+You still implement your own project data model and workflows.
+
+[Explore Starter Pro](https://pycolors.io/starters/pro) ·
+[See what is included](https://pycolors.io/docs/starter-pro/what-is-included) ·
+[Plan your upgrade](https://pycolors.io/docs/starter/upgrade)
 
 ---
-
-Designed for founders and product engineers shipping their first paid version.
-
-👉 Early access & roadmap: https://pycolors.io/starters
-
-------------------------------------------------------------------------
 
 ## Community
 
@@ -164,7 +160,7 @@ Have a question, idea, or feedback?
 Discussions are the best place to get help with setup, integrations,
 and deployment.
 
-------------------------------------------------------------------------
+---
 
 ## Read-only mirror
 
@@ -173,7 +169,7 @@ Source of truth: `apps/starter-free`.
 
 You can open Issues and participate in Discussions in this repository.
 
-------------------------------------------------------------------------
+---
 
 ## License
 

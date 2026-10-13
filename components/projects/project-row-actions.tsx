@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import Link from 'next/link';
+import * as React from "react";
+import Link from "next/link";
 import {
   Button,
   DropdownMenu,
@@ -9,10 +9,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-} from '@pycolors/ui';
-import { Project } from './project-types';
-import { ProjectRenameDialog } from './project-rename-dialog';
-import { ProjectConfirmDeleteDialog } from './project-confirm-delete-dialog';
+} from "@pycolors/ui";
+import { Project } from "./project-types";
+import { ProjectRenameDialog } from "./project-rename-dialog";
+import { ProjectConfirmDeleteDialog } from "./project-confirm-delete-dialog";
 
 export function ProjectRowActions({
   project,
@@ -37,7 +37,9 @@ export function ProjectRowActions({
 
         <DropdownMenuContent align="end">
           <DropdownMenuItem asChild>
-            <Link href={`/projects/${project.id}`}>Open</Link>
+            <Link href={`/projects/${encodeURIComponent(project.id)}`}>
+              Open
+            </Link>
           </DropdownMenuItem>
 
           <DropdownMenuItem
