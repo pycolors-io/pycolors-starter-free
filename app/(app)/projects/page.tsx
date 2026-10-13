@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Activity, LayoutGrid, Plus, ShieldCheck, Users } from "lucide-react";
+import { Activity, LayoutGrid, ShieldCheck, Users } from "lucide-react";
 
 import {
   Alert,
@@ -14,15 +14,20 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
 } from "@/components/ui";
 
 import { PageShell } from "@/components/app/page-shell";
 import { UpgradeGate } from "@/components/app/upgrade-gate";
 import { ProjectTable } from "@/components/projects/project-table";
-import {
-  MOCK_PROJECTS,
-  type Project,
-} from "@/components/projects/project-types";
+import { ProjectCreateDialog } from "@/components/projects/project-create-dialog";
+import { useProjects } from "@/components/projects/project-provider";
 
 function AnalyticsMetric({
   label,
@@ -53,56 +58,88 @@ function AnalyticsMetric({
 }
 
 export default function ProjectsPage() {
-  const [projects, setProjects] = React.useState<Project[]>(MOCK_PROJECTS);
-  const [isLoading, setIsLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    const timeout = setTimeout(() => setIsLoading(false), 450);
-    return () => clearTimeout(timeout);
-  }, []);
-
-  function onRename(id: string, name: string) {
-    const next = name.trim();
-    if (!next) return;
-
-    setProjects((prev) =>
-      prev.map((project) =>
-        project.id === id ? { ...project, name: next } : project,
-      ),
-    );
-  }
-
-  function onDelete(id: string) {
-    setProjects((prev) => prev.filter((project) => project.id !== id));
-  }
+  const {
+    projects,
+    isLoading,
+    storageError,
+    createProject,
+    renameProject,
+    deleteProject,
+    resetProjects,
+  } = useProjects();
+  const [resetOpen, setResetOpen] = React.useState(false);
 
   return (
     <PageShell
       title="Projects"
       description="A structured entity workspace for modern SaaS products."
       actions={
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Button asChild variant="outline" size="sm">
             <Link href="/dashboard">Back</Link>
           </Button>
 
-          <Button type="button" size="sm" disabled>
-            <Plus className="h-4 w-4" aria-hidden="true" />
-            New project
-          </Button>
+          <Dialog open={resetOpen} onOpenChange={setResetOpen}>
+            <DialogTrigger asChild>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                disabled={isLoading}
+              >
+                Reset demo
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Reset demo projects?</DialogTitle>
+                <DialogDescription>
+                  This replaces your local projects with the original examples.
+                  This action cannot be undone.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setResetOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="button"
+                  onClick={() => {
+                    resetProjects();
+                    setResetOpen(false);
+                  }}
+                >
+                  Reset demo
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+          <ProjectCreateDialog onCreate={createProject} disabled={isLoading} />
         </div>
       }
       meta={
         <Alert>
-          <AlertTitle>Production-shaped entity workflow</AlertTitle>
+          <AlertTitle>Try your first project</AlertTitle>
           <AlertDescription>
-            A credible SaaS entity surface with reusable table patterns, row
-            actions, dialogs, loading states, and upgrade-ready extension paths.
+            Create a project, open its details, then rename or delete it.
+            Changes are saved in this browser only. This demo has no account,
+            database, or synchronization between devices. Use sample data, not
+            sensitive information.
           </AlertDescription>
         </Alert>
       }
     >
       <div className="space-y-6">
+        {storageError ? (
+          <Alert>
+            <AlertTitle>Local storage notice</AlertTitle>
+            <AlertDescription>{storageError}</AlertDescription>
+          </Alert>
+        ) : null}
         <Card className="p-4">
           <CardHeader className="p-0">
             <CardTitle className="flex items-center gap-2">
@@ -123,26 +160,29 @@ export default function ProjectsPage() {
             <ProjectTable
               projects={projects}
               isLoading={isLoading}
-              onRename={onRename}
-              onDelete={onDelete}
+              onRename={renameProject}
+              onDelete={deleteProject}
             />
           </CardContent>
 
           <div className="mt-3 text-xs text-muted-foreground">
-            Designed to support organization workflows, permissions,
-            subscriptions, and scalable product architectures.
+            Reload to return to your saved projects, or reset the demo to start
+            again.
           </div>
         </Card>
 
         <UpgradeGate
-          title="Protected project workflows"
-          description="Unlock production-ready project architecture with protected access, plan gating, and organization-ready foundations."
+          title="Ready for real users and shared data?"
+          description="Starter Pro includes Auth.js authentication, protected routes, Prisma with PostgreSQL, and Stripe billing foundations. Connect your own project workflows to these foundations."
+          hint="Buying Starter Pro provides starter source code. It does not connect or migrate this browser demo automatically."
           features={[
-            "Protected app architecture",
-            "Plan gating & feature access",
-            "Organization-ready foundations",
-            "Production-ready SaaS structure",
+            "Auth.js authentication",
+            "Protected routes",
+            "Prisma & PostgreSQL",
+            "Stripe billing foundations",
           ]}
+          ctaLabel="Explore Starter Pro"
+          upgradeHref="https://pycolors.io/starters/pro"
           previewHeightClassName="min-h-[320px]"
         >
           <Card className="p-4">

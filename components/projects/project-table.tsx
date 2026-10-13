@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 import {
   Badge,
   Table,
@@ -9,18 +9,18 @@ import {
   TableCell,
   TableEmpty,
   TableLoading,
-} from '@pycolors/ui';
+} from "@pycolors/ui";
 
-import { Project } from './project-types';
-import { ProjectRowActions } from './project-row-actions';
+import { Project } from "./project-types";
+import { ProjectRowActions } from "./project-row-actions";
 
-function StatusBadge({ status }: { status: Project['status'] }) {
+function StatusBadge({ status }: { status: Project["status"] }) {
   const label =
-    status === 'active'
-      ? 'Active'
-      : status === 'trialing'
-        ? 'Trialing'
-        : 'Paused';
+    status === "active"
+      ? "Active"
+      : status === "trialing"
+        ? "Trialing"
+        : "Paused";
   return <Badge>{label}</Badge>;
 }
 
@@ -61,7 +61,7 @@ export function ProjectTable({
             <TableRow key={p.id}>
               <TableCell className="font-medium">
                 <Link
-                  href={`/projects/${p.id}`}
+                  href={`/projects/${encodeURIComponent(p.id)}`}
                   className="hover:underline underline-offset-4"
                 >
                   {p.name}

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import * as React from "react";
 import {
   Button,
   Input,
@@ -11,18 +11,21 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from '@pycolors/ui';
+} from "@pycolors/ui";
 
 export function ProjectCreateDialog({
   onCreate,
+  disabled = false,
 }: {
   onCreate: (name: string) => void;
+  disabled?: boolean;
 }) {
   const [open, setOpen] = React.useState(false);
-  const [name, setName] = React.useState('');
+  const [name, setName] = React.useState("");
+  const nameId = React.useId();
 
   function reset() {
-    setName('');
+    setName("");
   }
 
   function handleCreate() {
@@ -42,47 +45,53 @@ export function ProjectCreateDialog({
       }}
     >
       <DialogTrigger asChild>
-        <Button size="sm">New project</Button>
+        <Button type="button" size="sm" disabled={disabled}>
+          New project
+        </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create project</DialogTitle>
           <DialogDescription>
-            Create a new project in your workspace. You can rename it
-            later.
+            Create a new project in your workspace. You can rename it later.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="mt-4 space-y-2">
-          <div className="text-sm font-medium">Project name</div>
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            handleCreate();
+          }}
+          className="mt-4 space-y-2"
+        >
+          <label htmlFor={nameId} className="text-sm font-medium">
+            Project name
+          </label>
           <Input
+            id={nameId}
             placeholder="e.g. Marketing Website"
             value={name}
             onChange={(e) => setName(e.target.value)}
             autoFocus
           />
           <p className="text-xs text-muted-foreground">
-            v1: local-only. Later this will call the API.
+            Saved in this browser only. No account or backend is connected.
           </p>
-        </div>
 
-        <DialogFooter>
-          <Button
-            variant="outline"
-            type="button"
-            onClick={() => setOpen(false)}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="button"
-            onClick={handleCreate}
-            disabled={!name.trim()}
-          >
-            Create
-          </Button>
-        </DialogFooter>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              type="button"
+              onClick={() => setOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button type="submit" disabled={!name.trim()}>
+              Create
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

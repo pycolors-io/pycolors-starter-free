@@ -25,7 +25,7 @@ Most starters are either:
 
 PyColors Starter Free sits in the middle.
 
-It gives you a clean production baseline so you can focus on building
+It gives you a clean frontend baseline so you can focus on building
 your product instead of reinventing the foundation.
 
 ---
@@ -36,7 +36,7 @@ your product instead of reinventing the foundation.
 
 - Next.js App Router setup
 - Production-ready folder structure
-- Dashboard shell + auth flows
+- Dashboard shell + demo auth screens
 - Clean layout architecture ready to scale
 
 ### Design system included
@@ -86,7 +86,7 @@ Start building your product.
 
 This starter already contains real product surfaces:
 
-- Authentication flows (login / register / reset)
+- Demo authentication screens (login / register / reset)
 - Dashboard layout
 - Projects module (table + dialogs)
 - Settings / Billing / Admin pages structure
@@ -132,39 +132,35 @@ meant to be the fastest starting point.
 
 ---
 
-## Starter Pro (next)
+## Local project demo
 
-Starter Free gives you the full SaaS surface.
+Open `/projects` to create a project, open its details, rename it, or delete it.
+Projects are stored in this browser's `localStorage` and survive page reloads.
+Use **Reset demo** to restore the sample projects after confirming the reset.
 
-Starter Pro keeps the same screens and UX contracts —
-but wires the foundations for production so you can ship the **money path** faster.
+This is a frontend demo: no account, shared database, authorization, or
+cross-device synchronization is connected. Use sample data, not sensitive
+information. Clearing browser storage removes your changes. If storage is
+unavailable, the app keeps changes for the current visit and displays a notice.
+Project status, member counts, and update labels are illustrative demo values.
 
-From sign up → onboarding → subscription → team management.
+## When to choose Starter Pro
 
----
+Use Free to explore the UI and prototype your product workflows. Choose Pro
+when you need the connected foundations behind those screens:
 
-### What you get with Pro
+- Auth.js authentication and protected routes.
+- Prisma with PostgreSQL for your application's data layer.
+- Stripe Checkout, customer portal, and webhook-driven billing foundations.
+- Transactional email and PWA foundations.
 
-- **Authentication + organizations architecture**
-  Sessions, teams, invites, and role-based access patterns — production-ready.
+Starter Pro is source code to configure and adapt for your product. Purchasing
+it does not unlock this running demo or automatically migrate its local projects.
+You still implement your own project data model and workflows.
 
-- **Stripe billing foundations**
-  Checkout + customer portal flows, subscription states, and billing UX wired end-to-end.
-
-- **Production data layer conventions**
-  Structured CRUD patterns, validation, loading/error states, and API contracts aligned with real backend wiring.
-
-- **Advanced dashboard patterns**
-  Onboarding cues, empty states, scalable layouts, and real product UX decisions baked in.
-
-- **Less glue code. Fewer edge cases.**
-  Opinionated defaults and automation so you focus on product — not wiring.
-
----
-
-Designed for founders and product engineers shipping their first paid version.
-
-👉 Early access & roadmap: https://pycolors.io/starters
+[Explore Starter Pro](https://pycolors.io/starters/pro) ·
+[See what is included](https://pycolors.io/docs/starter-pro/what-is-included) ·
+[Plan your upgrade](https://pycolors.io/docs/starter/upgrade)
 
 ---
 
