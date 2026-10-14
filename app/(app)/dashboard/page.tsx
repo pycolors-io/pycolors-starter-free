@@ -22,6 +22,7 @@ import {
 } from "@/components/ui";
 
 import { UpgradeGate } from "@/components/app/upgrade-gate";
+import { GETTING_STARTED_STEPS } from "@/lib/getting-started";
 
 type TrendIntent = "good" | "neutral" | "bad";
 
@@ -203,6 +204,73 @@ export default function DashboardPage() {
           </Button>
         </div>
       </div>
+
+      <section aria-labelledby="getting-started-title" className="space-y-3">
+        <div className="space-y-1">
+          <h2 id="getting-started-title" className="text-base font-semibold">
+            Get started with Starter Free
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Try the workflow, make it yours, then choose your next foundation.
+            These are suggestions, not a completion checklist.
+          </p>
+        </div>
+
+        <ol role="list" className="grid min-w-0 gap-4 lg:grid-cols-3">
+          {GETTING_STARTED_STEPS.map((step, index) => (
+            <li key={step.id} className="min-w-0">
+              <Card className="flex h-full min-w-0 flex-col p-4">
+                <CardHeader className="p-0">
+                  <p className="text-xs font-medium text-muted-foreground">
+                    Step {index + 1}
+                  </p>
+                  <h3 className="text-sm font-semibold">{step.title}</h3>
+                  <CardDescription className="leading-6">
+                    {step.description}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="flex flex-1 flex-col gap-3 p-0 pt-3">
+                  {step.files ? (
+                    <dl className="space-y-2 text-xs">
+                      {step.files.map((file) => (
+                        <div key={file.path}>
+                          <dt>
+                            <code className="[overflow-wrap:anywhere]">
+                              {file.path}
+                            </code>
+                          </dt>
+                          <dd className="mt-1 text-muted-foreground">
+                            {file.purpose}
+                          </dd>
+                        </div>
+                      ))}
+                    </dl>
+                  ) : null}
+                  {step.note ? (
+                    <p className="text-xs leading-5 text-muted-foreground">
+                      {step.note}
+                    </p>
+                  ) : null}
+                  <div className="mt-auto flex flex-col gap-2">
+                    {step.links.map((link) => (
+                      <Button
+                        key={link.href}
+                        asChild
+                        variant={step.id === "projects" ? "default" : "outline"}
+                        className="h-auto min-h-11 whitespace-normal py-2 text-center"
+                      >
+                        <Link href={link.href} prefetch={false}>
+                          {link.label}
+                        </Link>
+                      </Button>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </li>
+          ))}
+        </ol>
+      </section>
 
       <p className="rounded-md border border-border/60 bg-muted/30 px-4 py-3 text-sm leading-6 text-muted-foreground">
         <span className="font-medium text-foreground">

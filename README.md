@@ -132,6 +132,28 @@ meant to be the fastest starting point.
 
 ---
 
+## Dashboard getting-started guide
+
+Start at `/dashboard` for three informational steps before the illustrative
+metrics:
+
+1. **Try the project workflow.** Open `/projects` to create a sample project,
+   view its details, rename it or delete it. Changes stay in this browser when
+   storage is available; use sample data rather than sensitive information.
+2. **Make the app yours.** Edit `app/layout.tsx` for metadata,
+   `app/(app)/layout.tsx` for app-header branding, and `app/globals.css` for styles
+   and tokens. Follow the [project structure](https://pycolors.io/docs/starter/project-structure)
+   and [getting-started guide](https://pycolors.io/docs/starter/getting-started).
+3. **Evaluate connected foundations.** [Explore Starter Pro](https://pycolors.io/starters/pro)
+   and [see what is included](https://pycolors.io/docs/starter-pro/what-is-included)
+   for Auth.js, protected routes, Prisma/PostgreSQL and Stripe billing foundations.
+
+The guide does not track completion or save onboarding progress. Following a
+link does not complete a step. Pro remains separate source code to configure:
+purchasing it does not unlock the running Free demo or migrate local projects.
+The existing project workflow, theme preference and illustrative-data notice
+remain unchanged.
+
 ## Local project demo
 
 Open `/projects` to create a project, open its details, rename it, or delete it.
