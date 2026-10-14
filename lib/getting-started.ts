@@ -20,8 +20,7 @@ export const GETTING_STARTED_STEPS: readonly GettingStartedStep[] = [
     title: "Try the project workflow",
     description:
       "Create a sample project, open its details, rename it or delete it. Changes stay in this browser and survive reloads when browser storage is available.",
-    note:
-      "Use sample data, not sensitive information. No shared database is connected.",
+    note: "Use sample data, not sensitive information. No shared database is connected.",
     links: [{ label: "Try projects", href: "/projects" }],
   },
   {
@@ -49,8 +48,7 @@ export const GETTING_STARTED_STEPS: readonly GettingStartedStep[] = [
     title: "Evaluate connected foundations",
     description:
       "Compare Starter Pro for Auth.js authentication, protected routes, Prisma/PostgreSQL and Stripe billing foundations.",
-    note:
-      "Pro is separate source code to configure and adapt. Buying it does not unlock this demo or automatically migrate your local projects.",
+    note: "Pro is separate source code to configure and adapt. Buying it does not unlock this demo or automatically migrate your local projects.",
     links: [
       {
         label: "Explore Starter Pro",
