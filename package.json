@@ -41,8 +41,8 @@
     "verify": "pnpm lint && pnpm types:check && pnpm build"
   },
   "dependencies": {
-    "@pycolors/tokens": "workspace:^",
-    "@pycolors/ui": "workspace:^",
+    "@pycolors/tokens": "^1.2.3",
+    "@pycolors/ui": "^1.7.0",
     "@radix-ui/react-slot": "^1.2.4",
     "@vercel/analytics": "^2.0.1",
     "lucide-react": "^1.49.0",

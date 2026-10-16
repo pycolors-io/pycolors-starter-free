@@ -267,3 +267,24 @@ assistant sample replies/reset, mobile navigation and absence of application
 mutation requests. Screenshots and results are written to a printed
 temporary directory. It does not run against production or in the standalone
 Starter Free mirror.
+
+## Standalone installation and Vercel
+
+The public mirror installs published `@pycolors/ui` and `@pycolors/tokens`
+versions from npm. It does not require the monorepo or private packages.
+The app-level `pnpm-lock.yaml` locks this standalone dependency graph; the
+monorepo continues to use its root lockfile and workspace overrides.
+
+Use Node 24 and the pnpm version declared in `packageManager`:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm test
+pnpm verify
+```
+
+The included `vercel.json` selects pnpm with a frozen lockfile, then runs the
+Next.js build. The standalone repository is the project root. No environment
+variables are required for the demo. When dependency metadata changes, refresh
+and validate this lockfile in a clean copy outside the monorepo, then commit it
+in the canonical `apps/starter-free` source before the next subtree sync.
