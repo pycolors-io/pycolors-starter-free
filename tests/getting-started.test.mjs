@@ -7,14 +7,14 @@ import { GETTING_STARTED_STEPS } from "../lib/getting-started.ts";
 const appRoot = new URL("../", import.meta.url);
 const read = (path) => readFileSync(new URL(path, appRoot), "utf8");
 
-test("the first-session path has three distinct, ordered steps", () => {
+test("the first-session path has four distinct, ordered steps", () => {
   assert.deepEqual(
     GETTING_STARTED_STEPS.map((step) => step.id),
-    ["projects", "customize", "pro"],
+    ["projects", "assistant", "customize", "pro"],
   );
   assert.equal(
     new Set(GETTING_STARTED_STEPS.map((step) => step.title)).size,
-    3,
+    4,
   );
   for (const step of GETTING_STARTED_STEPS) {
     assert.ok(step.title.trim());
@@ -38,7 +38,7 @@ test("the first action reuses the delivered projects routes", () => {
 });
 
 test("customization references files in the delivered starter", () => {
-  const files = GETTING_STARTED_STEPS[1].files;
+  const files = GETTING_STARTED_STEPS[2].files;
   assert.deepEqual(
     files.map((file) => file.path),
     ["app/layout.tsx", "app/(app)/layout.tsx", "app/globals.css"],
@@ -55,6 +55,8 @@ test("guide links use explicit existing destinations without tracking", () => {
     links.map((link) => link.href),
     [
       "/projects",
+      "/assistant",
+      "https://pycolors.io/docs/starter/assistant",
       "https://pycolors.io/docs/starter/project-structure",
       "https://pycolors.io/docs/starter/getting-started",
       "https://pycolors.io/starters/pro",
@@ -72,7 +74,7 @@ test("guide links use explicit existing destinations without tracking", () => {
 });
 
 test("Pro keeps the demo-unlock and migration boundary explicit", () => {
-  const step = GETTING_STARTED_STEPS[2];
+  const step = GETTING_STARTED_STEPS[3];
   for (const capability of [
     "Auth.js",
     "protected routes",

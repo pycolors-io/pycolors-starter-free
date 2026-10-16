@@ -24,6 +24,20 @@ export const GETTING_STARTED_STEPS: readonly GettingStartedStep[] = [
     links: [{ label: "Try projects", href: "/projects" }],
   },
   {
+    id: "assistant",
+    title: "Explore the assistant interface",
+    description:
+      "Try a chat response, review a local agent definition, or inspect a sample task plan inside the app.",
+    note: "Local simulation only: no AI service is connected. This session clears when you leave the page or reload.",
+    links: [
+      { label: "Try the assistant", href: "/assistant" },
+      {
+        label: "Read the integration guide",
+        href: "https://pycolors.io/docs/starter/assistant",
+      },
+    ],
+  },
+  {
     id: "customize",
     title: "Make the app yours",
     description: "In your own copy of the starter, begin with these files:",

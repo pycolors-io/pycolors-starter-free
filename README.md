@@ -89,6 +89,7 @@ This starter already contains real product surfaces:
 - Demo authentication screens (login / register / reset)
 - Dashboard layout
 - Projects module (table + dialogs)
+- Free assistant playground (local chat, definition export and sample task states)
 - Settings / Billing / Admin pages structure
 
 It's intentionally minimal but realistic.
@@ -134,17 +135,20 @@ meant to be the fastest starting point.
 
 ## Dashboard getting-started guide
 
-Start at `/dashboard` for three informational steps before the illustrative
+Start at `/dashboard` for four informational steps before the illustrative
 metrics:
 
 1. **Try the project workflow.** Open `/projects` to create a sample project,
    view its details, rename it or delete it. Changes stay in this browser when
    storage is available; use sample data rather than sensitive information.
-2. **Make the app yours.** Edit `app/layout.tsx` for metadata,
+2. **Explore the assistant interface.** [Try the assistant](/assistant) and follow
+   the [integration guide](https://pycolors.io/docs/starter/assistant). Replies
+   are local simulations; no model is connected and the session is not saved.
+3. **Make the app yours.** Edit `app/layout.tsx` for metadata,
    `app/(app)/layout.tsx` for app-header branding, and `app/globals.css` for styles
    and tokens. Follow the [project structure](https://pycolors.io/docs/starter/project-structure)
    and [getting-started guide](https://pycolors.io/docs/starter/getting-started).
-3. **Evaluate connected foundations.** [Explore Starter Pro](https://pycolors.io/starters/pro)
+4. **Evaluate connected foundations.** [Explore Starter Pro](https://pycolors.io/starters/pro)
    and [see what is included](https://pycolors.io/docs/starter-pro/what-is-included)
    for Auth.js, protected routes, Prisma/PostgreSQL and Stripe billing foundations.
 
@@ -210,3 +214,17 @@ You can open Issues and participate in Discussions in this repository.
 ## License
 
 MIT
+
+## Assistant playground
+
+Open `/assistant` from desktop/mobile navigation or the dashboard guide. Choose
+one suggestion, then Send. Try Stop/Retry, a local agent definition and its JSON
+export, a non-sensitive text-file reference, and explicit Work simulation states.
+The UI is included in Free. Replies and task results are fixed examples; no model,
+provider account or paid request is required. Nothing runs in the background.
+
+Messages, drafts and references last only while the page is mounted. New chat,
+navigation away or reload clears the session. No prompt/file data is added to
+analytics. Read the delivered [consumer README](components/assistant/README.md)
+and https://pycolors.io/docs/starter/assistant for limits and backend integration.
+Pro does not automatically connect a model, unlock this demo or migrate its data.
