@@ -229,6 +229,45 @@ analytics. Read the delivered [consumer README](components/assistant/README.md)
 and https://pycolors.io/docs/starter/assistant for limits and backend integration.
 Pro does not automatically connect a model, unlock this demo or migrate its data.
 
+## Product demo and Starter Pro
+
+All routes share an app-owned neutral light/dark theme. Public PyColors token
+files remain unchanged. The workspace includes a skip link, responsive
+navigation, local project CRUD and the existing assistant playground.
+
+Login, registration and password recovery are local interface previews. Use
+made-up details: submitting validates the form, clears the fields and shows an
+explicit demo result. Credentials are not sent or stored, no account or session
+is created, and no recovery email is sent. The forms stay disabled until their
+local JavaScript is ready, including when JavaScript is unavailable. Settings
+remain read-only; team changes last only while that page is open. Billing uses fictional sample prices
+and invoices, not the Starter Pro purchase price.
+
+Pro cards explain the separate source-code foundations and link to
+https://pycolors.io/starters/pro and
+https://pycolors.io/docs/starter-pro/what-is-included. Buying Pro does not unlock
+this demo or migrate local projects. Expand the illustrative interface only
+when you want to inspect its sample layout.
+
+### Browser regression (canonical monorepo)
+
+From the monorepo root, after building Starter Free and installing the existing
+UI Playwright browser (`pnpm --filter @pycolors/ui test:storybook:install`):
+
+```sh
+pnpm --filter @pycolors/starter-free exec next start --hostname 127.0.0.1 -p 3113
+# In another terminal:
+node apps/starter-free/tests/browser/product-demo.mjs
+```
+
+This optional local check uses the public UI workspace's existing Playwright
+dev dependency. It checks all routes in light/dark at 390/1440px, local account
+form validation and the no-JavaScript guard, project persistence/rename/delete,
+assistant sample replies/reset, mobile navigation and absence of application
+mutation requests. Screenshots and results are written to a printed
+temporary directory. It does not run against production or in the standalone
+Starter Free mirror.
+
 ## Standalone installation and Vercel
 
 The public mirror installs published `@pycolors/ui` and `@pycolors/tokens`
@@ -249,3 +288,9 @@ Next.js build. The standalone repository is the project root. No environment
 variables are required for the demo. When dependency metadata changes, refresh
 and validate this lockfile in a clean copy outside the monorepo, then commit it
 in the canonical `apps/starter-free` source before the next subtree sync.
+
+Inside the canonical monorepo, the root pnpm overrides resolve UI and tokens
+locally. The root Turbo configuration explicitly builds `@pycolors/ui` before
+Starter Free typechecking or builds: the public dependency ranges used by this
+standalone app do not create Turbo workspace edges under pnpm's default linking
+policy. Preserve these task dependencies when updating the mirror metadata.

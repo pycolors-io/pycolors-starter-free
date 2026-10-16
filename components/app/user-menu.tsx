@@ -1,15 +1,9 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import {
-  CreditCard,
-  LogOut,
-  Settings,
-  Sparkles,
-  User,
-} from 'lucide-react';
+import * as React from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { CreditCard, LogOut, Settings, Sparkles, User } from "lucide-react";
 
 import {
   Badge,
@@ -20,7 +14,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@pycolors/ui';
+} from "@pycolors/ui";
 
 export function UserMenu() {
   const router = useRouter();
@@ -38,7 +32,7 @@ export function UserMenu() {
             P
           </span>
 
-          <span className="hidden sm:inline">Patrice</span>
+          <span className="hidden sm:inline">Demo user</span>
         </Button>
       </DropdownMenuTrigger>
 
@@ -50,12 +44,10 @@ export function UserMenu() {
             </span>
 
             <div className="min-w-0">
-              <div className="truncate text-sm font-medium">
-                Patrice
-              </div>
+              <div className="truncate text-sm font-medium">Demo user</div>
 
               <div className="truncate text-xs font-normal text-muted-foreground">
-                patrice@pycolors.io
+                demo@example.com
               </div>
             </div>
           </div>
@@ -88,10 +80,10 @@ export function UserMenu() {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem asChild>
-          <Link href="https://pycolors.io/upgrade">
+          <Link href="https://pycolors.io/starters/pro">
             <div className="flex w-full items-center gap-2">
               <Sparkles className="h-4 w-4" aria-hidden="true" />
-              Upgrade to Pro
+              Explore Starter Pro
             </div>
           </Link>
         </DropdownMenuItem>
@@ -102,11 +94,11 @@ export function UserMenu() {
           className="text-destructive focus:text-destructive"
           onSelect={(event) => {
             event.preventDefault();
-            router.push('/login');
+            router.push("/login");
           }}
         >
           <LogOut className="h-4 w-4" aria-hidden="true" />
-          Sign out
+          Leave demo
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

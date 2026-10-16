@@ -7,7 +7,7 @@ import "./globals.css";
 const APP_NAME = "PyColors Starter Free";
 
 const APP_DESCRIPTION =
-  "Production-ready SaaS foundation for modern Next.js applications.";
+  "A free Next.js interface starter with browser-local projects, an assistant playground and clear paths to Starter Pro.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://starter-demo.pycolors.io"),
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     "TypeScript",
     "Tailwind CSS",
     "SaaS boilerplate",
-    "Production-ready starter",
+    "Free UI starter",
   ],
 
   authors: [

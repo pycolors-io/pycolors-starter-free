@@ -1,46 +1,31 @@
-'use client';
-
-import { Badge } from '@pycolors/ui';
-
-import { AppSidebarFooter } from '@/components/app/app-sidebar-footer';
-import { STARTER_VERSION_TAG } from '@/lib/version';
-
-import { AppSidebarNav } from './app-sidebar-nav';
+import Link from "next/link";
+import { Layers2 } from "lucide-react";
+import { AppSidebarFooter } from "./app-sidebar-footer";
+import { AppSidebarNav } from "./app-sidebar-nav";
 
 export function AppSidebar() {
   return (
     <div className="flex h-full flex-col">
-      <div className="space-y-6">
-        <div className="space-y-2">
-          <div className="flex items-start justify-between gap-3">
-            <div className="min-w-0">
-              <div className="flex items-center gap-2">
-                <span
-                  className="inline-flex h-2 w-2 rounded-full bg-emerald-500"
-                  aria-hidden="true"
-                />
-
-                <span className="text-sm font-semibold">
-                  PyColors Starter
-                </span>
-
-                <Badge variant="outline" className="text-[10px]">
-                  {STARTER_VERSION_TAG}
-                </Badge>
-              </div>
-
-              <div className="mt-1 text-xs text-muted-foreground">
-                Starter Free · B2B-ready surfaces
-              </div>
-            </div>
-          </div>
-
-          <div className="h-px bg-border/60" />
-        </div>
-
-        <AppSidebarNav />
-      </div>
-
+      <Link
+        href="/"
+        className="mb-8 flex min-h-11 items-center gap-3 rounded-md focus-visible:outline-2 focus-visible:outline-ring"
+      >
+        <span className="grid size-9 place-items-center rounded-lg border border-border bg-foreground text-background">
+          <Layers2 className="size-4" aria-hidden="true" />
+        </span>
+        <span>
+          <span className="block text-sm font-semibold tracking-tight">
+            PyColors
+          </span>
+          <span className="text-xs text-muted-foreground">
+            Personal workspace
+          </span>
+        </span>
+      </Link>
+      <p className="mb-3 px-3 text-[11px] font-medium uppercase tracking-widest text-muted-foreground">
+        Build & explore
+      </p>
+      <AppSidebarNav />
       <AppSidebarFooter />
     </div>
   );

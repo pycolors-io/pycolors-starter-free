@@ -20,7 +20,7 @@ export default function AssistantPage() {
       >
         <section
           aria-labelledby="assistant-demo-title"
-          className="rounded-2xl border border-border bg-muted/30 p-4 sm:p-5"
+          className="rounded-lg border border-border bg-muted/30 p-4 sm:p-5"
         >
           <div className="flex items-start gap-3">
             <FlaskConical
@@ -42,7 +42,7 @@ export default function AssistantPage() {
         <AssistantPlayground />
         <section
           aria-labelledby="assistant-integration-title"
-          className="rounded-2xl border border-border p-4 sm:p-5"
+          className="rounded-lg border border-border p-4 sm:p-5"
         >
           <div className="flex items-start gap-3">
             <Code2

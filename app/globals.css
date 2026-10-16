@@ -14,3 +14,65 @@
     font-family: var(--font-sans, ui-sans-serif, system-ui, -apple-system);
   }
 }
+
+/* App-owned neutral presentation. Shared semantic status colors stay intact. */
+:root {
+  --background: #fafafa;
+  --foreground: #171717;
+  --card: #ffffff;
+  --card-foreground: #171717;
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+  --primary: #171717;
+  --primary-foreground: #ffffff;
+  --secondary: #f0f0f0;
+  --secondary-foreground: #262626;
+  --muted: #f3f3f3;
+  --muted-foreground: #626262;
+  --accent: #f0f0f0;
+  --accent-foreground: #171717;
+  --border: #e5e5e5;
+  --input: #d4d4d4;
+  --ring: #737373;
+}
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --card: #111111;
+  --card-foreground: #ededed;
+  --popover: #171717;
+  --popover-foreground: #ededed;
+  --primary: #ededed;
+  --primary-foreground: #0a0a0a;
+  --secondary: #202020;
+  --secondary-foreground: #ededed;
+  --muted: #191919;
+  --muted-foreground: #a1a1a1;
+  --accent: #262626;
+  --accent-foreground: #ededed;
+  --border: #2a2a2a;
+  --input: #404040;
+  --ring: #a1a1a1;
+}
+@layer base {
+  body {
+    line-height: 1.5;
+  }
+  button,
+  a,
+  input,
+  textarea,
+  summary {
+    -webkit-tap-highlight-color: transparent;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+  @media (max-width: 639px), (pointer: coarse) {
+    button,
+    [role="button"] {
+      min-height: 44px;
+    }
+  }
+}

@@ -47,7 +47,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
         ref={ref}
         data-slot="card"
         className={cn(
-          "rounded-lg border text-card-foreground",
+          "rounded-lg border border-border text-card-foreground shadow-[0_1px_2px_rgb(0_0_0/0.02)]",
           variantClassNameByVariant[variant],
           interactive ? interactiveClassName : undefined,
           className,
@@ -93,7 +93,7 @@ export function CardDescription({ className, ...props }: CardDescriptionProps) {
   return (
     <p
       data-slot="card-description"
-      className={cn("text-sm text-muted-foreground", className)}
+      className={cn("text-sm leading-6 text-muted-foreground", className)}
       {...props}
     />
   );
