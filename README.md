@@ -288,3 +288,9 @@ Next.js build. The standalone repository is the project root. No environment
 variables are required for the demo. When dependency metadata changes, refresh
 and validate this lockfile in a clean copy outside the monorepo, then commit it
 in the canonical `apps/starter-free` source before the next subtree sync.
+
+Inside the canonical monorepo, the root pnpm overrides resolve UI and tokens
+locally. The root Turbo configuration explicitly builds `@pycolors/ui` before
+Starter Free typechecking or builds: the public dependency ranges used by this
+standalone app do not create Turbo workspace edges under pnpm's default linking
+policy. Preserve these task dependencies when updating the mirror metadata.
