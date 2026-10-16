@@ -72,7 +72,7 @@ export default function ProjectsPage() {
   return (
     <PageShell
       title="Projects"
-      description="A structured entity workspace for modern SaaS products."
+      description="Create, organize and revisit projects in your browser."
       actions={
         <div className="flex flex-wrap items-center gap-2">
           <Button asChild variant="outline" size="sm">
@@ -151,8 +151,7 @@ export default function ProjectsPage() {
             </CardTitle>
 
             <CardDescription>
-              Manage project records with reusable table, action, dialog,
-              loading, and empty-state patterns.
+              Your projects, their status and the next action — in one place.
             </CardDescription>
           </CardHeader>
 

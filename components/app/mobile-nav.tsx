@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Menu } from 'lucide-react';
+import * as React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Menu } from "lucide-react";
 
 import {
   Badge,
@@ -14,13 +14,13 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@pycolors/ui';
+} from "@pycolors/ui";
 
-import { AppSidebarFooter } from '@/components/app/app-sidebar-footer';
-import { NAV_ITEMS } from '@/components/layout/app/nav-items';
-import { STARTER_VERSION_TAG } from '@/lib/version';
+import { AppSidebarFooter } from "@/components/app/app-sidebar-footer";
+import { NAV_ITEMS } from "@/components/layout/app/nav-items";
+import { STARTER_VERSION_TAG } from "@/lib/version";
 
-import { AppNav } from './app-nav';
+import { AppNav } from "./app-nav";
 
 export function MobileNav() {
   const pathname = usePathname();
@@ -34,16 +34,15 @@ export function MobileNav() {
     <div className="md:hidden">
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
-          <Button
-            variant="outline"
-            size="icon-sm"
-            aria-label="Open navigation"
-          >
+          <Button variant="outline" size="icon-sm" aria-label="Open navigation">
             <Menu className="h-4 w-4" aria-hidden="true" />
           </Button>
         </SheetTrigger>
 
-        <SheetContent side="left" className="flex w-80 flex-col p-4">
+        <SheetContent
+          side="left"
+          className="flex w-80 max-w-[90vw] flex-col overflow-y-auto p-4"
+        >
           <SheetHeader className="mb-6 text-left">
             <div className="flex items-center gap-2">
               <SheetTitle>PyColors Starter</SheetTitle>
@@ -54,24 +53,18 @@ export function MobileNav() {
             </div>
 
             <SheetDescription>
-              Production-ready SaaS starter surfaces.
+              Explore the local demo workspace.
             </SheetDescription>
           </SheetHeader>
           <AppNav
             items={NAV_ITEMS}
             currentPath={pathname}
             onNavigate={close}
-            renderLink={({
-              href,
-              className,
-              children,
-              onClick,
-              active,
-            }) => (
+            renderLink={({ href, className, children, onClick, active }) => (
               <Link
                 href={href}
                 className={className}
-                aria-current={active ? 'page' : undefined}
+                aria-current={active ? "page" : undefined}
                 onClick={onClick}
               >
                 {children}

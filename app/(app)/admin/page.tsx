@@ -373,7 +373,7 @@ export default function AdminMembersPage() {
   return (
     <PageShell
       title="Admin"
-      description="Manage organization members, roles, and invitations."
+      description="Explore members and invitations in a sample workspace."
       actions={
         <div className="flex items-center gap-2">
           <Button type="button" size="sm" onClick={() => setInviteOpen(true)}>
@@ -384,10 +384,11 @@ export default function AdminMembersPage() {
       }
       meta={
         <Alert>
-          <AlertTitle>B2B-ready administration surface</AlertTitle>
+          <AlertTitle>Local team demo</AlertTitle>
           <AlertDescription>
-            A structured admin experience for members, roles, invitations,
-            protected ownership, and team collaboration workflows.
+            Try adding and removing sample invitations. Changes last until you
+            leave this page; no email is sent and no real access or permissions
+            change.
           </AlertDescription>
         </Alert>
       }
@@ -481,13 +482,13 @@ export default function AdminMembersPage() {
         </Card>
 
         <UpgradeGate
-          title="Role-aware access control"
-          description="Unlock protected admin routes, session-aware permissions, role enforcement, and organization-ready foundations."
+          title="Build on authenticated foundations"
+          description="Starter Pro provides authentication, protected routes and database foundations. Implement your own organization roles and invitation rules on top."
           features={[
             "Protected admin routes",
-            "Role-aware access control",
-            "Organization foundations",
-            "Session-aware permissions",
+            "Auth.js sessions",
+            "Prisma & PostgreSQL",
+            "Application-owned permissions",
           ]}
           previewHeightClassName="min-h-[320px]"
         >
@@ -531,8 +532,8 @@ export default function AdminMembersPage() {
           <DialogHeader>
             <DialogTitle>Invite member</DialogTitle>
             <DialogDescription>
-              Create a pending invitation and prepare the member for workspace
-              access.
+              Add an invitation to this local preview. No invitation email will
+              be sent.
             </DialogDescription>
           </DialogHeader>
 
@@ -545,16 +546,18 @@ export default function AdminMembersPage() {
               placeholder="teammate@company.com"
               autoFocus
               leftIcon={<Mail className="h-4 w-4" aria-hidden="true" />}
-              helperText="The invitation will appear under Invitations."
+              required
+              helperText="Sample data only. Appears under Invitations in this page."
             />
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Role</label>
+              <p className="text-sm font-medium">Role</p>
 
               <div className="flex items-center gap-2">
                 <Button
                   type="button"
                   size="sm"
+                  aria-pressed={inviteRole === "member"}
                   variant={inviteRole === "member" ? "default" : "outline"}
                   onClick={() => setInviteRole("member")}
                 >
@@ -564,6 +567,7 @@ export default function AdminMembersPage() {
                 <Button
                   type="button"
                   size="sm"
+                  aria-pressed={inviteRole === "owner"}
                   variant={inviteRole === "owner" ? "default" : "outline"}
                   onClick={() => setInviteRole("owner")}
                 >

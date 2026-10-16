@@ -95,7 +95,7 @@ export function ProjectDetails({ id }: { id: string }) {
       <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <h1 className="truncate text-lg font-semibold tracking-tight">
+            <h1 className="break-words text-2xl font-semibold tracking-tight sm:text-3xl">
               {project.name}
             </h1>
 
@@ -108,7 +108,7 @@ export function ProjectDetails({ id }: { id: string }) {
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Button asChild variant="outline" size="sm">
             <Link href="/projects">Back</Link>
           </Button>

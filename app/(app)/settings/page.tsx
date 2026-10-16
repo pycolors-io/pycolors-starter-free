@@ -35,7 +35,7 @@ export default function SettingsPage() {
     return () => clearTimeout(timeout);
   }, []);
 
-  const profile = { name: "Patrice", email: "patrice@pycolors.io" };
+  const profile = { name: "Alex Morgan", email: "alex@example.com" };
   const organization = {
     name: "PyColors SaaS",
     slug: "pycolors-saas",
@@ -44,7 +44,7 @@ export default function SettingsPage() {
   return (
     <PageShell
       title="Settings"
-      description="Account, workspace, security, and destructive action patterns."
+      description="Explore profile, workspace and account preferences."
       actions={
         <Button size="sm" type="button" disabled>
           Save changes
@@ -52,11 +52,11 @@ export default function SettingsPage() {
       }
       meta={
         <Alert>
-          <AlertTitle>Production-ready settings surface</AlertTitle>
+          <AlertTitle>Settings preview</AlertTitle>
           <AlertDescription>
-            A structured settings experience with tabs, forms, helper text,
-            loading states, and safe destructive patterns for modern SaaS
-            products.
+            These sample account settings are read-only. No account is connected
+            and no changes are saved. Try the appearance control in the header
+            to personalize this demo.
           </AlertDescription>
         </Alert>
       }
@@ -75,7 +75,7 @@ export default function SettingsPage() {
             value={tab}
             onValueChange={(value) => setTab(value as SettingsTab)}
           >
-            <TabsList className="w-full justify-start">
+            <TabsList className="h-auto w-full flex-wrap justify-start gap-1">
               <TabsTrigger value="profile">Profile</TabsTrigger>
               <TabsTrigger value="organization">Organization</TabsTrigger>
               <TabsTrigger value="security">Security</TabsTrigger>

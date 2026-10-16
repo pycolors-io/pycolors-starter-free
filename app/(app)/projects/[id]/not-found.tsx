@@ -1,13 +1,7 @@
 import Link from "next/link";
 import { FolderSearch } from "lucide-react";
 
-import {
-  Button,
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui";
+import { Button, Card, CardDescription, CardHeader } from "@/components/ui";
 
 export default function NotFound() {
   return (
@@ -19,11 +13,13 @@ export default function NotFound() {
           </span>
 
           <div className="space-y-2">
-            <CardTitle>Project not found</CardTitle>
+            <h1 className="text-xl font-semibold tracking-tight">
+              Project not found
+            </h1>
 
             <CardDescription className="leading-6">
               The requested project could not be located in this workspace. It
-              may have been removed, renamed, or the URL may be invalid.
+              may have been removed, or the URL may be invalid.
             </CardDescription>
           </div>
         </CardHeader>

@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
+import Link from "next/link";
 
-import { cn } from '@pycolors/ui';
+import { cn } from "@pycolors/ui";
 
 const AUTH_LINKS = [
-  { label: 'Login', href: '/login', ariaLabel: 'Open login page' },
+  { label: "Login", href: "/login", ariaLabel: "Open login page" },
   {
-    label: 'Register',
-    href: '/register',
-    ariaLabel: 'Open register page',
+    label: "Register",
+    href: "/register",
+    ariaLabel: "Open register page",
   },
   {
-    label: 'Reset',
-    href: '/forgot-password',
-    ariaLabel: 'Open password reset page',
+    label: "Reset",
+    href: "/forgot-password",
+    ariaLabel: "Open password reset page",
   },
 ] satisfies ReadonlyArray<{
   label: string;
@@ -24,12 +24,12 @@ const AUTH_LINKS = [
 
 const FOOTER_LINKS = [
   {
-    label: 'Docs',
-    href: 'https://pycolors.io/docs/starter',
+    label: "Docs",
+    href: "https://pycolors.io/docs/starter",
   },
   {
-    label: 'GitHub',
-    href: 'https://github.com/pycolors-io/pycolors-starter-free',
+    label: "GitHub",
+    href: "https://github.com/pycolors-io/pycolors-starter-free",
   },
 ] satisfies ReadonlyArray<{
   label: string;
@@ -46,7 +46,7 @@ export function AppSidebarFooter({
   className,
 }: AppSidebarFooterProps) {
   return (
-    <div className={cn('mt-auto space-y-4 pt-6', className)}>
+    <div className={cn("mt-auto space-y-4 pt-6", className)}>
       <div className="space-y-2 border-t border-border/60 pt-4">
         <div className="text-xs font-medium text-muted-foreground">
           Demo auth
@@ -59,7 +59,7 @@ export function AppSidebarFooter({
               href={item.href}
               aria-label={item.ariaLabel}
               onClick={onNavigate}
-              className="rounded-md border border-border/60 px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground"
+              className="inline-flex min-h-10 items-center rounded-md border border-border/60 px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground"
             >
               {item.label}
             </Link>

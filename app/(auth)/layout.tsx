@@ -15,17 +15,17 @@ export default function AuthLayout({
             href="/"
             className="text-sm font-semibold tracking-tight transition hover:opacity-80"
           >
-            PyColors SaaS
+            PyColors
           </Link>
 
           <p className="mt-1 text-xs text-muted-foreground">
-            Production-ready starter for modern SaaS
+            Starter Free · Account screen previews
           </p>
         </div>
         <ThemeToggle />
       </header>
 
-      <main className="flex flex-1 items-center justify-center px-4 py-10">
+      <main className="flex flex-1 items-center justify-center px-4 py-8 sm:py-14">
         <div className="w-full">{children}</div>
       </main>
     </div>

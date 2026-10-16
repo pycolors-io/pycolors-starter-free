@@ -199,7 +199,7 @@ export default function BillingPage() {
   }, []);
 
   const plan = {
-    name: "Pro",
+    name: "Sample plan",
     priceLabel: "$29 / month",
     seats: 10,
     renewalIso: "2026-03-01",
@@ -219,7 +219,7 @@ export default function BillingPage() {
   return (
     <PageShell
       title="Billing"
-      description="Manage plan, subscription status, invoices, and payment operations."
+      description="Preview a subscription overview, payment details and invoice history."
       actions={
         <div className="flex items-center gap-2">
           <Button asChild variant="outline" size="sm">
@@ -233,12 +233,11 @@ export default function BillingPage() {
       }
       meta={
         <Alert>
-          <AlertTitle>Billing-ready SaaS surface</AlertTitle>
+          <AlertTitle>Sample billing workspace</AlertTitle>
           <AlertDescription>
-            A complete billing experience shaped for subscriptions, invoices,
-            payment methods, customer portal access, and Stripe-backed
-            monetization. Starter Free uses illustrative demo data here; Starter
-            Pro is sold separately by PyColors.
+            All amounts, invoices and payment details below are fictional. No
+            payment service is connected. These sample subscription prices are
+            not the purchase price of Starter Pro.
           </AlertDescription>
         </Alert>
       }
@@ -430,8 +429,8 @@ export default function BillingPage() {
         </Card>
 
         <UpgradeGate
-          title="Advanced billing & subscription insights"
-          description="Unlock subscription analytics, usage-based billing, VAT handling, and customer billing intelligence."
+          title="Connect your product to Stripe"
+          description="Starter Pro includes Stripe Checkout, customer portal and webhook foundations to configure for your product. Your application owns its pricing and business rules."
           features={[
             "Stripe Checkout integration",
             "Billing portal flows",
