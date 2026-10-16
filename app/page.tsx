@@ -1,3 +1,4 @@
+import { ThemeToggle } from "@/components/theme-toggle";
 import type * as React from "react";
 import Link from "next/link";
 import {
@@ -223,6 +224,7 @@ export default function HomePage() {
         </div>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <Button asChild variant="outline" size="sm">
             <a href={EXTERNAL.docs} target="_blank" rel="noreferrer noopener">
               Docs

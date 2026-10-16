@@ -1,0 +1,14 @@
+{
+  "repository": "https://github.com/pycolors-io/pycolors",
+  "revision": "2357e0b8f963f07f5cbe19f43e3abd8e8f3b3d6f",
+  "source": "apps/marketing/content/blocks/app-shells/ai-chat",
+  "files": {
+    "agent-definition-export.ts": "a36484f125a67d8232618a19bf082c1efa67590157f2af39677f676260061d85",
+    "agent-definition.tsx": "6d26a49879d1478f1d6525b404d7e11d205cf7785e4555234aa7c8fb0054eef2",
+    "attachments.tsx": "964a9afe4cd76a28d187fcc5111b95ac0c037ef125f3e9b6d04792d5f26df550",
+    "chat-thread.tsx": "888552c03621eb8f5a780f19f31c1185bf5874ddb956a17bcdf2bca784d6e589",
+    "index.tsx": "f8a8f70682ae577fb65b1ea7b82cb1a1b19401aafefd438241f15f38e07a7ebd",
+    "types.ts": "2d4a8a3d13bc3e1d4607c4a21fd57d8dcb389b8d6827c93398ad1f380e225683",
+    "work.tsx": "957199dbd99e3a3227fdda24e7ab6ce320aba15d918d0b918d3672e9ae033d03"
+  }
+}

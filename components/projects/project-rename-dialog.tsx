@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import * as React from "react";
 import {
   Button,
   Dialog,
@@ -10,7 +10,7 @@ import {
   DialogDescription,
   DialogFooter,
   Input,
-} from '@pycolors/ui';
+} from "@pycolors/ui";
 
 export function ProjectRenameDialog({
   open,
@@ -24,6 +24,7 @@ export function ProjectRenameDialog({
   onRename: (name: string) => void;
 }) {
   const [value, setValue] = React.useState(initialName);
+  const nameId = React.useId();
 
   React.useEffect(() => {
     if (open) setValue(initialName);
@@ -43,23 +44,24 @@ export function ProjectRenameDialog({
         <DialogHeader>
           <DialogTitle>Rename project</DialogTitle>
           <DialogDescription>
-            Update the project name. This is a v1 local-only action.
+            Update the project name in this browser demo.
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={submit} className="mt-4 space-y-3">
           <div className="space-y-2">
-            <label className="text-sm font-medium">
+            <label htmlFor={nameId} className="text-sm font-medium">
               Project name
             </label>
             <Input
+              id={nameId}
               value={value}
               onChange={(e) => setValue(e.target.value)}
               autoFocus
               placeholder="e.g. Acme Workspace"
             />
             <p className="text-sm text-muted-foreground">
-              Later: PATCH /projects/:id
+              Saved locally in this browser. No backend is connected.
             </p>
           </div>
 
@@ -71,7 +73,9 @@ export function ProjectRenameDialog({
             >
               Cancel
             </Button>
-            <Button type="submit">Save</Button>
+            <Button type="submit" disabled={!value.trim()}>
+              Save
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
