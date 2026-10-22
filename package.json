@@ -46,7 +46,7 @@
     "@radix-ui/react-slot": "^1.2.4",
     "@vercel/analytics": "^2.0.1",
     "lucide-react": "^1.49.0",
-    "next": "15.5.12",
+    "next": "16.4.2",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },
