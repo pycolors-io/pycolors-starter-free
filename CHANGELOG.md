@@ -1,5 +1,9 @@
 # @pycolors/starter-free
 
+## Unreleased
+
+- Add a configured Starter Pro demo link on upgrade gates, preserving supported destination context and the commercial offer link.
+
 ## 1.2.3
 
 ### Patch Changes
