@@ -1,3 +1,5 @@
+import { ProDemoLink } from "./pro-demo-link";
+import { proDemoUrl } from "@/lib/pro-demo-url";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Check, Layers2 } from "lucide-react";
@@ -64,7 +66,12 @@ export function UpgradeGate({
             </ul>
           ) : null}
           <div className="flex flex-wrap items-center gap-3">
-            <Button asChild size="sm">
+            <ProDemoLink />
+            <Button
+              asChild
+              size="sm"
+              variant={proDemoUrl() ? "outline" : "default"}
+            >
               <Link href={upgradeHref}>
                 {ctaLabel}
                 <ArrowUpRight className="size-3.5" aria-hidden="true" />
