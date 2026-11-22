@@ -4,6 +4,13 @@
 
 - Add a configured Starter Pro demo link on upgrade gates, preserving supported destination context and the commercial offer link.
 
+## 1.2.4
+
+Release preparation — 20 November 2026.
+
+- Include the merged application runtime maintenance and align the displayed
+  starter version with its manifest.
+
 ## 1.2.3
 
 ### Patch Changes
